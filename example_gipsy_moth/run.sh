@@ -1,0 +1,21 @@
+../build/bin/MoRIS_run \
+-sample sample.txt \
+-map map.txt \
+-network network.txt \
+-typeofdata PRESENCE_ABSENCE \
+-seed 2098 \
+-rep 100 \
+-iterations 40 \
+-xcoord 72000 \
+-ycoord 42000 \
+-lambda 1.0 \
+-mu 10.0 \
+-sigma 1.0 \
+-law DIRAC \
+-wroad1 1.0 \
+-wroad2 0.0 \
+-wroad3 0.0 \
+-wroad4 0.0 \
+-wroad5 0.0 \
+-wroad6 0.0 \
+-min-connectivity 0.1

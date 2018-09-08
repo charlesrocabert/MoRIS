@@ -1,0 +1,20 @@
+../build/bin/MoRIS_run \
+-sample sample.txt \
+-map map.txt \
+-network network.txt \
+-seed 2098 \
+-rep 10 \
+-iterations 10000 \
+-xcoord 41569.22 \
+-ycoord 82000 \
+-lambda 1.0 \
+-mu 10.0 \
+-sigma 10.0 \
+-law GAUSSIAN \
+-wroad1 1.0 \
+-wroad2 0.5 \
+-wroad3 0.25 \
+-wroad4 0.175 \
+-wroad5 0.0 \
+-wroad6 0.0 \
+-min-connectivity 0.2
