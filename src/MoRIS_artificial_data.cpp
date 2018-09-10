@@ -64,14 +64,9 @@ int main(int argc, char const** argv)
   readArgs(argc, argv, parameters, sample_size, imitate_sample);
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 2) Get introduction node from its coordinates      */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  size_t introduction = get_introduction_node_from_coordinates(parameters->get_introduction_coordinates(), parameters->get_map_filename());
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 3) Create simulation                               */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  Simulation* simulation = new Simulation(parameters->get_prng(), parameters->get_type_of_data(), parameters->get_network_filename(), parameters->get_map_filename(), parameters->get_sample_filename(), introduction, parameters->get_lambda(), parameters->get_mu(), parameters->get_sigma(), parameters->get_jump_law(), parameters->get_repetitions_by_simulation(), parameters->get_road_linear_combination(), parameters->get_minimal_connectivity(), false);
+  Simulation* simulation = new Simulation(parameters);
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 4) Run simulation                                  */
@@ -79,7 +74,7 @@ int main(int argc, char const** argv)
   printf("> Run the simulation ...\n");
   while (simulation->get_iteration() < parameters->get_number_of_iterations())
   {
-    simulation->update(false);
+    simulation->compute_next_iteration();
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -97,8 +92,8 @@ int main(int argc, char const** argv)
     Node* node = NULL;
     while (sample_size > 0)
     {
-      size_t node_index = parameters->get_prng()->uniform(1, 1138);
-      node = simulation->get_graph()->get_node(node_index);
+      int node_index = parameters->get_prng()->uniform(1, 1138);
+      node           = simulation->get_graph()->get_node(node_index);
       if (node == NULL)
       {
         printf("Node not found ...\n");

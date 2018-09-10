@@ -39,6 +39,7 @@
 
 #include "Enums.h"
 #include "Prng.h"
+#include "Parameters.h"
 #include "Node.h"
 
 
@@ -51,8 +52,8 @@ public:
    * CONSTRUCTORS
    *----------------------------*/
   Graph( void ) = delete;
+  Graph( Parameters* parameters );
   Graph( const Graph& graph ) = delete;
-  Graph( Prng* prng, type_of_data data, std::string network_filename, std::string map_filename, std::string sample_filename, int nb_repetitions, std::vector<double>* road_linear_combination, double minimal_connectivity );
   
   /*----------------------------
    * DESTRUCTORS
@@ -63,21 +64,21 @@ public:
    * GETTERS
    *----------------------------*/
   
-  /*------------------------------------------------------------------ Graph structure */
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   inline int   get_number_of_nodes( void );
   inline Node* get_node( int identifier );
   inline Node* get_first( void );
   inline Node* get_next( void );
   
-  /*------------------------------------------------------------------ Graph data */
+  /*--------------------------------------- GRAPH STATISTICS */
   
   inline double get_maximum_weights_sum( void ) const;
-  inline double get_minimization_score( void ) const;
   inline double get_minimum_x_coordinate( void ) const;
   inline double get_minimum_y_coordinate( void ) const;
   inline double get_maximum_x_coordinate( void ) const;
   inline double get_maximum_y_coordinate( void ) const;
+  inline double get_score( void ) const;
   
   /*----------------------------
    * SETTERS
@@ -87,12 +88,10 @@ public:
   /*----------------------------
    * PUBLIC METHODS
    *----------------------------*/
-  void update( bool last_iteration );
-  void write_state( int iteration, double xintro, double yintro );
-  
-  inline void compute_jump_probabilities( void );
-  inline void reset_states( void );
-  inline void untag( void );
+  void untag( void );
+  void update_state( void );
+  void compute_score( void );
+  void write_state( std::string filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -103,31 +102,36 @@ protected:
   /*----------------------------
    * PROTECTED METHODS
    *----------------------------*/
+  int  get_introduction_node_from_coordinates( void );
+  void load_map( void );
+  void load_network( void );
+  void load_sample( void );
+  void compute_maximum_weight_sum( void );
+  void normalize_jump_probability( void );
+  void reset_states( void );
+  void initialize_introduction_node( void );
   
   /*----------------------------
    * PROTECTED ATTRIBUTES
    *----------------------------*/
   
-  /*------------------------------------------------------------------ Main parameters */
+  /*--------------------------------------- MAIN PARAMETERS */
   
-  Prng*        _prng;           /*!< Pseudorandom numbers generator */
-  int          _nb_repetitions; /*!< Number of repetitions          */
-  type_of_data _data;           /*!< Type of experimental data      */
+  Parameters* _parameters; /*!< Main parameters */
   
-  /*------------------------------------------------------------------ Graph structure */
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   std::unordered_map<int, Node*>           _map; /*!< Nodes map          */
   std::unordered_map<int, Node*>::iterator _it;  /*!< Nodes map iterator */
   
-  /*------------------------------------------------------------------ Graph data */
+  /*--------------------------------------- GRAPH STATISTICS */
   
   double _maximum_weights_sum; /*!< Maximum weights sum in nodes */
-  double _minimization_score;  /*!< Minimization score           */
   double _min_x_coord;         /*!< Minimum x coordinate         */
   double _min_y_coord;         /*!< Minimum y coordinate         */
   double _max_x_coord;         /*!< Maximum x coordinate         */
   double _max_y_coord;         /*!< Maximum y coordinate         */
-  
+  double _score;               /*!< Optimization score           */
 };
 
 
@@ -135,7 +139,7 @@ protected:
  * GETTERS
  *----------------------------*/
 
-/*------------------------------------------------------------------ Graph structure */
+/*--------------------------------------- GRAPH STRUCTURE */
 
 /**
  * \brief    Get total number of nodes
@@ -191,7 +195,7 @@ inline Node* Graph::get_next( void )
   return _it->second;
 }
 
-/*------------------------------------------------------------------ Graph data */
+/*--------------------------------------- GRAPH STATISTICS */
 
 /**
  * \brief    Get the maximum weights sum in the graph
@@ -202,17 +206,6 @@ inline Node* Graph::get_next( void )
 inline double Graph::get_maximum_weights_sum( void ) const
 {
   return _maximum_weights_sum;
-}
-
-/**
- * \brief    Get the minimization score
- * \details  --
- * \param    void
- * \return   \e double
- */
-inline double Graph::get_minimization_score( void ) const
-{
-  return _minimization_score;
 }
 
 /**
@@ -259,57 +252,20 @@ inline double Graph::get_maximum_y_coordinate( void ) const
   return _max_y_coord;
 }
 
+/**
+ * \brief    Get the optimization score
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Graph::get_score( void ) const
+{
+  return _score;
+}
+
 /*----------------------------
  * SETTERS
  *----------------------------*/
-
-/*----------------------------
- * PUBLIC METHODS
- *----------------------------*/
-
-/**
- * \brief    Compute jump probabilities depending on the maximum weight of the map
- * \details  --
- * \param    void
- * \return   \e void
- */
-inline void Graph::compute_jump_probabilities( void )
-{
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
-  {
-    it->second->set_jump_probability(it->second->get_weights_sum() / _maximum_weights_sum);
-  }
-}
-
-/**
- * \brief    Reset all node states
- * \details  --
- * \param    void
- * \return   \e void
- */
-inline void Graph::reset_states( void )
-{
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
-  {
-    it->second->reset();
-  }
-  _minimization_score = 0.0;
-  _it                 = _map.begin();
-}
-
-/**
- * \brief    Untag all the nodes
- * \details  --
- * \param    void
- * \return   \e void
- */
-inline void Graph::untag( void )
-{
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
-  {
-    it->second->untag();
-  }
-}
 
 
 #endif /* defined(__MoRIS__Graph__) */

@@ -2,9 +2,10 @@
 -sample sample.txt \
 -map map.txt \
 -network network.txt \
+-typeofdata PRESENCE_ABSENCE \
 -seed 2098 \
--rep 10 \
--iterations 10000 \
+-rep 100 \
+-iterations 40 \
 -xcoord 41569.22 \
 -ycoord 82000 \
 -lambda 1.0 \
@@ -12,9 +13,10 @@
 -sigma 10.0 \
 -law GAUSSIAN \
 -wroad1 1.0 \
--wroad2 0.5 \
--wroad3 0.25 \
--wroad4 0.175 \
+-wroad2 1.0 \
+-wroad3 1.0 \
+-wroad4 1.0 \
 -wroad5 0.0 \
 -wroad6 0.0 \
--min-connectivity 0.2
+-min-connectivity 0.0 \
+-save-outputs

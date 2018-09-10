@@ -37,6 +37,7 @@
 
 #include "Enums.h"
 #include "Prng.h"
+#include "Parameters.h"
 #include "Node.h"
 #include "Graph.h"
 
@@ -50,7 +51,7 @@ public:
    * CONSTRUCTORS
    *----------------------------*/
   Simulation( void ) = delete;
-  Simulation( Prng* prng, type_of_data data, std::string network_filename, std::string map_filename, std::string sample_filename, int introduction_node, double lambda, double mu, double sigma, jump_distribution_law jump_law, int nb_repetitions, std::vector<double>* road_linear_combination, double minimal_connectivity, bool save_lineage_tree );
+  Simulation( Parameters* parameters );
   Simulation( const Simulation& sim ) = delete;
   
   /*----------------------------
@@ -63,7 +64,7 @@ public:
    *----------------------------*/
   inline Graph* get_graph( void );
   inline int    get_iteration( void ) const;
-  inline double get_minimization_score( void );
+  inline double get_score( void ) const;
   
   /*----------------------------
    * SETTERS
@@ -73,7 +74,9 @@ public:
   /*----------------------------
    * PUBLIC METHODS
    *----------------------------*/
-  void update( bool last_iteration );
+  void compute_next_iteration( void );
+  void compute_score( void );
+  void write_state( std::string filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -84,21 +87,15 @@ protected:
   /*----------------------------
    * PROTECTED METHODS
    *----------------------------*/
+  double compute_euclidean_distance( Node* node1, Node* node2 );
   
   /*----------------------------
    * PROTECTED ATTRIBUTES
    *----------------------------*/
-  Prng*                 _prng;              /*!< Pseudorandom numbers generator */
-  Graph*                _graph;             /*!< Graph                          */
-  int                   _iteration;         /*!< Current iteration              */
-  int                   _nb_repetitions;    /*!< Number of repetitions          */
-  int                   _n;                 /*!< Number of nodes                */
-  int                   _introduction_node; /*!< Introduction node              */
-  double                _lambda;            /*!< Mean of Poisson law            */
-  double                _mu;                /*!< Mean of jump length            */
-  double                _sigma;             /*!< Variance of jump length        */
-  jump_distribution_law _jump_law;          /*!< Jump distribution law          */
-  bool                  _save_lineage_tree; /*!< Save the lineage tree          */
+  
+  Parameters* _parameters; /*!< Main parameters   */
+  Graph*      _graph;      /*!< Graph structure   */
+  int         _iteration;  /*!< Current iteration */
   
 };
 
@@ -130,14 +127,14 @@ inline int Simulation::get_iteration( void ) const
 }
 
 /**
- * \brief    Get the minimization score
+ * \brief    Get the optimization score
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Simulation::get_minimization_score( void )
+inline double Simulation::get_score( void ) const
 {
-  return _graph->get_minimization_score();
+  return _graph->get_score();
 }
 
 /*----------------------------

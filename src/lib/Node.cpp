@@ -156,6 +156,72 @@ Node* Node::jump( void )
   exit(EXIT_FAILURE);
 }
 
+/**
+ * \brief    Update node state
+ * \details  --
+ * \param    void
+ * \return   \e void
+ */
+void Node::update_state( void )
+{
+  _probability_of_presence = 0.0;
+  for (int rep = 0; rep < _nb_repetitions; rep++)
+  {
+    _current_state[rep]       = _next_state[rep];
+    _probability_of_presence += _current_state[rep];
+    _next_state[rep]          = 0;
+  }
+  _probability_of_presence /= (double)_nb_repetitions;
+}
+
+/**
+ * \brief    Reset node state
+ * \details  --
+ * \param    void
+ * \return   \e void
+ */
+void Node::reset_state( void )
+{
+  for (int rep = 0; rep < _nb_repetitions; rep++)
+  {
+    _current_state[rep]    = 0;
+    _next_state[rep]       = 0;
+    _nb_introductions[rep] = 0.0;
+  }
+  _probability_of_presence = 0.0;
+  _mean_nb_introductions   = 0.0;
+}
+
+/**
+ * \brief    Add an introduction at position 'rep'
+ * \details  --
+ * \param    int rep
+ * \return   \e void
+ */
+void Node::add_introduction( int rep )
+{
+  assert(rep >= 0);
+  assert(rep < _nb_repetitions);
+  _nb_introductions[rep]++;
+}
+
+/**
+ * \brief    Compute the mean number of introductions
+ * \details  --
+ * \param    void
+ * \return   \e void
+ */
+double Node::compute_mean_nb_introductions( void )
+{
+  _mean_nb_introductions = 0.0;
+  for (int rep = 0; rep < _nb_repetitions; rep++)
+  {
+    _mean_nb_introductions += _nb_introductions[rep];
+  }
+  return _mean_nb_introductions/(double)_nb_repetitions;
+}
+
 /*----------------------------
  * PROTECTED METHODS
  *----------------------------*/
+

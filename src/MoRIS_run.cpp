@@ -43,7 +43,6 @@
 
 void printUsage( void );
 void readArgs( int argc, char const** argv, Parameters* parameters );
-int  get_introduction_node_from_coordinates( std::pair<double, double>* coordinates, std::string map_filename );
 
 
 /**
@@ -58,52 +57,44 @@ int main(int argc, char const** argv)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 1) Read command line arguments and load parameters */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
   Parameters* parameters = new Parameters();
   readArgs(argc, argv, parameters);
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 2) Get introduction node from its coordinates      */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
-  int introduction = get_introduction_node_from_coordinates(parameters->get_introduction_coordinates(), parameters->get_map_filename());
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 3) Create the simulation                           */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
-  Simulation* simulation = new Simulation(parameters->get_prng(), parameters->get_type_of_data(), parameters->get_network_filename(), parameters->get_map_filename(), parameters->get_sample_filename(), introduction, parameters->get_lambda(), parameters->get_mu(), parameters->get_sigma(), parameters->get_jump_law(), parameters->get_repetitions_by_simulation(), parameters->get_road_linear_combination(), parameters->get_minimal_connectivity(), parameters->get_save_lineage_tree());
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 4) Run the simulation                              */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
-  while (simulation->get_iteration() < parameters->get_number_of_iterations())
+  if (parameters->saveOutputs())
   {
-    if (simulation->get_iteration() == parameters->get_number_of_iterations()-1)
-    {
-      simulation->update(true);
-      simulation->get_graph()->write_state(simulation->get_iteration(), parameters->get_introduction_coordinates()->first, parameters->get_introduction_coordinates()->second);
-    }
-    else
-    {
-      simulation->update(false);
-    }
-    if (parameters->get_save_simulation_state())
-    {
-      //simulation->get_graph()->write_state(simulation->get_iteration());
-    }
+    parameters->write_parameters("params_out.txt");
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 6) Free the memory and exit                        */
+  /* 2) Create the simulation                           */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  double minimization_score = simulation->get_minimization_score();
+  Simulation* simulation = new Simulation(parameters);
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 3) Run the simulation                              */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  while (simulation->get_iteration() < parameters->get_number_of_iterations())
+  {
+    simulation->compute_next_iteration();
+  }
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 4) Compute the score and save the final state      */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  simulation->compute_score();
+  if (parameters->saveOutputs())
+  {
+    simulation->write_state("final_state.txt");
+  }
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 5) Return the score, free the memory and exit      */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  double score = simulation->get_score();
   delete simulation;
   simulation = NULL;
   delete parameters;
   parameters = NULL;
-  std::cout << minimization_score << "\n";
+  std::cout << score << "\n";
   return EXIT_SUCCESS;
 }
 
@@ -443,13 +434,9 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
         options["min-connectivity"] = true;
       }
     }
-    if (strcmp(argv[i], "-save-state") == 0 || strcmp(argv[i], "--save-state") == 0)
+    if (strcmp(argv[i], "-save-outputs") == 0 || strcmp(argv[i], "--save-outputs") == 0)
     {
-      parameters->set_save_simulation_state(true);
-    }
-    if (strcmp(argv[i], "-save-tree") == 0 || strcmp(argv[i], "--save-tree") == 0)
-    {
-      parameters->set_save_lineage_tree(true);
+      parameters->set_save_outputs(true);
     }
   }
   bool parameter_lacking = false;
@@ -543,50 +530,8 @@ void printUsage( void )
   std::cout << "        Specify the weight of type VI roads\n";
   std::cout << "  -min-connectivity, --min-connectivity <connectivity>\n";
   std::cout << "        Specify the minimal connectivity between cells\n";
-  std::cout << "  -save-state, --save-state\n";
-  std::cout << "        The simulation state will be saved in <state.txt> at each iteration\n";
-  std::cout << "  -save-tree, --save-tree\n";
-  std::cout << "        The lineage tree will be saved in file <tree.txt>\n";
+  std::cout << "  -save-outputs, --save-outputs\n";
+  std::cout << "        Save various simulation outputs (final state, lineage tree, ...)\n";
   std::cout << "\n";
 }
 
-/**
- * \brief    Get introduction node from its coordinates
- * \details  --
- * \param    std::pair<double, double>* coordinates
- * \param    std::string map_filename
- * \return   \e int
- */
-int get_introduction_node_from_coordinates( std::pair<double, double>* coordinates, std::string map_filename )
-{
-  std::ifstream file(map_filename.c_str(), std::ios::in);
-  if(!file)
-  {
-    std::cout << "Error: " << map_filename << " file not found.\n";
-    exit(EXIT_FAILURE);
-  }
-  else
-  {
-    std::string line;
-    int    introduction = 0;
-    int    min_intro    = 0;
-    double x            = 0.0;
-    double y            = 0.0;
-    double dist         = 0.0;
-    double min_dist     = 1e+6;
-    while(getline(file, line))
-    {
-      std::stringstream flux;
-      flux.str(line.c_str());
-      flux >> introduction >> x >> y;
-      dist = sqrt((coordinates->first-x)*(coordinates->first-x) + (coordinates->second-y)*(coordinates->second-y));
-      if (min_dist > dist)
-      {
-        min_dist  = dist;
-        min_intro = introduction;
-      }
-    }
-    file.close();
-    return min_intro;
-  }
-}

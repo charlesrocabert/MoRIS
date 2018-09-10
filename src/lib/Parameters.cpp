@@ -51,8 +51,8 @@ Parameters::Parameters( void )
   
   /*------------------------------------------------------------------ Input data filenames */
   
-  _network_filename = "";
   _map_filename     = "";
+  _network_filename = "";
   _sample_filename  = "";
   
   /*------------------------------------------------------------------ Number of repetitions by simulation */
@@ -82,8 +82,7 @@ Parameters::Parameters( void )
   
   /*------------------------------------------------------------------ Extra statistics */
   
-  _save_simulation_state = false;
-  _save_lineage_tree     = false;
+  _save_outputs = false;
   
 }
 
@@ -106,8 +105,8 @@ Parameters::Parameters( const Parameters& parameters )
   
   /*------------------------------------------------------------------ Input data filenames */
   
-  _network_filename = parameters._network_filename;
   _map_filename     = parameters._map_filename;
+  _network_filename = parameters._network_filename;
   _sample_filename  = parameters._sample_filename;
   
   /*------------------------------------------------------------------ Number of repetitions by simulation */
@@ -136,8 +135,7 @@ Parameters::Parameters( const Parameters& parameters )
   
   /*------------------------------------------------------------------ Extra statistics */
   
-  _save_simulation_state = parameters._save_simulation_state;
-  _save_lineage_tree     = parameters._save_lineage_tree;
+  _save_outputs = parameters._save_outputs;
   
 }
 
@@ -161,6 +159,82 @@ Parameters::~Parameters( void )
 /*----------------------------
  * PUBLIC METHODS
  *----------------------------*/
+
+/**
+ * \brief    Write parameters in a file
+ * \details  --
+ * \param    void
+ * \return   \e void
+ */
+void Parameters::write_parameters( std::string filename )
+{
+  /*--------------*/
+  /* 1) Open file */
+  /*--------------*/
+  std::ofstream file(filename, std::ios::out | std::ios::trunc);
+  
+  /*-----------------*/
+  /* 2) Write header */
+  /*-----------------*/
+  file << "seed" << " ";
+  file << "type_of_data" << " ";
+  file << "map" << " ";
+  file << "network" << " ";
+  file << "sample" << " ";
+  file << "repetitions" << " ";
+  file << "iterations" << " ";
+  file << "x_introduction" << " ";
+  file << "y_introduction" << " ";
+  file << "lambda" << " ";
+  file << "mu" << " ";
+  file << "sigma" << " ";
+  file << "jump_law" << " ";
+  file << "road1_weight" << " ";
+  file << "road2_weight" << " ";
+  file << "road3_weight" << " ";
+  file << "road4_weight" << " ";
+  file << "road5_weight" << " ";
+  file << "road6_weight" << " ";
+  file << "minimal_connectivity" << " ";
+  file << "save_outputs" << "\n";
+  
+  /*-----------------*/
+  /* 3) Write data   */
+  /*-----------------*/
+  file << _seed << " ";
+  if (_data == PRESENCE_ONLY)
+  {
+    file << "PRESENCE_ONLY" << " ";
+  }
+  else if (_data == PRESENCE_ABSENCE)
+  {
+    file << "PRESENCE_ABSENCE" << " ";
+  }
+  file << _map_filename << " ";
+  file << _network_filename << " ";
+  file << _sample_filename << " ";
+  file << _repetitions_by_simulation << " ";
+  file << _number_of_iterations << " ";
+  file << _introduction_coordinates.first << " ";
+  file << _introduction_coordinates.second << " ";
+  file << _lambda << " ";
+  file << _mu << " ";
+  file << _sigma << " ";
+  file << _jump_law << " ";
+  file << _road_linear_combination[0] << " ";
+  file << _road_linear_combination[1] << " ";
+  file << _road_linear_combination[2] << " ";
+  file << _road_linear_combination[3] << " ";
+  file << _road_linear_combination[4] << " ";
+  file << _road_linear_combination[5] << " ";
+  file << _minimal_connectivity << " ";
+  file << _save_outputs << "\n";
+  
+  /*---------------*/
+  /* 4) Close file */
+  /*---------------*/
+  file.close();
+}
 
 /*----------------------------
  * PROTECTED METHODS

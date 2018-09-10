@@ -72,8 +72,8 @@ public:
   
   /*------------------------------------------------------------------ Input data filenames */
   
-  inline std::string get_network_filename( void ) const;
   inline std::string get_map_filename( void ) const;
+  inline std::string get_network_filename( void ) const;
   inline std::string get_sample_filename( void ) const;
   
   /*------------------------------------------------------------------ Number of repetitions by simulation */
@@ -102,8 +102,8 @@ public:
   
   /*------------------------------------------------------------------ Extra statistics */
   
-  inline bool get_save_simulation_state( void ) const;
-  inline bool get_save_lineage_tree( void ) const;
+  inline bool get_save_outputs( void ) const;
+  inline bool saveOutputs( void ) const;
   
   /*----------------------------
    * SETTERS
@@ -120,8 +120,8 @@ public:
   
   /*------------------------------------------------------------------ Input data filenames */
   
-  inline void set_network_filename( std::string filename );
   inline void set_map_filename( std::string filename );
+  inline void set_network_filename( std::string filename );
   inline void set_sample_filename( std::string filename );
   
   /*------------------------------------------------------------------ Number of repetitions by simulation */
@@ -150,13 +150,12 @@ public:
   
   /*------------------------------------------------------------------ Extra statistics */
   
-  inline void set_save_simulation_state( bool save_simulation_state );
-  inline void set_save_lineage_tree( bool save_lineage_tree );
-  inline void set_evaluate_complementary_data( bool evaluate_complementary_data );
+  inline void set_save_outputs( bool save_outputs );
   
   /*----------------------------
    * PUBLIC METHODS
    *----------------------------*/
+  void write_parameters( std::string filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -183,8 +182,8 @@ protected:
   
   /*------------------------------------------------------------------ Data filenames */
   
-  std::string _network_filename; /*!< Network filename */
   std::string _map_filename;     /*!< Map filename     */
+  std::string _network_filename; /*!< Network filename */
   std::string _sample_filename;  /*!< Sample filename  */
   
   /*------------------------------------------------------------------ Number of repetitions by simulation */
@@ -213,8 +212,7 @@ protected:
   
   /*------------------------------------------------------------------ Extra statistics */
   
-  bool _save_simulation_state; /*!< Save the simulation state */
-  bool _save_lineage_tree;     /*!< Save the lineage tree     */
+  bool _save_outputs; /*!< Save simulation outputs */
   
 };
 
@@ -263,17 +261,6 @@ inline type_of_data Parameters::get_type_of_data( void ) const
 /*------------------------------------------------------------------ Input data filenames */
 
 /**
- * \brief    Get the network filename
- * \details  --
- * \param    void
- * \return   \e std::string
- */
-inline std::string Parameters::get_network_filename( void ) const
-{
-  return _network_filename;
-}
-
-/**
  * \brief    Get the map filename
  * \details  --
  * \param    void
@@ -282,6 +269,17 @@ inline std::string Parameters::get_network_filename( void ) const
 inline std::string Parameters::get_map_filename( void ) const
 {
   return _map_filename;
+}
+
+/**
+ * \brief    Get the network filename
+ * \details  --
+ * \param    void
+ * \return   \e std::string
+ */
+inline std::string Parameters::get_network_filename( void ) const
+{
+  return _network_filename;
 }
 
 /**
@@ -407,25 +405,25 @@ inline double Parameters::get_minimal_connectivity( void ) const
 /*------------------------------------------------------------------ Extra statistics */
 
 /**
- * \brief    Get the save simulation state boolean
+ * \brief    Get the save simulation outputs boolean
  * \details  --
  * \param    void
  * \return   \e bool
  */
-inline bool Parameters::get_save_simulation_state( void ) const
+inline bool Parameters::get_save_outputs( void ) const
 {
-  return _save_simulation_state;
+  return _save_outputs;
 }
 
 /**
- * \brief    Get the save lineage tree boolean
+ * \brief    Save outputs?
  * \details  --
  * \param    void
  * \return   \e bool
  */
-inline bool Parameters::get_save_lineage_tree( void ) const
+inline bool Parameters::saveOutputs( void ) const
 {
-  return _save_lineage_tree;
+  return _save_outputs;
 }
 
 /*----------------------------
@@ -462,17 +460,6 @@ inline void Parameters::set_type_of_data( type_of_data data )
 /*------------------------------------------------------------------ Input data filenames */
 
 /**
- * \brief    Set network filename
- * \details  --
- * \param    std::string filename
- * \return   \e void
- */
-inline void Parameters::set_network_filename( std::string filename )
-{
-  _network_filename = std::string(filename);
-}
-
-/**
  * \brief    Set map filename
  * \details  --
  * \param    std::string filename
@@ -481,6 +468,17 @@ inline void Parameters::set_network_filename( std::string filename )
 inline void Parameters::set_map_filename( std::string filename )
 {
   _map_filename = std::string(filename);
+}
+
+/**
+ * \brief    Set network filename
+ * \details  --
+ * \param    std::string filename
+ * \return   \e void
+ */
+inline void Parameters::set_network_filename( std::string filename )
+{
+  _network_filename = std::string(filename);
 }
 
 /**
@@ -617,25 +615,14 @@ inline void Parameters::set_minimal_connectivity( double minimal_connectivity )
 /*------------------------------------------------------------------ Extra statistics */
 
 /**
- * \brief    Set save simulation state boolean
+ * \brief    Set save simulation outputs state boolean
  * \details  --
- * \param    bool save_simulation_state
+ * \param    bool save_outputs
  * \return   \e void
  */
-inline void Parameters::set_save_simulation_state( bool save_simulation_state )
+inline void Parameters::set_save_outputs( bool save_outputs )
 {
-  _save_simulation_state = save_simulation_state;
-}
-
-/**
- * \brief    Set save lineage tree boolean
- * \details  --
- * \param    bool save_lineage_tree
- * \return   \e void
- */
-inline void Parameters::set_save_lineage_tree( bool save_lineage_tree )
-{
-  _save_lineage_tree = save_lineage_tree;
+  _save_outputs = save_outputs;
 }
 
 

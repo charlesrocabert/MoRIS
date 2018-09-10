@@ -116,13 +116,11 @@ public:
   /*----------------------------
    * PUBLIC METHODS
    *----------------------------*/
-  Node* jump( void );
-  
-  inline bool   isAllowedToJump( int rep );
-  inline void   update( void );
-  inline void   reset( void );
-  inline void   add_introduction( int rep );
-  inline double compute_mean_nb_introductions( void );
+  Node*  jump( void );
+  void   update_state( void );
+  void   reset_state( void );
+  void   add_introduction( int rep );
+  double compute_mean_nb_introductions( void );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -422,11 +420,11 @@ inline void Node::set_as_introduction_node( void )
 {
   for (int rep = 0; rep < _nb_repetitions; rep++)
   {
-    _current_state[rep]       = 1;
-    _next_state[rep]          = 1;
-    _probability_of_presence  = 1.0;
-    _nb_introductions[rep]   += 1.0;
+    _current_state[rep]     = 1;
+    _next_state[rep]        = 1;
+    _nb_introductions[rep] += 1.0;
   }
+  _probability_of_presence = 1.0;
 }
 
 /*------------------------------------------------------------------ Graph structure */
@@ -520,93 +518,6 @@ inline void Node::set_sample_data( double y, double n )
   {
     _f = _y/_n;
   }
-}
-
-/*----------------------------
- * PUBLIC METHODS
- *----------------------------*/
-
-/**
- * \brief    Evaluate the jump capability
- * \details  If the node is occupied (state = 1), a new jump is allowed
- * \param    int rep
- * \return   \e bool
- */
-inline bool Node::isAllowedToJump( int rep )
-{
-  assert(rep >= 0);
-  assert(rep < _nb_repetitions);
-  if (_current_state[rep] == 1)
-  {
-    _next_state[rep] = 1;
-    return true;
-  }
-  return false;
-}
-
-/**
- * \brief    Update node state
- * \details  --
- * \param    void
- * \return   \e void
- */
-inline void Node::update( void )
-{
-  _probability_of_presence = 0.0;
-  for (int rep = 0; rep < _nb_repetitions; rep++)
-  {
-    _current_state[rep]       = _next_state[rep];
-    _probability_of_presence += _current_state[rep];
-    _next_state[rep]          = 0;
-  }
-  _probability_of_presence /= (double)_nb_repetitions;
-}
-
-/**
- * \brief    Reset node state
- * \details  --
- * \param    void
- * \return   \e void
- */
-inline void Node::reset( void )
-{
-  for (int rep = 0; rep < _nb_repetitions; rep++)
-  {
-    _current_state[rep]    = 0;
-    _next_state[rep]       = 0;
-    _nb_introductions[rep] = 0.0;
-  }
-  _probability_of_presence = 0.0;
-  _mean_nb_introductions   = 0.0;
-}
-
-/**
- * \brief    Add an introduction at position 'rep'
- * \details  --
- * \param    int rep
- * \return   \e void
- */
-inline void Node::add_introduction( int rep )
-{
-  assert(rep >= 0);
-  assert(rep < _nb_repetitions);
-  _nb_introductions[rep]++;
-}
-
-/**
- * \brief    Compute the mean number of introductions
- * \details  --
- * \param    void
- * \return   \e void
- */
-inline double Node::compute_mean_nb_introductions( void )
-{
-  _mean_nb_introductions = 0.0;
-  for (int rep = 0; rep < _nb_repetitions; rep++)
-  {
-    _mean_nb_introductions += _nb_introductions[rep];
-  }
-  return _mean_nb_introductions/(double)_nb_repetitions;
 }
 
 
