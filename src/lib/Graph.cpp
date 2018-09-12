@@ -53,14 +53,17 @@ Graph::Graph( Parameters* parameters )
   
   /*--------------------------------------- GRAPH STATISTICS */
   
+  _introduction_node = get_introduction_node_from_coordinates();
   compute_maximum_weight_sum();
-  normalize_jump_probability();
+  normalize_jump_probability_by_weight_sum();
   reset_states();
-  initialize_introduction_node();
+  set_introduction_node();
   
-  /*--------------------------------------- SIMULATION DATA */
+  /*--------------------------------------- MINIMIZATION SCORE */
   
-  _score = 0.0;
+  compute_score();
+  _empty_score = _score;
+  _score       = 0.0;
 }
 
 /*----------------------------
@@ -132,11 +135,12 @@ void Graph::compute_score( void )
   {
     for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
     {
-      double y = it->second->get_y();
-      if (y > 0.0)
+      double y_obs = it->second->get_y_obs();
+      if (y_obs > 0.0)
       {
-        double nb_intros  = it->second->compute_mean_nb_introductions();
-        _score           += (y-nb_intros)*(y-nb_intros);
+        it->second->compute_mean_var_nb_introductions();
+        double nb_intros  = it->second->get_mean_nb_introductions();
+        _score           += (y_obs-nb_intros)*(y_obs-nb_intros);
       }
     }
   }
@@ -145,21 +149,27 @@ void Graph::compute_score( void )
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   else if (_parameters->get_type_of_data() == PRESENCE_ABSENCE)
   {
+    double count = 0.0;
     for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
     {
-      double y = it->second->get_y();
-      double n = it->second->get_n();
-      if (n > 0.0)
+      double y_sim = it->second->get_y_sim();
+      double n_sim = (double)_parameters->get_repetitions_by_simulation();
+      double y_obs = it->second->get_y_obs();
+      double n_obs = it->second->get_n_obs();
+      if (n_obs > 0.0 && it->first != _introduction_node)
       {
-        unsigned int a      = (unsigned int)(it->second->get_probability_of_presence()*_parameters->get_repetitions_by_simulation());
-        unsigned int b      = y;
-        unsigned int c      = (unsigned int)_parameters->get_repetitions_by_simulation()-a;
-        unsigned int d      = n-y;
+        unsigned int a      = (unsigned int)(y_sim);
+        unsigned int b      = (unsigned int)(y_obs);
+        unsigned int c      = (unsigned int)(n_sim-y_sim);
+        unsigned int d      = (unsigned int)(n_obs-y_obs);
         double current_FS   = gsl_ran_hypergeometric_pdf(a, a+b, c+d, a+c);
         double current_MFS  = gsl_ran_hypergeometric_pdf(b, b+b, d+d, b+d);
         _score             += (1.0-current_FS/current_MFS)*(1.0-current_FS/current_MFS);
+        count              += 1.0;
       }
     }
+    _score /= count;
+    _score = log10(_score);
   }
 }
 
@@ -172,17 +182,21 @@ void Graph::compute_score( void )
 void Graph::write_state( std::string filename )
 {
   std::ofstream file(filename, std::ios::out | std::ios::trunc);
-  file << "id xcoord ycoord y n f_obs f_sim\n";
+  file << "id xcoord ycoord y n f_obs y_sim f_sim total_nb_intros mean_nb_intros var_nb_intros\n";
   Node* node = get_first();
   while (node != NULL)
   {
     file << node->get_identifier() << " ";
     file << node->get_x_coord() << " ";
     file << node->get_y_coord() << " ";
-    file << node->get_y() << " ";
-    file << node->get_n() << " ";
-    file << node->get_f() << " ";
-    file << node->get_probability_of_presence() << "\n";
+    file << node->get_y_obs() << " ";
+    file << node->get_n_obs() << " ";
+    file << node->get_f_obs() << " ";
+    file << node->get_y_sim() << " ";
+    file << node->get_f_sim() << " ";
+    file << node->get_total_nb_introductions() << " ";
+    file << node->get_mean_nb_introductions() << " ";
+    file << node->get_var_nb_introductions() << "\n";
     node = get_next();
   }
   file.close();
@@ -227,23 +241,22 @@ void Graph::load_map( void )
 {
   _map.clear();
   _min_x_coord = 1e+10;
-  _min_y_coord = 1e+10;
   _max_x_coord = 0.0;
+  _min_y_coord = 1e+10;
   _max_y_coord = 0.0;
   std::ifstream file(_parameters->get_map_filename(), std::ios::in);
   assert(file);
   std::string line;
-  int    identifier = 0;
-  double x_coord    = 0.0;
-  double y_coord    = 0.0;
-  double node_area  = 0.0;
-  double suitable   = 0.0;
-  int    intro      = 0;
+  int    identifier    = 0;
+  double x_coord       = 0.0;
+  double y_coord       = 0.0;
+  double node_area     = 0.0;
+  double suitable_area = 0.0;
   while(getline(file, line))
   {
     std::stringstream flux;
     flux.str(line.c_str());
-    flux >> identifier >> x_coord >> y_coord >> node_area >> suitable >> intro;
+    flux >> identifier >> x_coord >> y_coord >> node_area >> suitable_area;
     if (_min_x_coord > x_coord)
     {
       _min_x_coord = x_coord;
@@ -262,7 +275,7 @@ void Graph::load_map( void )
     }
     assert(_map.find(identifier) == _map.end());
     _map[identifier] = new Node(_parameters->get_prng(), identifier, _parameters->get_repetitions_by_simulation());
-    _map[identifier]->set_map_data(x_coord, y_coord, node_area);
+    _map[identifier]->set_map_data(x_coord, y_coord, node_area, suitable_area);
   }
   file.close();
 }
@@ -379,11 +392,11 @@ void Graph::compute_maximum_weight_sum( void )
  * \param    void
  * \return   \e void
  */
-void Graph::normalize_jump_probability( void )
+void Graph::normalize_jump_probability_by_weight_sum( void )
 {
   for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
   {
-    it->second->set_jump_probability(it->second->get_weights_sum() / _maximum_weights_sum);
+    it->second->set_jump_probability(it->second->get_weights_sum()/_maximum_weights_sum);
   }
 }
 
@@ -400,17 +413,15 @@ void Graph::reset_states( void )
     it->second->reset_state();
   }
   _score = 0.0;
-  _it    = _map.begin();
 }
 
 /**
- * \brief    Initialize the introduction node
+ * \brief    Set the introduction node
  * \details  --
  * \param    void
  * \return   \e void
  */
-void Graph::initialize_introduction_node( void )
+void Graph::set_introduction_node( void )
 {
-  int introduction_node = get_introduction_node_from_coordinates();
-  _map[introduction_node]->set_as_introduction_node();
+  _map[_introduction_node]->set_as_introduction_node();
 }

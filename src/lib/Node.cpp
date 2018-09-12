@@ -42,36 +42,40 @@
  */
 Node::Node( Prng* prng, int identifier, int nb_repetitions )
 {
-  /*------------------------------------------------------------------ Simulation variables */
+  /*--------------------------------------- SIMULATION VARIABLES */
   
-  _prng                    = prng;
-  _identifier              = identifier;
-  _nb_repetitions          = nb_repetitions;
-  _tagged                  = false;
-  _current_state           = new int[_nb_repetitions];
-  _next_state              = new int[_nb_repetitions];
-  _probability_of_presence = 0.0;
-  _nb_introductions        = new double[_nb_repetitions];
-  _mean_nb_introductions   = 0.0;
+  _prng                   = prng;
+  _identifier             = identifier;
+  _nb_repetitions         = nb_repetitions;
+  _tagged                 = false;
+  _current_state          = new int[_nb_repetitions];
+  _next_state             = new int[_nb_repetitions];
+  _y_sim                  = 0.0;
+  _f_sim                  = 0.0;
+  _nb_introductions       = new double[_nb_repetitions];
+  _total_nb_introductions = 0.0;
+  _mean_nb_introductions  = 0.0;
+  _var_nb_introductions   = 0.0;
   
-  /*------------------------------------------------------------------ Graph structure */
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   _weights.clear();
   _neighbors.clear();
   _weights_sum      = 0.0;
   _jump_probability = 0.0;
   
-  /*------------------------------------------------------------------ Map data */
+  /*--------------------------------------- MAP DATA */
   
-  _x_coord   = 0;
-  _y_coord   = 0;
-  _node_area = 0.0;
+  _x_coord       = 0;
+  _y_coord       = 0;
+  _node_area     = 0.0;
+  _suitable_area = 0.0;
   
-  /*------------------------------------------------------------------ Sample data */
+  /*--------------------------------------- SAMPLING DATA */
   
-  _y = 0.0;
-  _n = 0.0;
-  _f = 0.0;
+  _y_obs = 0.0;
+  _n_obs = 0.0;
+  _f_obs = 0.0;
 }
 
 /*----------------------------
@@ -86,7 +90,7 @@ Node::Node( Prng* prng, int identifier, int nb_repetitions )
  */
 Node::~Node( void )
 {
-  /*------------------------------------------------------------------ Simulation variables */
+  /*--------------------------------------- SIMULATION VARIABLES */
   
   delete[] _current_state;
   _current_state = NULL;
@@ -95,7 +99,7 @@ Node::~Node( void )
   delete[] _nb_introductions;
   _nb_introductions = NULL;
   
-  /*------------------------------------------------------------------ Graph structure */
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   _weights.clear();
   _neighbors.clear();
@@ -113,33 +117,32 @@ Node::~Node( void )
  */
 Node* Node::jump( void )
 {
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 1) Compute the weight sum                       */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
-  double total = 0.0;
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 1) Compute the weight sum (for a self-avoiding random walk) */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  double weight_sum = 0.0;
   for (size_t i = 0; i < _neighbors.size(); i++)
   {
     if (!(_neighbors[i] != NULL && _neighbors[i]->isTagged()))
     {
-      total += _weights[i];
+      weight_sum += _weights[i];
     }
   }
   
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 2) If there is no way to escape the node, break */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 2) If there is no way to escape the node, break             */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   
-  if (total == 0.0)
+  if (weight_sum == 0.0)
   {
     return this;
   }
   
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 3) Or draw the next node                        */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 3) Or draw the next node with roulette wheel                */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   
-  double draw = _prng->uniform()*total;
+  double draw = _prng->uniform()*weight_sum;
   double sum  = 0.0;
   for (size_t i = 0; i < _neighbors.size(); i++)
   {
@@ -158,20 +161,23 @@ Node* Node::jump( void )
 
 /**
  * \brief    Update node state
- * \details  --
+ * \details  This method also computes the next simulated probability of presence
  * \param    void
  * \return   \e void
  */
 void Node::update_state( void )
 {
-  _probability_of_presence = 0.0;
+  /* memcpy not used because _probability_of_presence
+     must be computed */
+  _y_sim = 0.0;
+  _f_sim = 0.0;
   for (int rep = 0; rep < _nb_repetitions; rep++)
   {
-    _current_state[rep]       = _next_state[rep];
-    _probability_of_presence += _current_state[rep];
-    _next_state[rep]          = 0;
+    _current_state[rep]  = _next_state[rep];
+    _y_sim              += (double)_next_state[rep];
+    _f_sim              += (double)_next_state[rep];
   }
-  _probability_of_presence /= (double)_nb_repetitions;
+  _f_sim /= (double)_nb_repetitions;
 }
 
 /**
@@ -188,21 +194,11 @@ void Node::reset_state( void )
     _next_state[rep]       = 0;
     _nb_introductions[rep] = 0.0;
   }
-  _probability_of_presence = 0.0;
+  _y_sim                   = 0.0;
+  _f_sim                   = 0.0;
+  _total_nb_introductions  = 0.0;
   _mean_nb_introductions   = 0.0;
-}
-
-/**
- * \brief    Add an introduction at position 'rep'
- * \details  --
- * \param    int rep
- * \return   \e void
- */
-void Node::add_introduction( int rep )
-{
-  assert(rep >= 0);
-  assert(rep < _nb_repetitions);
-  _nb_introductions[rep]++;
+  _var_nb_introductions    = 0.0;
 }
 
 /**
@@ -211,14 +207,18 @@ void Node::add_introduction( int rep )
  * \param    void
  * \return   \e void
  */
-double Node::compute_mean_nb_introductions( void )
+void Node::compute_mean_var_nb_introductions( void )
 {
   _mean_nb_introductions = 0.0;
+  _var_nb_introductions  = 0.0;
   for (int rep = 0; rep < _nb_repetitions; rep++)
   {
     _mean_nb_introductions += _nb_introductions[rep];
+    _var_nb_introductions  += _nb_introductions[rep]*_nb_introductions[rep];
   }
-  return _mean_nb_introductions/(double)_nb_repetitions;
+  _mean_nb_introductions /= (double)_nb_repetitions;
+  _var_nb_introductions  /= (double)_nb_repetitions;
+  _var_nb_introductions  -= _mean_nb_introductions*_mean_nb_introductions;
 }
 
 /*----------------------------

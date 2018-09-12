@@ -58,69 +58,69 @@ public:
    * GETTERS
    *----------------------------*/
   
-  /*------------------------------------------------------------------ Simulation variables */
+  /*--------------------------------------- SIMULATION VARIABLES */
   
   inline int    get_identifier( void ) const;
   inline bool   isTagged( void ) const;
-  inline int    get_current_state( int rep );
-  inline int    get_next_state( int rep );
-  inline double get_probability_of_presence( void ) const;
+  inline bool   isOccupied( int rep ) const;
+  inline double get_y_sim( void ) const;
+  inline double get_f_sim( void ) const;
+  inline double get_total_nb_introductions( void ) const;
+  inline double get_mean_nb_introductions( void ) const;
+  inline double get_var_nb_introductions( void ) const;
   
-  /*------------------------------------------------------------------ Graph structure */
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   inline std::vector<double>* get_weights( void );
   inline std::vector<Node*>*  get_neighbors( void );
   inline double               get_weights_sum( void ) const;
   inline double               get_jump_probability( void ) const;
   
-  /*------------------------------------------------------------------ Map data */
+  /*--------------------------------------- MAP DATA */
   
   inline double get_x_coord( void ) const;
   inline double get_y_coord( void ) const;
   inline double get_node_area( void ) const;
+  inline double get_suitable_area( void ) const;
   
-  /*------------------------------------------------------------------ Sample data */
+  /*--------------------------------------- SAMPLING DATA */
   
-  inline double get_y( void ) const;
-  inline double get_n( void ) const;
-  inline double get_f( void ) const;
+  inline double get_y_obs( void ) const;
+  inline double get_n_obs( void ) const;
+  inline double get_f_obs( void ) const;
   
   /*----------------------------
    * SETTERS
    *----------------------------*/
   Node& operator=(const Node&) = delete;
   
-  /*------------------------------------------------------------------ Simulation variables */
+  /*--------------------------------------- SIMULATION VARIABLES */
   
   inline void tag( void );
   inline void untag( void );
-  inline void set_current_state( int rep, int state );
-  inline void set_next_state( int rep, int state );
+  inline void add_introduction( int rep );
   inline void set_as_introduction_node( void );
   
-  /*------------------------------------------------------------------ Graph structure */
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   inline void add_neighbor( double weight, Node* node );
   inline void set_jump_probability( double jump_probability );
   
-  /*------------------------------------------------------------------ Map data */
+  /*--------------------------------------- MAP DATA */
   
-  inline void set_x_coord( double x_coord );
-  inline void set_y_coord( double y_coord );
-  inline void set_map_data( double x_coord, double y_coord, double node_area );
+  inline void set_map_data( double x_coord, double y_coord, double node_area, double suitable_area );
   
-  /*------------------------------------------------------------------ Sample data */
+  /*--------------------------------------- SAMPLING DATA */
   
-  inline void set_sample_data( double y, double n );
+  inline void set_sample_data( double y_obs, double n_obs );
   
   /*----------------------------
    * PUBLIC METHODS
    *----------------------------*/
-  Node*  jump( void );
-  void   update_state( void );
-  void   reset_state( void );
-  void   add_introduction( int rep );
-  double compute_mean_nb_introductions( void );
+  Node* jump( void );
+  void  update_state( void );
+  void  reset_state( void );
+  void  compute_mean_var_nb_introductions( void );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -136,37 +136,40 @@ protected:
    * PROTECTED ATTRIBUTES
    *----------------------------*/
   
-  /*------------------------------------------------------------------ Simulation variables */
+  /*--------------------------------------- SIMULATION VARIABLES */
   
-  Prng*   _prng;                    /*!< Pseudorandom numbers generator    */
-  int     _identifier;              /*!< Node identifier                   */
-  int     _nb_repetitions;          /*!< Number of repetitions             */
-  bool    _tagged;                  /*!< Node tag state                    */
-  int*    _current_state;           /*!< Hexagon current state             */
-  int*    _next_state;              /*!< Hexagon next state                */
-  double  _probability_of_presence; /*!< Simulated probability of presence */
-  double* _nb_introductions;        /*!< Number of introductions           */
-  double  _mean_nb_introductions;   /*!< Mean number of introductions      */
+  Prng*   _prng;                   /*!< Pseudorandom numbers generator          */
+  int     _identifier;             /*!< Node identifier                         */
+  int     _nb_repetitions;         /*!< Number of repetitions                   */
+  bool    _tagged;                 /*!< Node tag state                          */
+  int*    _current_state;          /*!< Hexagon current state                   */
+  int*    _next_state;             /*!< Hexagon next state                      */
+  double  _y_sim;                  /*!< Number of occupied cells                */
+  double  _f_sim;                  /*!< Simulated probability of presence       */
+  double* _nb_introductions;       /*!< Number of introductions                 */
+  double  _total_nb_introductions; /*!< Total number of introductions           */
+  double  _mean_nb_introductions;  /*!< Mean number of introductions            */
+  double  _var_nb_introductions;   /*!< Variance of the number of introductions */
   
-  /*------------------------------------------------------------------ Network data */
-  
+  /*--------------------------------------- GRAPH STRUCTURE */
   
   std::vector<double> _weights;          /*!< Vector of weights   */
   std::vector<Node*>  _neighbors;        /*!< Vector of neighbors */
   double              _weights_sum;      /*!< Sum of weights      */
   double              _jump_probability; /*!< Jump probability    */
   
-  /*------------------------------------------------------------------ Map data */
+  /*--------------------------------------- MAP DATA */
   
-  double _x_coord;   /*!< Node x coordinate */
-  double _y_coord;   /*!< Node y coordinate */
-  double _node_area; /*!< Node area         */
+  double _x_coord;       /*!< Node x coordinate */
+  double _y_coord;       /*!< Node y coordinate */
+  double _node_area;     /*!< Node area         */
+  double _suitable_area; /*!< Suitable area     */
   
-  /*------------------------------------------------------------------ Sample data */
+  /*--------------------------------------- SAMPLING DATA */
   
-  double _y; /*!< Number of positive observations */
-  double _n; /*!< Total number of observations    */
-  double _f; /*!< Observed frequency              */
+  double _y_obs; /*!< Number of positive observations */
+  double _n_obs; /*!< Total number of observations    */
+  double _f_obs; /*!< Observed frequency              */
 };
 
 
@@ -174,7 +177,7 @@ protected:
  * GETTERS
  *----------------------------*/
 
-/*------------------------------------------------------------------ Simulation variables */
+/*--------------------------------------- SIMULATION VARIABLES */
 
 /**
  * \brief    Get the node identifier
@@ -204,24 +207,22 @@ inline bool Node::isTagged( void ) const
  * \param    int rep
  * \return   \e int
  */
-inline int Node::get_current_state( int rep )
+inline bool Node::isOccupied( int rep ) const
 {
   assert(rep >= 0);
   assert(rep < _nb_repetitions);
-  return _current_state[rep];
+  return (bool)_current_state[rep];
 }
 
 /**
- * \brief    Get next state for repetition rep
+ * \brief    Get the number of oocupied cells
  * \details  --
- * \param    int rep
- * \return   \e int
+ * \param    void
+ * \return   \e double
  */
-inline int Node::get_next_state( int rep )
+inline double Node::get_y_sim( void ) const
 {
-  assert(rep >= 0);
-  assert(rep < _nb_repetitions);
-  return _next_state[rep];
+  return _y_sim;
 }
 
 /**
@@ -230,12 +231,45 @@ inline int Node::get_next_state( int rep )
  * \param    void
  * \return   \e double
  */
-inline double Node::get_probability_of_presence( void ) const
+inline double Node::get_f_sim( void ) const
 {
-  return _probability_of_presence;
+  return _f_sim;
 }
 
-/*------------------------------------------------------------------ Graph structure */
+/**
+ * \brief    Get the total number of introductions through all the repetitions
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_total_nb_introductions( void ) const
+{
+  return _total_nb_introductions;
+}
+
+/**
+ * \brief    Get the mean number of introductions
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_mean_nb_introductions( void ) const
+{
+  return _mean_nb_introductions;
+}
+
+/**
+ * \brief    Get the variance of the number of introductions
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_var_nb_introductions( void ) const
+{
+  return _var_nb_introductions;
+}
+
+/*--------------------------------------- GRAPH STRUCTURE */
 
 /**
  * \brief    Get the list of weights
@@ -281,7 +315,7 @@ inline double Node::get_jump_probability( void ) const
   return _jump_probability;
 }
 
-/*------------------------------------------------------------------ Map data */
+/*--------------------------------------- MAP DATA */
 
 /**
  * \brief    Get the x coordinate of the node
@@ -316,7 +350,18 @@ inline double Node::get_node_area( void ) const
   return _node_area;
 }
 
-/*------------------------------------------------------------------ Sample data */
+/**
+ * \brief    Get the suitable area of the node
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_suitable_area( void ) const
+{
+  return _suitable_area;
+}
+
+/*--------------------------------------- SAMPLING DATA */
 
 /**
  * \brief    Get observed number of positive samples
@@ -324,9 +369,9 @@ inline double Node::get_node_area( void ) const
  * \param    void
  * \return   \e double
  */
-inline double Node::get_y( void ) const
+inline double Node::get_y_obs( void ) const
 {
-  return _y;
+  return _y_obs;
 }
 
 /**
@@ -335,9 +380,9 @@ inline double Node::get_y( void ) const
  * \param    void
  * \return   \e double
  */
-inline double Node::get_n( void ) const
+inline double Node::get_n_obs( void ) const
 {
-  return _n;
+  return _n_obs;
 }
 
 /**
@@ -346,16 +391,16 @@ inline double Node::get_n( void ) const
  * \param    void
  * \return   \e double
  */
-inline double Node::get_f( void ) const
+inline double Node::get_f_obs( void ) const
 {
-  return _f;
+  return _f_obs;
 }
 
 /*----------------------------
  * SETTERS
  *----------------------------*/
 
-/*------------------------------------------------------------------ Simulation variables */
+/*--------------------------------------- SIMULATION VARIABLES */
 
 /**
  * \brief    Tag the node
@@ -380,34 +425,25 @@ inline void Node::untag( void )
 }
 
 /**
- * \brief    Set node current state (occupied or not) for repetition rep
+ * \brief    Add an introduction at repetition rep
  * \details  --
  * \param    int rep
- * \param    int state
  * \return   \e void
  */
-inline void Node::set_current_state( int rep, int state )
+inline void Node::add_introduction( int rep )
 {
   assert(rep >= 0);
   assert(rep < _nb_repetitions);
-  assert(state == 0 || state == 1);
-  _current_state[rep] = state;
-}
-
-/**
- * \brief    Set node next state (occupied or not) for repetition rep
- * \details  --
- * \param    int rep
- * \param    int state
- * \return   \e void
- */
-inline void Node::set_next_state( int rep, int state )
-{
-  assert(rep >= 0);
-  assert(rep < _nb_repetitions);
-  assert(state == 0 || state == 1);
-  _next_state[rep]        = state;
-  _nb_introductions[rep] += 1.0;
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 1) Set state at time t+1                 */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  _next_state[rep] = 1;
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 2) Increment the number of introductions */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  _nb_introductions[rep]  += 1.0;
+  _total_nb_introductions += 1.0;
 }
 
 /**
@@ -424,10 +460,11 @@ inline void Node::set_as_introduction_node( void )
     _next_state[rep]        = 1;
     _nb_introductions[rep] += 1.0;
   }
-  _probability_of_presence = 1.0;
+  _y_sim = (double)_nb_repetitions;
+  _f_sim = 1.0;
 }
 
-/*------------------------------------------------------------------ Graph structure */
+/*--------------------------------------- GRAPH STRUCTURE */
 
 /**
  * \brief    Add a neighbor to the neighbors list
@@ -457,29 +494,7 @@ inline void Node::set_jump_probability( double jump_probability )
   _jump_probability = jump_probability;
 }
 
-/*------------------------------------------------------------------ Map data */
-
-/**
- * \brief    Set x coordinate
- * \details  --
- * \param    double x_coord
- * \return   \e void
- */
-inline void Node::set_x_coord( double x_coord )
-{
-  _x_coord = x_coord;
-}
-
-/**
- * \brief    Set y coordinate
- * \details  --
- * \param    double y_coord
- * \return   \e void
- */
-inline void Node::set_y_coord( double y_coord )
-{
-  _y_coord = y_coord;
-}
+/*--------------------------------------- MAP DATA */
 
 /**
  * \brief    Set the map data
@@ -487,36 +502,40 @@ inline void Node::set_y_coord( double y_coord )
  * \param    double x_coord
  * \param    double y_coord
  * \param    double node_area
+ * \param    double suitable_area
  * \return   \e void
  */
-inline void Node::set_map_data( double x_coord, double y_coord, double node_area )
+inline void Node::set_map_data( double x_coord, double y_coord, double node_area, double suitable_area )
 {
   assert(node_area > 0.0);
-  _x_coord   = x_coord;
-  _y_coord   = y_coord;
-  _node_area = node_area;
+  assert(suitable_area > 0.0);
+  assert(suitable_area <= node_area);
+  _x_coord       = x_coord;
+  _y_coord       = y_coord;
+  _node_area     = node_area;
+  _suitable_area = suitable_area;
 }
 
-/*------------------------------------------------------------------ Sample data */
+/*--------------------------------------- SAMPLING DATA */
 
 /**
  * \brief    Set the sampling data
  * \details  --
- * \param    double y
- * \param    double n
+ * \param    double y_obs
+ * \param    double n_obs
  * \return   \e void
  */
-inline void Node::set_sample_data( double y, double n )
+inline void Node::set_sample_data( double y_obs, double n_obs )
 {
-  assert(y >= 0.0);
-  assert(n >= 0.0);
-  assert(y <= n);
-  _y = y;
-  _n = n;
-  _f = 0.0;
-  if (_n > 0.0)
+  assert(y_obs >= 0.0);
+  assert(n_obs >= 0.0);
+  assert(y_obs <= n_obs);
+  _y_obs = y_obs;
+  _n_obs = n_obs;
+  _f_obs = 0.0;
+  if (_n_obs > 0.0)
   {
-    _f = _y/_n;
+    _f_obs = _y_obs/_n_obs;
   }
 }
 

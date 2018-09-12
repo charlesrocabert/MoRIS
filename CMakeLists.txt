@@ -40,7 +40,7 @@ set(PACKAGE "\"MoRIS\"")
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 6)
-set(VERSION_PATCH 0)
+set(VERSION_PATCH 1)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -74,8 +74,8 @@ set(EXECUTABLE_OUTPUT_PATH ../build/bin)
 set(RUN_EXECUTABLE MoRIS_run)
 add_executable(${RUN_EXECUTABLE} src/MoRIS_run.cpp)
 
-set(GENERATE_ARTIFICIAL_DATA_EXECUTABLE MoRIS_artificial_data)
-add_executable(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} src/MoRIS_artificial_data.cpp)
+#set(GENERATE_ARTIFICIAL_DATA_EXECUTABLE MoRIS_artificial_data)
+#add_executable(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} src/MoRIS_artificial_data.cpp)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -85,7 +85,7 @@ find_package(GSL REQUIRED)
 if(GSL_FOUND)
   include_directories(${GSL_INCLUDE_DIR})
   target_link_libraries(${RUN_EXECUTABLE} ${GSL_LIBRARIES})
-  target_link_libraries(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} ${GSL_LIBRARIES})
+  #target_link_libraries(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} ${GSL_LIBRARIES})
 endif(GSL_FOUND)
 
 
@@ -94,15 +94,15 @@ endif(GSL_FOUND)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 add_library(
   MoRIS
+  src/lib/Enums.h
+  src/lib/Prng.cpp
+  src/lib/Prng.h
+  src/lib/Parameters.cpp
+  src/lib/Parameters.h
   src/lib/Node.cpp
   src/lib/Node.h
   src/lib/Graph.cpp
   src/lib/Graph.h
-  src/lib/Enums.h
-  src/lib/Parameters.cpp
-  src/lib/Parameters.h
-  src/lib/Prng.cpp
-  src/lib/Prng.h
   src/lib/Simulation.cpp
   src/lib/Simulation.h
 )
@@ -110,7 +110,7 @@ add_library(
 
 target_link_libraries(MoRIS gsl gslcblas)
 target_link_libraries(${RUN_EXECUTABLE} MoRIS)
-target_link_libraries(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} MoRIS)
+#target_link_libraries(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} MoRIS)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

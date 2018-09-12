@@ -43,6 +43,7 @@
 
 void printUsage( void );
 void readArgs( int argc, char const** argv, Parameters* parameters );
+void create_output_folder( void );
 
 
 /**
@@ -61,7 +62,8 @@ int main(int argc, char const** argv)
   readArgs(argc, argv, parameters);
   if (parameters->saveOutputs())
   {
-    parameters->write_parameters("params_out.txt");
+    create_output_folder();
+    parameters->write_parameters("output/parameters.txt");
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -83,7 +85,7 @@ int main(int argc, char const** argv)
   simulation->compute_score();
   if (parameters->saveOutputs())
   {
-    simulation->write_state("final_state.txt");
+    simulation->write_state("output/final_state.txt");
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -533,5 +535,17 @@ void printUsage( void )
   std::cout << "  -save-outputs, --save-outputs\n";
   std::cout << "        Save various simulation outputs (final state, lineage tree, ...)\n";
   std::cout << "\n";
+}
+
+/**
+ * \brief    Create outputs folder
+ * \details  --
+ * \param    void
+ * \return   \e void
+ */
+void create_output_folder( void )
+{
+  system("rm -rf output");
+  system("mkdir output");
 }
 

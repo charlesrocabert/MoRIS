@@ -62,7 +62,6 @@ public:
   /*----------------------------
    * GETTERS
    *----------------------------*/
-  inline Graph* get_graph( void );
   inline int    get_iteration( void ) const;
   inline double get_score( void ) const;
   
@@ -87,6 +86,8 @@ protected:
   /*----------------------------
    * PROTECTED METHODS
    *----------------------------*/
+  int    draw_number_of_jumps( double jump_probability );
+  double draw_jump_size( void );
   double compute_euclidean_distance( Node* node1, Node* node2 );
   
   /*----------------------------
@@ -103,17 +104,6 @@ protected:
 /*----------------------------
  * GETTERS
  *----------------------------*/
-
-/**
- * \brief    Get the graph
- * \details  --
- * \param    void
- * \return   \e Graph*
- */
-inline Graph* Simulation::get_graph( void )
-{
-  return _graph;
-}
 
 /**
  * \brief    Get current iteration

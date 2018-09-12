@@ -1,0 +1,16 @@
+setwd("/Users/charlesrocabert/git/MoRIS-development/example_lasius_neglectus_squares")#
+#
+d = read.table("output/final_state.txt", h=T, sep=" ")
+setwd("/Users/charlesrocabert/git/MoRIS-development/example_lasius_neglectus_squares")#
+#
+d = read.table("output/final_state.txt", h=T, sep=" ")#
+#
+d = d[d$f_sim>0,]
+plot(d$xcoord, d$yccord)
+setwd("/Users/charlesrocabert/git/MoRIS-development/example_lasius_neglectus_squares")#
+#
+d = read.table("output/final_state.txt", h=T, sep=" ")#
+#
+d = d[d$f_sim>0,]#
+#
+plot(d$xcoord, d$yccord)

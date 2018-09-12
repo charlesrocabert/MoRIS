@@ -133,12 +133,6 @@
 		B669106221459B6800274C93 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
 		B669106321459B6800274C93 /* sample_OK.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample_OK.csv; sourceTree = "<group>"; };
 		B669106421459B6800274C93 /* sample_OK.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_OK.xlsx; sourceTree = "<group>"; };
-		B669106621459B6800274C93 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
-		B669106721459B6800274C93 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B669106821459B6800274C93 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
-		B669106921459B6800274C93 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
-		B669106A21459B6800274C93 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
-		B669106B21459B6800274C93 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
 		B669106D21459B6800274C93 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../../LICENSE; sourceTree = "<group>"; };
 		B669106E21459B6800274C93 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
 		B669107121459B6800274C93 /* Enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
@@ -159,6 +153,33 @@
 		B669108121459B6800274C93 /* MoRIS_run.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MoRIS_run.cpp; sourceTree = "<group>"; };
 		B669108521459B6800274C93 /* MoRIS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MoRIS.xcodeproj; sourceTree = "<group>"; };
 		B669108C21459BB100274C93 /* MoRIS_run */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MoRIS_run; sourceTree = BUILT_PRODUCTS_DIR; };
+		B696BE782149B5B500380CA8 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		B696BE792149B5B500380CA8 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
+		B696BE7A2149B5B500380CA8 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
+		B696BE7B2149B5B500380CA8 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
+		B696BE7D2149B5B500380CA8 /* final_state.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = final_state.txt; sourceTree = "<group>"; };
+		B696BE7E2149B5B500380CA8 /* lineage_tree.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = lineage_tree.txt; sourceTree = "<group>"; };
+		B696BE7F2149B5B500380CA8 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
+		B696BE812149B5B500380CA8 /* convert.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert.py; sourceTree = "<group>"; };
+		B696BE822149B5B500380CA8 /* map.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.csv; sourceTree = "<group>"; };
+		B696BE832149B5B500380CA8 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		B696BE842149B5B500380CA8 /* map.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.xlsx; sourceTree = "<group>"; };
+		B696BE852149B5B500380CA8 /* network.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.csv; sourceTree = "<group>"; };
+		B696BE862149B5B500380CA8 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
+		B696BE872149B5B500380CA8 /* network.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = network.xlsx; sourceTree = "<group>"; };
+		B696BE882149B5B500380CA8 /* sample.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.csv; sourceTree = "<group>"; };
+		B696BE892149B5B500380CA8 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
+		B696BE8A2149B5B500380CA8 /* sample.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.xlsx; sourceTree = "<group>"; };
+		B6AC48C82148669500F783C5 /* map.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = map.R; sourceTree = "<group>"; };
+		B6AC48C92148669500F783C5 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		B6AC48CA2148669500F783C5 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
+		B6AC48CB2148669500F783C5 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
+		B6AC48CC2148669500F783C5 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
+		B6AC48CD2148669500F783C5 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
+		B6AC48CE2148669500F783C5 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
+		B6AC48D1214866B500F783C5 /* map.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = map.R; sourceTree = "<group>"; };
+		B6AC48D5214866B500F783C5 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
+		B6AC48D6214866B500F783C5 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +227,8 @@
 				B669104D21459B6800274C93 /* docs */,
 				B6690FFB21459B6800274C93 /* cmake */,
 				B6690FF721459B6800274C93 /* build */,
-				B669106521459B6800274C93 /* example_lasius_neglectus */,
+				B6AC48C62148669500F783C5 /* example_lasius_neglectus_hexagons */,
+				B6AC48CF214866B500F783C5 /* example_lasius_neglectus_squares */,
 				B669105021459B6800274C93 /* example_gipsy_moth */,
 				B669106F21459B6800274C93 /* src */,
 				B669108221459B6800274C93 /* xcode */,
@@ -477,20 +499,6 @@
 			path = "previous data";
 			sourceTree = "<group>";
 		};
-		B669106521459B6800274C93 /* example_lasius_neglectus */ = {
-			isa = PBXGroup;
-			children = (
-				B669106621459B6800274C93 /* map.txt */,
-				B669106721459B6800274C93 /* network.txt */,
-				B669106821459B6800274C93 /* parameters.txt */,
-				B669106921459B6800274C93 /* plot.R */,
-				B669106A21459B6800274C93 /* run.sh */,
-				B669106B21459B6800274C93 /* sample.txt */,
-			);
-			name = example_lasius_neglectus;
-			path = ../../../example_lasius_neglectus;
-			sourceTree = "<group>";
-		};
 		B669106F21459B6800274C93 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,6 +567,73 @@
 		B669108621459B6800274C93 /* Products */ = {
 			isa = PBXGroup;
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B696BE772149B5B500380CA8 /* input */ = {
+			isa = PBXGroup;
+			children = (
+				B696BE7A2149B5B500380CA8 /* parameters.txt */,
+				B696BE782149B5B500380CA8 /* map.txt */,
+				B696BE792149B5B500380CA8 /* network.txt */,
+				B696BE7B2149B5B500380CA8 /* sample.txt */,
+			);
+			path = input;
+			sourceTree = "<group>";
+		};
+		B696BE7C2149B5B500380CA8 /* output */ = {
+			isa = PBXGroup;
+			children = (
+				B696BE7D2149B5B500380CA8 /* final_state.txt */,
+				B696BE7E2149B5B500380CA8 /* lineage_tree.txt */,
+				B696BE7F2149B5B500380CA8 /* parameters.txt */,
+			);
+			path = output;
+			sourceTree = "<group>";
+		};
+		B696BE802149B5B500380CA8 /* xlsx */ = {
+			isa = PBXGroup;
+			children = (
+				B696BE812149B5B500380CA8 /* convert.py */,
+				B696BE822149B5B500380CA8 /* map.csv */,
+				B696BE832149B5B500380CA8 /* map.txt */,
+				B696BE842149B5B500380CA8 /* map.xlsx */,
+				B696BE852149B5B500380CA8 /* network.csv */,
+				B696BE862149B5B500380CA8 /* network.txt */,
+				B696BE872149B5B500380CA8 /* network.xlsx */,
+				B696BE882149B5B500380CA8 /* sample.csv */,
+				B696BE892149B5B500380CA8 /* sample.txt */,
+				B696BE8A2149B5B500380CA8 /* sample.xlsx */,
+			);
+			path = xlsx;
+			sourceTree = "<group>";
+		};
+		B6AC48C62148669500F783C5 /* example_lasius_neglectus_hexagons */ = {
+			isa = PBXGroup;
+			children = (
+				B6AC48C82148669500F783C5 /* map.R */,
+				B6AC48C92148669500F783C5 /* map.txt */,
+				B6AC48CA2148669500F783C5 /* network.txt */,
+				B6AC48CB2148669500F783C5 /* parameters.txt */,
+				B6AC48CC2148669500F783C5 /* plot.R */,
+				B6AC48CD2148669500F783C5 /* run.sh */,
+				B6AC48CE2148669500F783C5 /* sample.txt */,
+			);
+			name = example_lasius_neglectus_hexagons;
+			path = ../../../example_lasius_neglectus_hexagons;
+			sourceTree = "<group>";
+		};
+		B6AC48CF214866B500F783C5 /* example_lasius_neglectus_squares */ = {
+			isa = PBXGroup;
+			children = (
+				B696BE772149B5B500380CA8 /* input */,
+				B696BE7C2149B5B500380CA8 /* output */,
+				B696BE802149B5B500380CA8 /* xlsx */,
+				B6AC48D6214866B500F783C5 /* run.sh */,
+				B6AC48D5214866B500F783C5 /* plot.R */,
+				B6AC48D1214866B500F783C5 /* map.R */,
+			);
+			name = example_lasius_neglectus_squares;
+			path = ../../../example_lasius_neglectus_squares;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -821,6 +896,7 @@
 				B600E1A02145EE8A007F2221 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B6690FE721459B3D00274C93 /* Build configuration list for PBXProject "MoRIS" */ = {
 			isa = XCConfigurationList;

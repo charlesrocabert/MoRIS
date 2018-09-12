@@ -22,7 +22,7 @@
 // Seed the pseudorandom numbers generator
 ///////////////////////////////////////////////////////////////
 
-SEED  34089
+SEED  23451
 
 
 ///////////////////////////////////////////////////////////////
@@ -36,23 +36,23 @@ TYPE_OF_DATA  PRESENCE_ABSENCE
 // Set network, map and sample data files
 ///////////////////////////////////////////////////////////////
 
-NETWORK_FILE  network.txt
-MAP_FILE      map.txt
-SAMPLE_FILE   sample.txt
+NETWORK_FILE  input/network.txt
+MAP_FILE      input/map.txt
+SAMPLE_FILE   input/sample.txt
 
 
 ///////////////////////////////////////////////////////////////
 // Set the number of repetitions by simulation
 ///////////////////////////////////////////////////////////////
 
-REPETITIONS_BY_SIMULATION  1000
+REPETITIONS_BY_SIMULATION  100
 
 
 ///////////////////////////////////////////////////////////////
 // Set the number of iterations by simulation
 ///////////////////////////////////////////////////////////////
 
-NUMBER_OF_ITERATIONS  60
+NUMBER_OF_ITERATIONS  25
 
 
 ///////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ OPTIMIZE_COORDINATES              TRUE
 OPTIMIZE_LAMBDA                   TRUE
 OPTIMIZE_MU                       TRUE
 OPTIMIZE_SIGMA                    TRUE
-OPTIMIZE_ROAD_LINEAR_COMBINATION  FALSE
+OPTIMIZE_ROAD_LINEAR_COMBINATION  TRUE
 OPTIMIZE_MINIMAL_CONNECTIVITY     FALSE
 
 
@@ -71,30 +71,30 @@ OPTIMIZE_MINIMAL_CONNECTIVITY     FALSE
 // Set the simulation parameters
 ///////////////////////////////////////////////////////////////
 
-X_MIN       50000.0
-X_MAX       300000.0
+X_MIN       20000
+X_MAX       88000
 
-Y_MIN       50000.0
-Y_MAX       300000.0
+Y_MIN       14000
+Y_MAX       104000
 
 LAMBDA_MIN  0.0
 LAMBDA_MAX  3.0
 
 MU_MIN      0.0
-MU_MAX      50.0
+MU_MAX      20.0
 
 SIGMA_MIN   0.0
-SIGMA_MAX   50.0
+SIGMA_MAX   0.0
 
-JUMP_LAW    GAUSSIAN
+JUMP_LAW    DIRAC
 
 
 ///////////////////////////////////////////////////////////////
 // Set the linear combination of road categories (from 1 to 6)
 ///////////////////////////////////////////////////////////////
 
-ROAD_LINEAR_COMBINATION_MIN  1.0 0.0 0.0 0.0 0.0 0.0
-ROAD_LINEAR_COMBINATION_MAX  1.0 0.0 0.0 0.0 0.0 0.0
+ROAD_LINEAR_COMBINATION_MIN  0.0 0.0 0.0 0.0 0.0 0.0
+ROAD_LINEAR_COMBINATION_MAX  1.0 1.0 1.0 1.0 0.0 0.0
 
 
 ///////////////////////////////////////////////////////////////

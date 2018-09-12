@@ -78,6 +78,10 @@ public:
   inline double get_minimum_y_coordinate( void ) const;
   inline double get_maximum_x_coordinate( void ) const;
   inline double get_maximum_y_coordinate( void ) const;
+  
+  /*--------------------------------------- MINIMIZATION SCORE */
+  
+  inline double get_empty_score( void ) const;
   inline double get_score( void ) const;
   
   /*----------------------------
@@ -107,9 +111,9 @@ protected:
   void load_network( void );
   void load_sample( void );
   void compute_maximum_weight_sum( void );
-  void normalize_jump_probability( void );
+  void normalize_jump_probability_by_weight_sum( void );
   void reset_states( void );
-  void initialize_introduction_node( void );
+  void set_introduction_node( void );
   
   /*----------------------------
    * PROTECTED ATTRIBUTES
@@ -126,12 +130,17 @@ protected:
   
   /*--------------------------------------- GRAPH STATISTICS */
   
+  int    _introduction_node;   /*!< Introduction node            */
   double _maximum_weights_sum; /*!< Maximum weights sum in nodes */
   double _min_x_coord;         /*!< Minimum x coordinate         */
   double _min_y_coord;         /*!< Minimum y coordinate         */
   double _max_x_coord;         /*!< Maximum x coordinate         */
   double _max_y_coord;         /*!< Maximum y coordinate         */
-  double _score;               /*!< Optimization score           */
+  
+  /*--------------------------------------- MINIMIZATION SCORE */
+  
+  double _empty_score; /*!< Optimization score with empty map */
+  double _score;       /*!< Optimization score                */
 };
 
 
@@ -250,6 +259,19 @@ inline double Graph::get_maximum_x_coordinate( void ) const
 inline double Graph::get_maximum_y_coordinate( void ) const
 {
   return _max_y_coord;
+}
+
+/*--------------------------------------- MINIMIZATION SCORE */
+
+/**
+ * \brief    Get the optimization score with empty map
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Graph::get_empty_score( void ) const
+{
+  return _empty_score;
 }
 
 /**

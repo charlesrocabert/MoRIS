@@ -1,0 +1,22 @@
+../build/bin/MoRIS_run \
+-map input/map.txt \
+-network input/network.txt \
+-sample input/sample.txt \
+-typeofdata PRESENCE_ABSENCE \
+-seed 2980 \
+-rep 10000 \
+-iterations 25 \
+-xcoord 58323.8321858 \
+-ycoord 31945.7432484 \
+-lambda 1.86423969218 \
+-mu 16.8590378562 \
+-sigma 3.21161087249 \
+-law GAUSSIAN \
+-wroad1 0.702409350886 \
+-wroad2 0.540005590127 \
+-wroad3 0.203964664523 \
+-wroad4 0.0445034140736 \
+-wroad5 0.0 \
+-wroad6 0.0 \
+-min-connectivity 0.0 \
+-save-outputs

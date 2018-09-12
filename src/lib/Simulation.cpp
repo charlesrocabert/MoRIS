@@ -41,12 +41,21 @@
 Simulation::Simulation( Parameters* parameters )
 {
   assert(parameters != NULL);
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 1) Initialize the simulation  */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   _parameters = parameters;
   _graph      = new Graph(_parameters);
   _iteration  = 0;
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 2) Save lineage tree if asked */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   if (_parameters->saveOutputs())
   {
-    std::ofstream tree_file("lineage_tree.txt", std::ios::out | std::ios::trunc);
+    std::ofstream tree_file("output/lineage_tree.txt", std::ios::out | std::ios::trunc);
+    tree_file << "start_node end_node geodesic_distance euclidean_dist iteration\n";
     tree_file.close();
   }
 }
@@ -82,19 +91,15 @@ void Simulation::compute_next_iteration( void )
   std::ofstream tree_file;
   if (_parameters->saveOutputs())
   {
-    tree_file.open("lineage_tree.txt", std::ios::out | std::ios::app);
+    tree_file.open("output/lineage_tree.txt", std::ios::out | std::ios::app);
   }
+  std::vector<Node*> tagged_nodes;
+  tagged_nodes.reserve(sizeof(Node*)*_graph->get_number_of_nodes());
   
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 1) For each node of the graph */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
-  Node*                 start_node = _graph->get_first();
-  Prng*                 prng       = _parameters->get_prng();
-  double                lambda     = _parameters->get_lambda();
-  double                mu         = _parameters->get_mu();
-  double                sigma      = _parameters->get_sigma();
-  jump_distribution_law jump_law   = _parameters->get_jump_law();
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 1) For each node of the graph and each repetition */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  Node* start_node = _graph->get_first();
   while (start_node != NULL)
   {
     /*-----------------------------------------------*/
@@ -102,67 +107,48 @@ void Simulation::compute_next_iteration( void )
     /*-----------------------------------------------*/
     for (int rep = 0; rep < _parameters->get_repetitions_by_simulation(); rep++)
     {
-      /* If the cell is occupied */
-      if (start_node->get_current_state(rep) == 1)
+      if (start_node->isOccupied(rep))
       {
-        start_node->set_next_state(rep, 1);
-        
-        /* A) Draw the number of jumps to accomplish */
-        int number_of_jumps = prng->poisson(lambda*start_node->get_jump_probability());
-        
-        /* B) Compute each jump event ---------------*/
+        int number_of_jumps = draw_number_of_jumps(start_node->get_jump_probability());
         for (int jump = 0; jump < number_of_jumps; jump++)
         {
-          std::vector<Node*> tagged_nodes;
+          
           Node*  current_node     = start_node;
           int    current_id       = current_node->get_identifier();
-          double distance         = 0.0;
+          double distance         = draw_jump_size();
           double current_distance = 0.0;
-          if (jump_law == DIRAC)
-          {
-            distance = mu;
-          }
-          else if (jump_law == GAUSSIAN)
-          {
-            distance = prng->gaussian(mu, sigma);
-          }
-          else if (jump_law == LOGNORMAL)
-          {
-            distance = pow(10.0, prng->gaussian(log10(mu), sigma));
-          }
-          /* While distance is lower than drawn distance, jump and tag explored node */
           while (current_distance < distance)
           {
             current_node->tag();
             tagged_nodes.push_back(current_node);
             current_node = current_node->jump();
-            /* If current node is out of the map, stop walking */
+            /*** If the current node is out of the map, stop walking ***/
             if (current_node == NULL)
             {
               break;
             }
-            /* If current node itself, stop walking */
+            /*** If the current node is itself, stop walking ***/
             if (current_node->get_identifier() == current_id)
             {
               break;
             }
+            /*** Else increment the distance ***/
             current_distance += 1.0;
           }
-          /* If current node is inside the map, set it occupied */
           if (current_node != NULL)
           {
-            current_node->set_next_state(rep, 1);
+            current_node->add_introduction(rep);
             if (_parameters->saveOutputs())
             {
               double euclidean_dist = compute_euclidean_distance(start_node, current_node);
               tree_file << start_node->get_identifier() << " " << current_node->get_identifier() << " " << distance << " " << euclidean_dist << " " << _iteration << "\n";
             }
           }
-          /* Untag visited node during this random walk */
           for (size_t i = 0; i < tagged_nodes.size(); i++)
           {
             tagged_nodes[i]->untag();
           }
+          tagged_nodes.clear();
         }
       }
     }
@@ -177,10 +163,9 @@ void Simulation::compute_next_iteration( void )
     tree_file.close();
   }
   
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 2) Update all the cell states */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 2) Update all the cell states                     */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   _graph->update_state();
   _iteration++;
 }
@@ -210,6 +195,49 @@ void Simulation::write_state( std::string filename )
 /*----------------------------
  * PROTECTED METHODS
  *----------------------------*/
+
+/**
+ * \brief    Draw the number of jumps
+ * \details  --
+ * \param    double jump_probability
+ * \return   \e int
+ */
+int Simulation::draw_number_of_jumps( double jump_probability )
+{
+  assert(jump_probability >= 0.0);
+  Prng*  prng     = _parameters->get_prng();
+  double lambda   = _parameters->get_lambda();
+  int    nb_jumps = prng->poisson(lambda*jump_probability);
+  return nb_jumps;
+}
+
+/**
+ * \brief    Draw the jump size
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+double Simulation::draw_jump_size( void )
+{
+  Prng*                 prng     = _parameters->get_prng();
+  double                mu       = _parameters->get_mu();
+  double                sigma    = _parameters->get_sigma();
+  jump_distribution_law jump_law = _parameters->get_jump_law();
+  double                distance = 0.0;
+  if (jump_law == DIRAC)
+  {
+    distance = mu;
+  }
+  else if (jump_law == GAUSSIAN)
+  {
+    distance = prng->gaussian(mu, sigma);
+  }
+  else if (jump_law == LOGNORMAL)
+  {
+    distance = pow(10.0, prng->gaussian(log10(mu), sigma));
+  }
+  return distance;
+}
 
 /**
  * \brief    Compute the euclidean distance between two nodes

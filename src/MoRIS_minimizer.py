@@ -27,10 +27,10 @@ import math
 import subprocess
 import numpy as np
 
-DEFAULT_PARAMETERS_FILE  = "parameters.txt"
-DEFAULT_MAP_FILENAME     = "map.txt"
-DEFAULT_NETWORK_FILENAME = "network.txt"
-DEFAULT_SAMPLE_FILENAME  = "sample.txt"
+DEFAULT_PARAMETERS_FILE  = "input/parameters.txt"
+DEFAULT_MAP_FILENAME     = "input/map.txt"
+DEFAULT_NETWORK_FILENAME = "input/network.txt"
+DEFAULT_SAMPLE_FILENAME  = "input/sample.txt"
 DEFAULT_RUN_PATH         = "../build/bin/MoRIS_run"
 DEFAULT_REPETITIONS      = 100
 TIME_THRESHOLD           = 180
@@ -549,7 +549,6 @@ class SimulationManager:
 			str(self.current_road_linear_combination[5])+" "+
 			str(self.current_minimal_connectivity)+" "+
 			str(self.current_score)+"\n")
-		os.system("Rscript plot.R > /dev/null &")
 		return self.current_score
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
