@@ -66,6 +66,7 @@ Parameters::Parameters( void )
   /*------------------------------------------------------------------ Simulation parameters */
   
   _introduction_coordinates = std::pair<double, double>(0.0, 0.0);
+  _introduction_probability = 0.0;
   _lambda                   = 0.0;
   _mu                       = 0.0;
   _sigma                    = 0.0;
@@ -120,6 +121,7 @@ Parameters::Parameters( const Parameters& parameters )
   /*------------------------------------------------------------------ Simulation parameters */
   
   _introduction_coordinates = std::pair<double, double>(parameters._introduction_coordinates.first, parameters._introduction_coordinates.second);
+  _introduction_probability = parameters._introduction_probability;
   _lambda                   = parameters._lambda;
   _mu                       = parameters._mu;
   _sigma                    = parameters._sigma;
@@ -185,6 +187,7 @@ void Parameters::write_parameters( std::string filename )
   file << "iterations" << " ";
   file << "x_introduction" << " ";
   file << "y_introduction" << " ";
+  file << "introduction_probability" << " ";
   file << "lambda" << " ";
   file << "mu" << " ";
   file << "sigma" << " ";
@@ -217,6 +220,7 @@ void Parameters::write_parameters( std::string filename )
   file << _number_of_iterations << " ";
   file << _introduction_coordinates.first << " ";
   file << _introduction_coordinates.second << " ";
+  file << _introduction_probability << " ";
   file << _lambda << " ";
   file << _mu << " ";
   file << _sigma << " ";

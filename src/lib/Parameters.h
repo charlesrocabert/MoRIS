@@ -87,6 +87,7 @@ public:
   /*------------------------------------------------------------------ Simulation parameters */
   
   inline std::pair<double, double>* get_introduction_coordinates( void );
+  inline double                     get_introduction_probability( void ) const;
   inline double                     get_lambda( void ) const;
   inline double                     get_mu( void ) const;
   inline double                     get_sigma( void ) const;
@@ -135,6 +136,7 @@ public:
   /*------------------------------------------------------------------ Simulation parameters */
   
   inline void set_introduction_coordinates( std::pair<double, double>* introduction_coordinates );
+  inline void set_introduction_probability( double introduction_probability );
   inline void set_lambda( double lambda );
   inline void set_mu( double mu );
   inline void set_sigma( double sigma );
@@ -197,6 +199,7 @@ protected:
   /*------------------------------------------------------------------ Simulation parameters */
   
   std::pair<double, double> _introduction_coordinates; /*!< Coordinates of the introduction node */
+  double                    _introduction_probability; /*!< Introduction probability             */
   double                    _lambda;                   /*!< Lambda                               */
   double                    _mu;                       /*!< Mu                                   */
   double                    _sigma;                    /*!< Sigma                                */
@@ -330,6 +333,17 @@ inline int Parameters::get_number_of_iterations( void ) const
 inline std::pair<double, double>* Parameters::get_introduction_coordinates( void )
 {
   return &_introduction_coordinates;
+}
+
+/**
+ * \brief    Get the introduction probability
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_introduction_probability( void ) const
+{
+  return _introduction_probability;
 }
 
 /**
@@ -532,6 +546,19 @@ inline void Parameters::set_introduction_coordinates( std::pair<double, double>*
 {
   _introduction_coordinates.first  = introduction_coordinates->first;
   _introduction_coordinates.second = introduction_coordinates->second;
+}
+
+/**
+ * \brief    Set the introduction probability
+ * \details  --
+ * \param    double introduction_probability
+ * \return   \e void
+ */
+inline void Parameters::set_introduction_probability( double introduction_probability )
+{
+  assert(introduction_probability >= 0.0);
+  assert(introduction_probability <= 1.0);
+  _introduction_probability = introduction_probability;
 }
 
 /**

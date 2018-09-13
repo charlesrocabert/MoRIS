@@ -1,4 +1,4 @@
-# :ant: MoRIS 0.6.1
+# :ant: MoRIS 0.7.0
 Copyright &copy; 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet.
 
 All rights reserved

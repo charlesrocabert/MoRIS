@@ -44,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		B600E19B2145EE8A007F2221 /* MoRIS_artificial_data */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MoRIS_artificial_data; sourceTree = BUILT_PRODUCTS_DIR; };
+		B656907C214ADD58003CD5D1 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
 		B6690FF621459B6800274C93 /* AUTHORS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = AUTHORS.md; path = ../../../AUTHORS.md; sourceTree = "<group>"; };
 		B6690FF921459B6800274C93 /* MoRIS_artificial_data */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MoRIS_artificial_data; sourceTree = "<group>"; };
 		B6690FFA21459B6800274C93 /* MoRIS_run */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MoRIS_run; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		B669108C21459BB100274C93 /* MoRIS_run */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MoRIS_run; sourceTree = BUILT_PRODUCTS_DIR; };
 		B696BE782149B5B500380CA8 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
 		B696BE792149B5B500380CA8 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B696BE7A2149B5B500380CA8 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
 		B696BE7B2149B5B500380CA8 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
 		B696BE7D2149B5B500380CA8 /* final_state.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = final_state.txt; sourceTree = "<group>"; };
 		B696BE7E2149B5B500380CA8 /* lineage_tree.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = lineage_tree.txt; sourceTree = "<group>"; };
@@ -572,7 +572,6 @@
 		B696BE772149B5B500380CA8 /* input */ = {
 			isa = PBXGroup;
 			children = (
-				B696BE7A2149B5B500380CA8 /* parameters.txt */,
 				B696BE782149B5B500380CA8 /* map.txt */,
 				B696BE792149B5B500380CA8 /* network.txt */,
 				B696BE7B2149B5B500380CA8 /* sample.txt */,
@@ -628,6 +627,7 @@
 				B696BE772149B5B500380CA8 /* input */,
 				B696BE7C2149B5B500380CA8 /* output */,
 				B696BE802149B5B500380CA8 /* xlsx */,
+				B656907C214ADD58003CD5D1 /* parameters.txt */,
 				B6AC48D6214866B500F783C5 /* run.sh */,
 				B6AC48D5214866B500F783C5 /* plot.R */,
 				B6AC48D1214866B500F783C5 /* map.R */,

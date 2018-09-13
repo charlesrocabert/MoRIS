@@ -125,7 +125,6 @@ class MoRIS_Minimizer:
 		self.vector_length      = 0
 		self.parameters_index   = {}
 		self.current_parameters = {}
-		self.empty_score        = 0.0
 		self.current_score      = 0.0
 
 	#### Parse a line and get the list of words ###
@@ -500,7 +499,7 @@ class MoRIS_Minimizer:
 		cmd_line += " -law "+self.jump_law
 		cmd_line += " -xcoord "+str(command_line_params["x"])
 		cmd_line += " -ycoord "+str(command_line_params["y"])
-		cmd_line += " -p-intro "+str(command_line_params["p_intro"])
+		#cmd_line += " -p-intro "+str(command_line_params["p_intro"])
 		cmd_line += " -lambda "+str(command_line_params["lambda"])
 		cmd_line += " -mu "+str(command_line_params["mu"])
 		cmd_line += " -sigma "+str(command_line_params["sigma"])
@@ -515,9 +514,8 @@ class MoRIS_Minimizer:
 
 	### Read the standard output ###
 	def read_exec_ouput( self, exec_output ):
-		output             = exec_output.strip("\n").split(" ")
-		self.empty_score   = float(output[0])
-		self.current_score = float(output[1])
+		output             = exec_output.strip("\n")
+		self.current_score = float(exec_output)
 
 	### Open output file header ###
 	def open_output_file_header( self ):
@@ -529,14 +527,14 @@ class MoRIS_Minimizer:
 
 	### Write output file header ###
 	def write_output_file_header( self ):
-		line = "score empty_score"
+		line = "score"
 		for param in self.default_parameters.keys():
 			line += " "+param
 		self.output_file.write(line+"\n")
 
 	### Write output file data ###
-	def write_output_file_data( self ):
-		line = str(self.current_score)+" "+str(self.empty_score)
+	def write_output_file_data( self, score ):
+		line = str(score)
 		for param in self.to_optimize.keys():
 			if self.to_optimize[param]:
 				line += " "+str(self.current_parameters[param])
@@ -571,7 +569,7 @@ class MoRIS_Minimizer:
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 		# 4) Save the data and return the score  #
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-		self.write_output_file_data()
+		self.write_output_file_data(self.current_score)
 		return self.current_score
 
 #~~~~~~~~~~~~~~#
@@ -638,7 +636,7 @@ if __name__ == '__main__':
 		minimizer.write_output_file_header()
 		vector    = minimizer.build_vector_of_parameters()
 		start     = time.time()
-		cmaes_res = cma.fmin(minimizer.minimization_function, vector, 0.1)
+		cmaes_res = cma.fmin(minimizer.minimization_function, vector, 0.8)
 		end       = time.time()
 		minimizer.close_output_file_header()
 		if end-start < TIME_THRESHOLD:

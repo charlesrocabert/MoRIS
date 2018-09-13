@@ -38,24 +38,27 @@
  * \param    Prng* prng
  * \param    int identifier
  * \param    int nb_repetitions
+ * \param    double introduction_probability
  * \return   \e void
  */
-Node::Node( Prng* prng, int identifier, int nb_repetitions )
+Node::Node( Prng* prng, int identifier, int nb_repetitions, double introduction_probability )
 {
   /*--------------------------------------- SIMULATION VARIABLES */
   
-  _prng                   = prng;
-  _identifier             = identifier;
-  _nb_repetitions         = nb_repetitions;
-  _tagged                 = false;
-  _current_state          = new int[_nb_repetitions];
-  _next_state             = new int[_nb_repetitions];
-  _y_sim                  = 0.0;
-  _f_sim                  = 0.0;
-  _nb_introductions       = new double[_nb_repetitions];
-  _total_nb_introductions = 0.0;
-  _mean_nb_introductions  = 0.0;
-  _var_nb_introductions   = 0.0;
+  _prng                     = prng;
+  _identifier               = identifier;
+  _nb_repetitions           = nb_repetitions;
+  _introduction_probability = introduction_probability;
+  _tagged                   = false;
+  _current_state            = new int[_nb_repetitions];
+  _next_state               = new int[_nb_repetitions];
+  _n_sim                    = (double)_nb_repetitions/_introduction_probability;
+  _y_sim                    = 0.0;
+  _f_sim                    = 0.0;
+  _nb_introductions         = new double[_nb_repetitions];
+  _total_nb_introductions   = 0.0;
+  _mean_nb_introductions    = 0.0;
+  _var_nb_introductions     = 0.0;
   
   /*--------------------------------------- GRAPH STRUCTURE */
   
@@ -177,7 +180,7 @@ void Node::update_state( void )
     _y_sim              += (double)_next_state[rep];
     _f_sim              += (double)_next_state[rep];
   }
-  _f_sim /= (double)_nb_repetitions;
+  _f_sim /= _n_sim;
 }
 
 /**

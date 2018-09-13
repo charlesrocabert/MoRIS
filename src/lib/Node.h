@@ -46,7 +46,7 @@ public:
    * CONSTRUCTORS
    *----------------------------*/
   Node( void ) = delete;
-  Node( Prng* prng, int identifier, int nb_repetitions );
+  Node( Prng* prng, int identifier, int nb_repetitions, double introduction_probability );
   Node( const Node& node ) = delete;
   
   /*----------------------------
@@ -63,6 +63,7 @@ public:
   inline int    get_identifier( void ) const;
   inline bool   isTagged( void ) const;
   inline bool   isOccupied( int rep ) const;
+  inline double get_n_sim( void ) const;
   inline double get_y_sim( void ) const;
   inline double get_f_sim( void ) const;
   inline double get_total_nb_introductions( void ) const;
@@ -138,18 +139,20 @@ protected:
   
   /*--------------------------------------- SIMULATION VARIABLES */
   
-  Prng*   _prng;                   /*!< Pseudorandom numbers generator          */
-  int     _identifier;             /*!< Node identifier                         */
-  int     _nb_repetitions;         /*!< Number of repetitions                   */
-  bool    _tagged;                 /*!< Node tag state                          */
-  int*    _current_state;          /*!< Hexagon current state                   */
-  int*    _next_state;             /*!< Hexagon next state                      */
-  double  _y_sim;                  /*!< Number of occupied cells                */
-  double  _f_sim;                  /*!< Simulated probability of presence       */
-  double* _nb_introductions;       /*!< Number of introductions                 */
-  double  _total_nb_introductions; /*!< Total number of introductions           */
-  double  _mean_nb_introductions;  /*!< Mean number of introductions            */
-  double  _var_nb_introductions;   /*!< Variance of the number of introductions */
+  Prng*   _prng;                     /*!< Pseudorandom numbers generator          */
+  int     _identifier;               /*!< Node identifier                         */
+  int     _nb_repetitions;           /*!< Number of repetitions                   */
+  double  _introduction_probability; /*!< Introduction probability                */
+  bool    _tagged;                   /*!< Node tag state                          */
+  int*    _current_state;            /*!< Hexagon current state                   */
+  int*    _next_state;               /*!< Hexagon next state                      */
+  double  _n_sim;                    /*!< Number of virtual sampled cells         */
+  double  _y_sim;                    /*!< Number of occupied cells                */
+  double  _f_sim;                    /*!< Simulated probability of presence       */
+  double* _nb_introductions;         /*!< Number of introductions                 */
+  double  _total_nb_introductions;   /*!< Total number of introductions           */
+  double  _mean_nb_introductions;    /*!< Mean number of introductions            */
+  double  _var_nb_introductions;     /*!< Variance of the number of introductions */
   
   /*--------------------------------------- GRAPH STRUCTURE */
   
@@ -215,7 +218,18 @@ inline bool Node::isOccupied( int rep ) const
 }
 
 /**
- * \brief    Get the number of oocupied cells
+ * \brief    Get the number of virtual sampled cells
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_n_sim( void ) const
+{
+  return _n_sim;
+}
+
+/**
+ * \brief    Get the number of occupied cells
  * \details  --
  * \param    void
  * \return   \e double
@@ -461,7 +475,7 @@ inline void Node::set_as_introduction_node( void )
     _nb_introductions[rep] += 1.0;
   }
   _y_sim = (double)_nb_repetitions;
-  _f_sim = 1.0;
+  _f_sim = _introduction_probability;
 }
 
 /*--------------------------------------- GRAPH STRUCTURE */

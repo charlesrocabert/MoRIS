@@ -55,7 +55,7 @@ Graph::Graph( Parameters* parameters )
   
   _introduction_node = get_introduction_node_from_coordinates();
   compute_maximum_weight_sum();
-  normalize_jump_probability_by_weight_sum();
+  compute_jump_probability();
   reset_states();
   set_introduction_node();
   
@@ -153,10 +153,10 @@ void Graph::compute_score( void )
     for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
     {
       double y_sim = it->second->get_y_sim();
-      double n_sim = (double)_parameters->get_repetitions_by_simulation();
+      double n_sim = it->second->get_n_sim();
       double y_obs = it->second->get_y_obs();
       double n_obs = it->second->get_n_obs();
-      if (n_obs > 0.0 && it->first != _introduction_node)
+      if (n_obs > 0.0)
       {
         unsigned int a      = (unsigned int)(y_sim);
         unsigned int b      = (unsigned int)(y_obs);
@@ -182,7 +182,7 @@ void Graph::compute_score( void )
 void Graph::write_state( std::string filename )
 {
   std::ofstream file(filename, std::ios::out | std::ios::trunc);
-  file << "id xcoord ycoord y n f_obs y_sim f_sim total_nb_intros mean_nb_intros var_nb_intros\n";
+  file << "id xcoord ycoord y n f_obs n_sim y_sim f_sim total_nb_intros mean_nb_intros var_nb_intros empty_score score\n";
   Node* node = get_first();
   while (node != NULL)
   {
@@ -192,11 +192,14 @@ void Graph::write_state( std::string filename )
     file << node->get_y_obs() << " ";
     file << node->get_n_obs() << " ";
     file << node->get_f_obs() << " ";
+    file << node->get_n_sim() << " ";
     file << node->get_y_sim() << " ";
     file << node->get_f_sim() << " ";
     file << node->get_total_nb_introductions() << " ";
     file << node->get_mean_nb_introductions() << " ";
-    file << node->get_var_nb_introductions() << "\n";
+    file << node->get_var_nb_introductions() << " ";
+    file << _empty_score << " ";
+    file << _score << "\n";
     node = get_next();
   }
   file.close();
@@ -274,7 +277,7 @@ void Graph::load_map( void )
       _max_y_coord = y_coord;
     }
     assert(_map.find(identifier) == _map.end());
-    _map[identifier] = new Node(_parameters->get_prng(), identifier, _parameters->get_repetitions_by_simulation());
+    _map[identifier] = new Node(_parameters->get_prng(), identifier, _parameters->get_repetitions_by_simulation(), _parameters->get_introduction_probability());
     _map[identifier]->set_map_data(x_coord, y_coord, node_area, suitable_area);
   }
   file.close();
@@ -387,16 +390,17 @@ void Graph::compute_maximum_weight_sum( void )
 }
 
 /**
- * \brief    Normalize the jump probability by the maximum weight of the map
+ * \brief    Compute the jump probability
  * \details  --
  * \param    void
  * \return   \e void
  */
-void Graph::normalize_jump_probability_by_weight_sum( void )
+void Graph::compute_jump_probability( void )
 {
   for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
   {
     it->second->set_jump_probability(it->second->get_weights_sum()/_maximum_weights_sum);
+    //it->second->set_jump_probability(1.0);
   }
 }
 

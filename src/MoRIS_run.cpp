@@ -91,12 +91,13 @@ int main(int argc, char const** argv)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 5) Return the score, free the memory and exit      */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  double score = simulation->get_score();
+  double empty_score = simulation->get_empty_score();
+  double score       = simulation->get_score();
   delete simulation;
   simulation = NULL;
   delete parameters;
   parameters = NULL;
-  std::cout << score << "\n";
+  std::cout << empty_score << " " << score << "\n";
   return EXIT_SUCCESS;
 }
 
@@ -125,6 +126,7 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
   options["iterations"]       = false;
   options["xcoord"]           = false;
   options["ycoord"]           = false;
+  options["p-intro"]          = false;
   options["lambda"]           = false;
   options["mu"]               = false;
   options["sigma"]            = false;
@@ -275,6 +277,19 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
       {
         ycoord = atof(argv[i+1]);
         options["ycoord"] = true;
+      }
+    }
+    if (strcmp(argv[i], "-p-intro") == 0 || strcmp(argv[i], "--p-intro") == 0)
+    {
+      if (i+1 == argc)
+      {
+        std::cout << "Error: p-intro value is missing.\n";
+        exit(EXIT_FAILURE);
+      }
+      else
+      {
+        parameters->set_introduction_probability(atof(argv[i+1]));
+        options["p-intro"] = true;
       }
     }
     if (strcmp(argv[i], "-lambda") == 0 || strcmp(argv[i], "--lambda") == 0)
@@ -510,6 +525,8 @@ void printUsage( void )
   std::cout << "        Specify the x coordinate of the introduction cell\n";
   std::cout << "  -ycoord, --ycoord <coordinate>\n";
   std::cout << "        Specify the y coordinate of the introduction cell\n";
+  std::cout << "  -p-intro, --p-intro <p-intro>\n";
+  std::cout << "        Specify the probability of introduction\n";
   std::cout << "  -lambda, --lambda <lambda>\n";
   std::cout << "        Specify the mean number of jumps/cell/year\n";
   std::cout << "  -mu, --mu <mu>\n";

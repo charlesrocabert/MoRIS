@@ -63,6 +63,7 @@ public:
    * GETTERS
    *----------------------------*/
   inline int    get_iteration( void ) const;
+  inline double get_empty_score( void ) const;
   inline double get_score( void ) const;
   
   /*----------------------------
@@ -114,6 +115,17 @@ protected:
 inline int Simulation::get_iteration( void ) const
 {
   return _iteration;
+}
+
+/**
+ * \brief    Get the optimization score when map is empty
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Simulation::get_empty_score( void ) const
+{
+  return _graph->get_empty_score();
 }
 
 /**

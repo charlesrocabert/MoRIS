@@ -111,7 +111,7 @@ protected:
   void load_network( void );
   void load_sample( void );
   void compute_maximum_weight_sum( void );
-  void normalize_jump_probability_by_weight_sum( void );
+  void compute_jump_probability( void );
   void reset_states( void );
   void set_introduction_node( void );
   

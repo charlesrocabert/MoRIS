@@ -39,8 +39,8 @@ set(PACKAGE "\"MoRIS\"")
 # Define the version number                                                        #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 6)
-set(VERSION_PATCH 1)
+set(VERSION_MINOR 7)
+set(VERSION_PATCH 0)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

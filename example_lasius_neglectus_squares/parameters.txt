@@ -19,21 +19,14 @@
 
 
 ///////////////////////////////////////////////////////////////
-// Seed the pseudorandom numbers generator
+// Set executable path
 ///////////////////////////////////////////////////////////////
 
-SEED  23451
-
-
-///////////////////////////////////////////////////////////////
-// Type of experimental data
-///////////////////////////////////////////////////////////////
-
-TYPE_OF_DATA  PRESENCE_ABSENCE
+EXEC_PATH  ../build/bin/MoRIS_run
 
 
 ///////////////////////////////////////////////////////////////
-// Set network, map and sample data files
+// Set input files
 ///////////////////////////////////////////////////////////////
 
 NETWORK_FILE  input/network.txt
@@ -42,65 +35,93 @@ SAMPLE_FILE   input/sample.txt
 
 
 ///////////////////////////////////////////////////////////////
-// Set the number of repetitions by simulation
+// Seed main parameters
 ///////////////////////////////////////////////////////////////
 
+SEED                       238409
+TYPE_OF_DATA               PRESENCE_ABSENCE
 REPETITIONS_BY_SIMULATION  100
-
+NUMBER_OF_ITERATIONS       25
+JUMP_LAW                   GAUSSIAN
 
 ///////////////////////////////////////////////////////////////
-// Set the number of iterations by simulation
+// Set the default parameter values
 ///////////////////////////////////////////////////////////////
 
-NUMBER_OF_ITERATIONS  25
+X_DEFAULT        30000
+Y_DEFAULT        30000
+P_INTRO_DEFAULT  1.0
+LAMBDA_DEFAULT   1.0
+MU_DEFAULT       10.0
+SIGMA_DEFAULT    0.0
+W1_DEFAULT       1.0
+W2_DEFAULT       0.5
+W3_DEFAULT       0.25
+W4_DEFAULT       0.125
+W5_DEFAULT       0.0
+W6_DEFAULT       0.0
+MIN_W_DEFAULT    0.0
 
 
 ///////////////////////////////////////////////////////////////
 // Set the parameters to optimize
 ///////////////////////////////////////////////////////////////
 
-OPTIMIZE_COORDINATES              TRUE
-OPTIMIZE_LAMBDA                   TRUE
-OPTIMIZE_MU                       TRUE
-OPTIMIZE_SIGMA                    TRUE
-OPTIMIZE_ROAD_LINEAR_COMBINATION  TRUE
-OPTIMIZE_MINIMAL_CONNECTIVITY     FALSE
+OPTIMIZE_X        TRUE
+OPTIMIZE_Y        TRUE
+OPTIMIZE_P_INTRO  TRUE
+OPTIMIZE_LAMBDA   TRUE
+OPTIMIZE_MU       TRUE
+OPTIMIZE_SIGMA    TRUE
+OPTIMIZE_W1       FALSE
+OPTIMIZE_W2       FALSE
+OPTIMIZE_W3       FALSE
+OPTIMIZE_W4       FALSE
+OPTIMIZE_W5       FALSE
+OPTIMIZE_W6       FALSE
+OPTIMIZE_MIN_W    FALSE
 
 
 ///////////////////////////////////////////////////////////////
-// Set the simulation parameters
+// Set the parameters ranges
 ///////////////////////////////////////////////////////////////
 
-X_MIN       20000
-X_MAX       88000
+X_MIN  20000
+X_MAX  88000
 
-Y_MIN       14000
-Y_MAX       104000
+Y_MIN  14000
+Y_MAX  104000
+
+P_INTRO_MIN  0.0
+P_INTRO_MAX  1.0
 
 LAMBDA_MIN  0.0
 LAMBDA_MAX  3.0
 
-MU_MIN      0.0
-MU_MAX      20.0
+MU_MIN  0.0
+MU_MAX  20.0
 
-SIGMA_MIN   0.0
-SIGMA_MAX   0.0
+SIGMA_MIN  0.0
+SIGMA_MAX  20.0
 
-JUMP_LAW    DIRAC
+W1_MIN  0.0
+W1_MAX  1.0
 
+W2_MIN  0.0
+W2_MAX  1.0
 
-///////////////////////////////////////////////////////////////
-// Set the linear combination of road categories (from 1 to 6)
-///////////////////////////////////////////////////////////////
+W3_MIN  0.0
+W3_MAX  1.0
 
-ROAD_LINEAR_COMBINATION_MIN  0.0 0.0 0.0 0.0 0.0 0.0
-ROAD_LINEAR_COMBINATION_MAX  1.0 1.0 1.0 1.0 0.0 0.0
+W4_MIN  0.0
+W4_MAX  1.0
 
+W5_MIN  0.0
+W5_MAX  1.0
 
-///////////////////////////////////////////////////////////////
-// Set the minimal connectivity between cells
-///////////////////////////////////////////////////////////////
+W6_MIN  0.0
+W6_MAX  1.0
 
-MINIMAL_CONNECTIVITY_MIN  0.0
-MINIMAL_CONNECTIVITY_MAX  0.0
+MIN_W_MIN  0.0
+MIN_W_MAX  1.0
 

@@ -2,10 +2,7 @@ library("caTools")
 
 setwd("/Users/charlesrocabert/git/MoRIS-development/example_lasius_neglectus_squares")
 
-d = read.table("output.tmp", sep=" ", h=F)
-
-names(d) = c("x", "y", "lambda", "mu", "sigma", "w1", "w2", "w3", "w4", "w5", "w6", "minc", "score")
-
+d = read.table("optim.txt", sep=" ", h=T)
 
 N = length(d$x)
 L = 200
@@ -20,14 +17,16 @@ par(mfrow=c(3,3), mar=c(2,2,2,2))
 
 plot(d$score, pch=20, main="Score", col="tomato")
 lines(runmean(d$score, k=100), col="blue", lwd=2)
-#abline(h=0.129035)
-abline(h=log10(0.129035))
+lines(d$empty_score)
 
 plot(d$x, pch=20, main="X")
 lines(runmean(d$x, k=100), col="green", lwd=2)
 
 plot(d$y, pch=20, main="Y")
 lines(runmean(d$y, k=100), col="green", lwd=2)
+
+plot(d$p_intro, pch=20, main="P intro")
+lines(runmean(d$p_intro, k=100), col="green", lwd=2)
 
 plot(d$lambda, pch=20, main="Lambda")
 lines(runmean(d$lambda, k=100), col="green", lwd=2)
@@ -47,11 +46,9 @@ points(d$w3, col="green")
 lines(d$w3, col="green", lty=2)
 points(d$w4, col="purple")
 lines(d$w4, col="purple", lty=2)
-
-plot(x=NULL, xlim=c(0,length(d$x)), ylim=c(0,1))
 legend("topleft", legend=c("w1","w2","w3","w4"), col=c("blue", "red", "green", "purple"), lwd=c(2,2,2,2))
 
-plot(d$minc, pch=20, main="Min connectivity")
-lines(runmean(d$minc, k=100), col="green", lwd=2)
+plot(d$min_w, pch=20, main="Min connectivity")
+lines(runmean(d$min_w, k=100), col="green", lwd=2)
 
 dev.off()
