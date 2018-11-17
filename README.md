@@ -18,3 +18,21 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 
 ## Download
 Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>
+
+## How to build input files for MoRIS software?
+
+Three datafiles are necessary to run MoRIS:
+1. A text file describing the area of interest, named by default `map.txt`,
+2. A text file describing the road network of interest, named by default `network.txt`,
+3. A text file describing the presence-absence data, named by default `sample.txt`.
+
+### 1. How to build the map file (area of interest)?
+Here is an example:
+
+| 1 | 0    | 2000 | 4000000 | 4000000 | 165 | 5.8144  | 1.63 |
+| 2 | 2000 | 2000 | 4000000 | 4000000 | 245 | 6.7420  | 1.49 |
+| 3 | 4000 | 2000 | 4000000 | 4000000 | 398 | 21.4843 | 1.40 |
+| 4 | ...  | ...  | ...     | ...     | ... | ...     | ...  |
+
+
+
