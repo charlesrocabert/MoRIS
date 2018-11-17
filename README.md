@@ -41,6 +41,9 @@ Here is an example:
 - Column 4 contains the area of the cell, here in square meters,
 - Column 5 contains the suitable habitat area of the cell, in square meters.
 
+1. First define a working area (fig1 red square) around your area of interest, namely: the area where you have presence/absence data on your favorite invasive species (fig1 red/green dots). This working area must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on fig1). Do not underestimate the importance of the bufferring area, to avoid estimation biases in <strong>MoRIS</strong>.
+
+<strong>[Writing in progress ...]</strong>
 
 
 
