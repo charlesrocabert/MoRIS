@@ -29,10 +29,19 @@ Three datafiles are necessary to run MoRIS:
 ### 1. How to build the map file (area of interest)?
 Here is an example:
 
-| 1 | 0    | 2000 | 4000000 | 4000000 | 165 | 5.8144  | 1.63 |
-| 2 | 2000 | 2000 | 4000000 | 4000000 | 245 | 6.7420  | 1.49 |
-| 3 | 4000 | 2000 | 4000000 | 4000000 | 398 | 21.4843 | 1.40 |
-| 4 | ...  | ...  | ...     | ...     | ... | ...     | ...  |
+| 1 | 0    | 2000 | 4000000 | 4000000 |
+|---|------|------|---------|---------|
+| 2 | 2000 | 2000 | 4000000 | 4000000 |
+| 3 | 4000 | 2000 | 4000000 | 4000000 |
+| 4 | ...  | ...  | ...     | ...     |
+
+- Column 1 contains cell identifiers, which must be positive integer numbers (usually from `1` to `n`),
+- Column 2 contains the x-axis coordinate of the cell, here in meters. The coordinate of the cell centroid is preferred,
+- Column 3 contains the y-axis coordinate of the cell, here in meters. The coordinate of the cell centroid is preferred,
+- Column 4 contains the area of the cell, here in square meters,
+- Column 5 contains the suitable habitat area of the cell, in square meters.
+
+
 
 
 
