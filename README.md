@@ -79,32 +79,5 @@ This mode should only be used for test or development phases.
 #### Executable files emplacement
 Binary executable files are in <code>build/bin</code> folder.
 
-## How to build input files for MoRIS software?
-
-Three datafiles are necessary to run MoRIS:
-1. A text file describing the area of interest, named by default `map.txt`,
-2. A text file describing the road network of interest, named by default `network.txt`,
-3. A text file describing the presence-absence data, named by default `sample.txt`.
-
-### 1. How to build the map file (area of interest)?
-Here is an example:
-
-| 1 | 0    | 2000 | 4000000 | 4000000 |
-|---|------|------|---------|---------|
-| 2 | 2000 | 2000 | 4000000 | 4000000 |
-| 3 | 4000 | 2000 | 4000000 | 4000000 |
-| 4 | ...  | ...  | ...     | ...     |
-
-- Column 1 contains cell identifiers, which must be positive integer numbers (usually from `1` to `n`),
-- Column 2 contains the x-axis coordinate of the cell, here in meters. The coordinate of the cell centroid is preferred,
-- Column 3 contains the y-axis coordinate of the cell, here in meters. The coordinate of the cell centroid is preferred,
-- Column 4 contains the area of the cell, here in square meters,
-- Column 5 contains the suitable habitat area of the cell, in square meters.
-
-1. First define a working area (fig1 red square) around your area of interest, namely: the area where you have presence/absence data on your favorite invasive species (fig1 red/green dots). This working area must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on fig1). Do not underestimate the importance of the bufferring area, to avoid estimation biases in <strong>MoRIS</strong>.
-
-<strong>[Writing in progress ...]</strong>
-
-
-
-
+## 7. Tutorial <a name="tutorial"></a>
+A tutorial to build MoRIS input files is available here: https://github.com/charlesrocabert/MoRIS/blob/master/docs/TUTORIAL.md.
