@@ -46,7 +46,7 @@ This <strong>working area</strong> must be centered around and larger by at leas
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/map1.png">
+  <img src="tutorial_pics/map1.png", width="300">
   <br/>
   <strong>Figure 1</strong>
   <br/>
