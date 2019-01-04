@@ -37,7 +37,7 @@ Here is an example of the file structure:
 - Column 4 contains <strong>the area of the cell</strong>, here in square meters,
 - Column 5 contains <strong>the suitable habitat area of the cell</strong>, in square meters.
 
-### 1.2 How to get it?
+### 1.2 How to build it?
 
 #### Choose an extent.
 Define a <strong>working area</strong> (red square on figure 1) around your <strong>area of interest</strong>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
