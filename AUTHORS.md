@@ -1,10 +1,10 @@
-# :ant: Original authors
+# Original authors
 * Charles Rocabert
 * Jérôme Gippet
 * Serge Fenet
 
-# :ant: Major Contributors
+# Major Contributors
 --
 
-# :ant: Other Contributors
---
+# Other Contributors
+* Vivek Srivastava
