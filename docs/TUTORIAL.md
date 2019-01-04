@@ -44,7 +44,11 @@ Define a <strong>working area</strong> (red square on figure 1) around your <str
 
 This <strong>working area</strong> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on figure 1). Do not underestimate the importance of this <strong>bufferring area</strong>, to avoid estimation biases in MoRIS.
 
-![Figure 1](https://github.com/charlesrocabert/MoRIS/blob/master/docs/tutorial_pics/map1.png)
+<p align="center">
+  <img src="docs/tutorial_pics/map1.png">
+  <br/>
+  <strong>Figure 1</strong>
+</p>
 
 #### Discretize the map.
 Define the <strong>shape and resolution</strong> of your fishnet. You can use squares or any other regular shape. On figure 2, squares are 3km large. This is because in this case, the species of interest do not disperse naturally more than 3 kilometers by year. In this case, it is thus assumed that natural dispersal could only allow the colonization of cells that are adjacent to already invaded cells.
