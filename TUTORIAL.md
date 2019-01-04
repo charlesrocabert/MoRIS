@@ -3,7 +3,11 @@
 J. M. W. Gippet – July 2018
 </p>
 
-This role of this tutorial is to describe to the user how to build MoRIS input files, in order to perform HMD (Human Mediated Dispersal) parameters estimation. MoRIS requires 3 input files:
+<br/>
+<br/>
+This tutorial explains to the user how to build MoRIS input files, in order to perform HMD (Human Mediated Dispersal) parameters estimation.
+
+MoRIS requires 3 input files:
 - <strong>The map file</strong>, describing a discretized version of the area of interest, made of "cells" of a given size (<em>e.g.</em> squares, or hexagons, or anything else),
 - <strong>The network file</strong>, describing the network connecting discrete areas of the map (<em>e.g.</em> a road network, but any network could work, such as a river system or an aerial system),
 - <strong>The sample file</strong>, describing the sampling effort of the invasive species of interest, cell by cell. A presence-absence scheme is required.
