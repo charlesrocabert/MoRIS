@@ -17,7 +17,7 @@ MoRIS requires 3 input files:
 2. [How to build the network file](#network)
 3. [How to build the sample file](#sample)
 
-## 1. How to build the map file (area of interest)?
+## 1. How to build the map file (area of interest)?<a name="map"></a>
 
 ### 1.1 File name and structure
 
