@@ -39,11 +39,13 @@ Here is an example of the file structure:
 
 ### 1.2 How to get it?
 
-1. <strong>Choose an extent.</strong> Define a <em>working area</em> (red square on figure 1) around your <em>area of interest</em>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
-<br/>
-This <em>working area</em> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on fig1). Do not underestimate the importance of the bufferring area, to avoid estimation biases in <strong>MoRIS</strong>.
+#### Choose an extent.
+Define a <strong>working area</strong> (red square on figure 1) around your <strong>area of interest</strong>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
 
+This <strong>working area</strong> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on figure 1). Do not underestimate the importance of this <strong>bufferring area</strong>, to avoid estimation biases in MoRIS.
 
+#### Discretize the map.
+Define the <strong>shape and resolution</strong> of your fishnet. You can use squares or any other regular shape. On figure 2, squares are 3km large. This is because in this case, the species of interest do not disperse naturally more than 3 kilometers by year. In this case, it is thus assumed that natural dispersal could only allow the colonization of cells that are adjacent to already invaded cells.
 
 
 
