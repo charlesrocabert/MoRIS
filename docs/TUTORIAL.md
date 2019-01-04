@@ -45,9 +45,11 @@ Define a <strong>working area</strong> (red square on figure 1) around your <str
 This <strong>working area</strong> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on figure 1). Do not underestimate the importance of this <strong>bufferring area</strong>, to avoid estimation biases in MoRIS.
 
 <p align="center">
+  <br/>
   <img src="tutorial_pics/map1.png">
   <br/>
   <strong>Figure 1</strong>
+  <br/>
 </p>
 
 #### Discretize the map.
