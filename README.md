@@ -32,6 +32,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 ## 3. Copyright <a name="copyright"></a>
 Copyright &copy; 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet.
 All rights reserved.
+The full list of contributors is displayed in AUTHORS.md. 
 
 ## 4. License <a name="license"></a>
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
