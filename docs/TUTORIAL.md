@@ -1,93 +1,29 @@
-<h1 align="center">:ant: MoRIS</h1>
+<h1 align="center">:ant: MoRIS tutorial</h1>
 <p align="center">
-<em>Model of Routes of Invasive Spread</em>
-<br />
-<br />
-<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>&nbsp;<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/build-passing-green.svg" /></a>&nbsp;<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/license-GPL v3-blue.svg" /></a>&nbsp;
+J. M. W. Gippet – July 2018
 </p>
+
+<br/>
+<br/>
+This tutorial explains to the user how to build MoRIS input files, in order to perform HMD (Human Mediated Dispersal) parameters estimation.
+
+MoRIS requires 3 input files:
+- <strong>The map file</strong>, describing a discretized version of the area of interest, made of "cells" of a given size (<em>e.g.</em> squares, or hexagons, or anything else),
+- <strong>The network file</strong>, describing the network connecting cells on the map (<em>e.g.</em> a road network, but any network could work, such as a river system or an aerial system),
+- <strong>The sample file</strong>, describing the sampling effort of the invasive species of interest, cell by cell. A presence-absence scheme is required.
 
 ## Table of contents
-1. [Introduction](#introduction)
-2. [Publications](#publications)
-3. [Copyright](#copyright)
-4. [License](#license)
-5. [Download](#download)
-6. [Installation instructions](#installation_instructions)
-7. [Tutorial](#tutorial)
+1. [How to build the map file](#map)
+2. [How to build the network file](#network)
+3. [How to build the sample file](#sample)
 
-## 1. Introduction <a name="introduction"></a>
-<p align="justify">
-Human-mediated dispersal acts as a vector for many exotic species, both at the introduction and secondary spread stages. Primary and secondary introductions arise from human-mediated long distance dispersal happening at global scales. Secondary spread occurs at smaller spatial and time scales (<em>e.g.</em> landscape) and results from either natural or human-mediated dispersal. Despite the importance of materials transportation (<em>e.g.</em> landscaping, construction) for the spread of invasive species, few studies have investigated short distance human-mediated dispersal and even less have tried to model it.
-</p>
+## 1. How to build the map file (area of interest)?<a name="map"></a>
 
-<p align="justify">
-  <strong>MoRIS</strong> (<em>Model of Routes of Invasive Spread</em>) is a spatially explicit spread model designed to simulate invasive species dispersal by transport at local to regional spatial scales. <strong>MoRIS</strong> is an innovative, yet simple model, taking into account the road network topology to influence the direction of dispersal events. <strong>MoRIS</strong> is designed to minimize <em>a priori</em> making (<em>e.g.</em>, expert knowledge), to enable the estimation of human-mediated dispersal parameters based on a simple presence/absence locations dataset and to produce predictive maps of spread.
-</p>
+### 1.1 File name and structure
 
-## 2. Publications <a name="publications"></a>
-• J. M.W. Gippet, S. Fenet, A. Dumet, B. Kaufmann and C. Rocabert (2016, August). MoRIS: Model of Routes of Invasive Spread. Human-mediated dispersal, road network and invasion parameters. In <em>Proceedings of IENE 2016 conference. 5th International Conference on Ecology and Transportation: Integrating Transport Infrastructures with Living Landscapes</em> (Lyon, France). http://hal.cirad.fr/LJK_MAD_STEEP/hal-01412280v1
+By default, the map file must be named `map.txt` (MoRIS offers the possibility to choose optional filenames).
 
-• J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
-
-## 3. Copyright <a name="copyright"></a>
-Copyright &copy; 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet.
-All rights reserved.
-The full list of contributors is displayed in AUTHORS.md. 
-
-## 4. License <a name="license"></a>
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
-
-## 5. Download <a name="download"></a>
-Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>
-
-## 6. Installation instructions <a name="installation_instructions"></a>
-Download the latest release of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
-
-### 6.1. Supported platforms
-MoRIS software has been successfully tested on Ubuntu 12.04 LTS, Ubuntu 14.04 LTS, OSX 10.9.5 (Maverick) and OSX 10.10.1 (Yosemite).
-
-### 6.2. Required dependencies
-* A C++ compiler (GCC, LLVM, ...)
-* CMake (command line version)
-* GSL for C/C++
-* CBLAS for C/C++
-* Python 2.7 or higher (Packages CMA-ES and numpy are required)
-* R (packages maptools, latticeExtra and RColorBrewer are required)
-
-### 6.3. Software compilation
-
-#### User mode
-To compile MoRIS, run the following instructions on the command line:
-
-    cd cmake/
-
-and
-
-    bash make.sh
-
-#### Debug mode
-To compile the software in DEBUG mode, use <code>make_debug.sh</code> script instead of <code>make.sh</code>:
-
-    bash make_debug.sh
-
-This mode should only be used for test or development phases.
-
-#### Executable files emplacement
-Binary executable files are in <code>build/bin</code> folder.
-
-## How to build input files for MoRIS software?
-
-Three datafiles are necessary to run MoRIS:
-1. A text file describing the area of interest, named by default `map.txt`,
-2. A text file describing the road network of interest, named by default `network.txt`,
-3. A text file describing the presence-absence data, named by default `sample.txt`.
-
-### 1. How to build the map file (area of interest)?
-Here is an example:
+Here is an example of the file structure:
 
 | 1 | 0    | 2000 | 4000000 | 4000000 |
 |---|------|------|---------|---------|
@@ -95,16 +31,22 @@ Here is an example:
 | 3 | 4000 | 2000 | 4000000 | 4000000 |
 | 4 | ...  | ...  | ...     | ...     |
 
-- Column 1 contains cell identifiers, which must be positive integer numbers (usually from `1` to `n`),
-- Column 2 contains the x-axis coordinate of the cell, here in meters. The coordinate of the cell centroid is preferred,
-- Column 3 contains the y-axis coordinate of the cell, here in meters. The coordinate of the cell centroid is preferred,
-- Column 4 contains the area of the cell, here in square meters,
-- Column 5 contains the suitable habitat area of the cell, in square meters.
+- Column 1 contains <strong>cell identifiers</strong>, which must be positive integer numbers (usually from `1` to `n` if the map contains `n` cells),
+- Column 2 contains <strong>the x-axis coordinate of the cell</strong>, here in meters. The coordinate of the centroid is preferred,
+- Column 3 contains <strong>the y-axis coordinate of the cell</strong>, here in meters. The coordinate of the centroid is preferred,
+- Column 4 contains <strong>the area of the cell</strong>, here in square meters,
+- Column 5 contains <strong>the suitable habitat area of the cell</strong>, in square meters.
 
-1. First define a working area (fig1 red square) around your area of interest, namely: the area where you have presence/absence data on your favorite invasive species (fig1 red/green dots). This working area must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on fig1). Do not underestimate the importance of the bufferring area, to avoid estimation biases in <strong>MoRIS</strong>.
+### 1.2 How to build it?
 
-<strong>[Writing in progress ...]</strong>
+#### Choose an extent.
+Define a <strong>working area</strong> (red square on figure 1) around your <strong>area of interest</strong>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
 
+This <strong>working area</strong> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on figure 1). Do not underestimate the importance of this <strong>bufferring area</strong>, to avoid estimation biases in MoRIS.
 
+#### Discretize the map.
+Define the <strong>shape and resolution</strong> of your fishnet. You can use squares or any other regular shape. On figure 2, squares are 3km large. This is because in this case, the species of interest do not disperse naturally more than 3 kilometers by year. In this case, it is thus assumed that natural dispersal could only allow the colonization of cells that are adjacent to already invaded cells.
 
+#### Extract the information of interest from each cell.
+Determine the coordinates of the centroid of each cell. Do not forget to use metric projected coordinate system (such as Lambert93 for France), meters unit is preferred. Also, calculate the area of each cell (3km large squares have areas of 9,000,000m²) and give them a unique ID from `1` to `n` (here `n = 13,689`).
 
