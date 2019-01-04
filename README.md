@@ -16,7 +16,6 @@
 7. [Tutorial](#tutorial)
 
 ## 1. Introduction <a name="introduction"></a>
-
 <p align="justify">
 Human-mediated dispersal acts as a vector for many exotic species, both at the introduction and secondary spread stages. Primary and secondary introductions arise from human-mediated long distance dispersal happening at global scales. Secondary spread occurs at smaller spatial and time scales (<em>e.g.</em> landscape) and results from either natural or human-mediated dispersal. Despite the importance of materials transportation (<em>e.g.</em> landscaping, construction) for the spread of invasive species, few studies have investigated short distance human-mediated dispersal and even less have tried to model it.
 </p>
@@ -26,18 +25,15 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 </p>
 
 ## 2. Publications <a name="publications"></a>
-
 • J. M.W. Gippet, S. Fenet, A. Dumet, B. Kaufmann and C. Rocabert (2016, August). MoRIS: Model of Routes of Invasive Spread. Human-mediated dispersal, road network and invasion parameters. In <em>Proceedings of IENE 2016 conference. 5th International Conference on Ecology and Transportation: Integrating Transport Infrastructures with Living Landscapes</em> (Lyon, France). http://hal.cirad.fr/LJK_MAD_STEEP/hal-01412280v1
 
 • J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
 
 ## 3. Copyright <a name="copyright"></a>
-
 Copyright &copy; 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet.
 All rights reserved.
 
 ## 4. License <a name="license"></a>
-
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -46,6 +42,41 @@ You should have received a copy of the GNU General Public License along with thi
 
 ## 5. Download <a name="download"></a>
 Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>
+
+## 6. Installation instructions <a name="installation_instructions"></a>
+Download the latest release of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
+
+### 6.1. Supported platforms
+MoRIS software has been successfully tested on Ubuntu 12.04 LTS, Ubuntu 14.04 LTS, OSX 10.9.5 (Maverick) and OSX 10.10.1 (Yosemite).
+
+### 6.2. Required dependencies
+* A C++ compiler (GCC, LLVM, ...)
+* CMake (command line version)
+* GSL for C/C++
+* CBLAS for C/C++
+* Python 2.7 or higher (Packages CMA-ES and numpy are required)
+* R (packages maptools, latticeExtra and RColorBrewer are required)
+
+### 6.3. Software compilation
+
+#### User mode
+To compile MoRIS, run the following instructions on the command line:
+
+    cd cmake/
+
+and
+
+    bash make.sh
+
+#### Debug mode
+To compile the software in DEBUG mode, use <code>make_debug.sh</code> script instead of <code>make.sh</code>:
+
+    bash make_debug.sh
+
+This mode should only be used for test or development phases.
+
+#### Executable files emplacement
+Binary executable files are in <code>build/bin</code> folder.
 
 ## How to build input files for MoRIS software?
 
