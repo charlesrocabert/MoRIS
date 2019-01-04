@@ -47,5 +47,6 @@ This <strong>working area</strong> must be centered around and larger by at leas
 #### Discretize the map.
 Define the <strong>shape and resolution</strong> of your fishnet. You can use squares or any other regular shape. On figure 2, squares are 3km large. This is because in this case, the species of interest do not disperse naturally more than 3 kilometers by year. In this case, it is thus assumed that natural dispersal could only allow the colonization of cells that are adjacent to already invaded cells.
 
-
+### Extract the information of interest from each cell.
+Determine the coordinates of the centroid of each cell. Do not forget to use metric projected coordinate system (such as Lambert93 for France), meters unit is preferred. Also, calculate the area of each cell (3km large squares have areas of 9,000,000m²) and give them a unique ID from `1` to `n` (here `n = 13,689`).
 
