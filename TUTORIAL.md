@@ -31,7 +31,7 @@ Here is an example of the file structure:
 | 3 | 4000 | 2000 | 4000000 | 4000000 |
 | 4 | ...  | ...  | ...     | ...     |
 
-- Column 1 contains <strong>cell identifiers</strong>, which must be positive integer numbers (usually from `1` to `n`),
+- Column 1 contains <strong>cell identifiers</strong>, which must be positive integer numbers (usually from `1` to `n` if the map contains `n` cells),
 - Column 2 contains <strong>the x-axis coordinate of the cell</strong>, here in meters. The coordinate of the centroid is preferred,
 - Column 3 contains <strong>the y-axis coordinate of the cell</strong>, here in meters. The coordinate of the centroid is preferred,
 - Column 4 contains <strong>the area of the cell</strong>, here in square meters,
@@ -39,7 +39,9 @@ Here is an example of the file structure:
 
 ### 1.2 How to get it?
 
-1. First define a working area (fig1 red square) around your area of interest, namely: the area where you have presence/absence data on your favorite invasive species (fig1 red/green dots). This working area must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on fig1). Do not underestimate the importance of the bufferring area, to avoid estimation biases in <strong>MoRIS</strong>.
+1. <strong>Choose an extent.</strong> Define a <em>working area</em> (red square on figure 1) around your <em>area of interest</em>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
+<br/>
+This <em>working area</em> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on fig1). Do not underestimate the importance of the bufferring area, to avoid estimation biases in <strong>MoRIS</strong>.
 
 
 
