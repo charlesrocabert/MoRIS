@@ -21,7 +21,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 </p>
 
 <p align="justify">
-  <strong>MoRIS</strong> (<em>Model of Routes of Invasive Spread</em>) is a spatially explicit spread model designed to simulate invasive species dispersal by transport at local to regional spatial scales. <strong>MoRIS</strong> is an innovative, yet simple model, taking into account the road network topology to influence the direction of dispersal events. <strong>MoRIS</strong> is designed to minimize <em>a priori</em> making (<em>e.g.</em>, expert knowledge), to enable the estimation of human-mediated dispersal parameters based on a simple presence/absence locations dataset and to produce predictive maps of spread.
+  MoRIS (<em>Model of Routes of Invasive Spread</em>) is a spatially explicit spread model designed to simulate invasive species dispersal by transport at local to regional spatial scales. MoRIS is an innovative, yet simple model, taking into account the road network topology to influence the direction of dispersal events. MoRIS is designed to minimize <em>a priori</em> making (<em>e.g.</em>, expert knowledge), to enable the estimation of human-mediated dispersal parameters based on a simple presence/absence locations dataset and to produce predictive maps of spread.
 </p>
 
 <p align="justify">
