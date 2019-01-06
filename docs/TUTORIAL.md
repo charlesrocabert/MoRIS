@@ -21,7 +21,7 @@ MoRIS requires 3 input files:
 
 ### 1.1 File name and structure
 
-By default, the map file must be named `map.txt` (MoRIS offers the possibility to choose optional filenames).
+By default, the map file must be named `map.txt` (MoRIS offers the possibility to choose optional filenames). The map file is a <strong>list all the cells of the discretized area of interest (one cell by line)</strong>.
 
 Here is an example of the file structure:
 
@@ -37,7 +37,9 @@ Here is an example of the file structure:
 - Column 4 contains <strong>the area of the cell</strong>, here in square meters,
 - Column 5 contains <strong>the suitable habitat area of the cell</strong>, in square meters.
 
-### 1.2 How to build it?
+<strong>The separator must be a single space " ". End-of-line symbol must be "\n".</strong>
+
+### 1.2 How to build the file
 
 #### A) Choose an extent.
 Define a <strong>working area</strong> (red square on figure 1) around your <strong>area of interest</strong>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
@@ -46,7 +48,7 @@ This <strong>working area</strong> must be centered around and larger by at leas
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/map1.png", height="300">
+  <img src="tutorial_pics/figure1.png", height="300">
   <br/>
   <strong>Figure 1</strong>
   <br/>
@@ -57,7 +59,7 @@ Define the <strong>shape and resolution</strong> of your fishnet. You can use sq
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/map2.png", height="300">
+  <img src="tutorial_pics/figure2.png", height="300">
   <br/>
   <strong>Figure 2</strong>
   <br/>
@@ -66,3 +68,53 @@ Define the <strong>shape and resolution</strong> of your fishnet. You can use sq
 #### C) Extract the information of interest from each cell.
 Determine the coordinates of the centroid of each cell. Do not forget to use metric projected coordinate system (such as Lambert93 for France), meters unit is preferred. Also, calculate the area of each cell (3km large squares have areas of 9,000,000m²) and give them a unique ID from `1` to `n` (here `n = 13,689`).
 
+## 2. How to build the network file?<a name="network"></a>
+
+### 2.1 File name and structure
+
+By default, the map file must be named `network.txt` (MoRIS offers the possibility to choose optional filenames). The network file is an <strong>adjacency list of all the links between map cells (one link by line). Cell identifiers must be the same in the map file and the network file</strong>.
+The network file then describes how the cells of the map are connected to each other.
+
+More precisely, the network file contains the <strong>undirected graph</strong> (<em>e.g.</em> one line in the file describes an undirected edge between two nodes of the graph) representing the network of interest, discretized to the scale of the map cells. 
+
+Here is an example of the file structure:
+
+| 1   | -1  | 0   | 0   | 2   | 0   | 4   | 5   |
+|-----|-----|-----|-----|-----|-----|-----|-----|
+| 1   | 2   | 1   | 0   | 0   | 1   | 0   | 1   |
+| 1   | 3   | 0   | 2   | 0   | 0   | 2   | 3   |
+| 2   | 3   | 0   | 0   | 0   | 3   | 0   | 0   |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+
+- Column 1 contains the <strong>identifier of the first cell</strong>,
+- Column 2 contains the <strong>identifier of the second cell</strong>. <strong>Importantly, a link can lead to the exterior of the map. In this case, the second identifier is `-1`</strong>,
+- Column 3 contains the <strong>number of roads of category I</strong> linking the first and the second cell,
+- Column 4 contains the <strong>number of roads of category II</strong> linking the first and the second cell,
+- Column 5 contains the <strong>number of roads of category III</strong> linking the first and the second cell,
+- Column 6 contains the <strong>number of roads of category IV</strong> linking the first and the second cell,
+- Column 7 contains the <strong>number of roads of category V</strong> linking the first and the second cell,
+- Column 8 contains the <strong>number of roads of category VI</strong> linking the first and the second cell.
+
+<strong>The separator must be a single space " ". End-of-line symbol must be "\n".</strong>
+
+Even if the network file structure is especially accurate for road networks, we see that any kind of network can be described in this file. For example, column 3 can describe a road network, while column 4 can describe a river system. MoRIS software then allows to weight each network category, and to give more importance to one network than another.
+
+The identifier `-1` shows that dispersal events are allowed to go out of the map, and then be lost. This property explains why a big enough buffering zone must be designed in the area of interest (see section 1).
+
+### 2.2 How to build the file
+
+#### A) Interest the map grid and the network of interest.
+Speaking a "GIS" vocabulary (Geographic Information System), the procedure is the following:
+- First, transform he polygonal grid defined in part 1 into a polylines grid,
+- Then, identify adjacent cells by comparing the polygonal grid and the polylines grid,
+- Finally, intersect the polylines grid describing the map  and polylines grid describing the network of interest (see figure 3).
+
+<p align="center">
+  <br/>
+  <img src="tutorial_pics/figure3-1.png">
+  <br/>
+  <img src="tutorial_pics/figure3-2.png", height="300">
+  <br/>
+  <strong>Figure 3</strong>
+  <br/>
+</p>
