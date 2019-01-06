@@ -1,6 +1,6 @@
 <h1 align="center">:ant: MoRIS tutorial</h1>
 <p align="center">
-J. M. W. Gippet – July 2018
+J. M. W. Gippet, C. Rocabert
 </p>
 
 <br/>
