@@ -103,7 +103,7 @@ The identifier `-1` shows that dispersal events are allowed to go out of the map
 
 ### 2.2 How to build the file
 
-#### A) Interest the map grid and the network of interest.
+#### A) Intersect the map grid and the network of interest.
 Speaking a "GIS" vocabulary (Geographic Information System), the procedure is the following:
 - First, transform he polygonal grid defined in part 1 into a polylines grid,
 - Then, identify adjacent cells by comparing the polygonal grid and the polylines grid,
@@ -116,5 +116,49 @@ Speaking a "GIS" vocabulary (Geographic Information System), the procedure is th
   <img src="tutorial_pics/figure3-2.png", height="300">
   <br/>
   <strong>Figure 3</strong>
+  <br/>
+</p>
+
+Each red dot is an intersection between an edge between cells and the network of interest (figure 4).
+<p align="center">
+  <br/>
+  <img src="tutorial_pics/figure4.png", height="300">
+  <br/>
+  <strong>Figure 4</strong>
+  <br/>
+</p>
+
+From this structure, called a "points shapefile", the table of attributes must be extracted.
+For each network category, the number of intersections (red dots) per edge are summed up, to obtain a line of the network file.
+
+## 3. How to build the sample file?<a name="sample"></a>
+
+### 3.1 File name and structure
+
+By default, the map file must be named `sample.txt` (MoRIS offers the possibility to choose optional filenames). The sample file is a <strong>list of the sampling effort of the species of interest, discretized by map cell</strong>.
+
+Here is an example of the file structure:
+
+| 1   | 0   | 0   |
+|-----|-----|-----|
+| 2   | 4   | 28  |
+| 3   | 0   | 13  |
+| ... | ... | ... |
+
+- Column 1 contains the <strong>cell identifier</strong> (corresponding to identifiers in the map and network files),
+- Column 2 contains the <strong>number of presences per cell (positive observations)</strong>,
+- Column 3 contains the <strong>number of samplings per cell (presences + absences)</strong>.
+
+<strong>The separator must be a single space " ". End-of-line symbol must be "\n".</strong>
+
+### 3.2 How to build the file
+
+#### A) Intersect the map grid and the experimental sampling.
+
+<p align="center">
+  <br/>
+  <img src="tutorial_pics/figure5.png">
+  <br/>
+  <strong>Figure 5</strong>
   <br/>
 </p>
