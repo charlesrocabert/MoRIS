@@ -1,4 +1,4 @@
-<h1 align="center">:ant: MoRIS tutorial</h1>
+<h1 align="center">:ant: MoRIS input files tutorial</h1>
 <p align="center">
 J. M. W. Gippet, C. Rocabert
 </p>
@@ -48,7 +48,7 @@ This <strong>working area</strong> must be centered around and larger by at leas
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/figure1.png", height="300">
+  <img src="docs/pics/figure1.png", height="300">
   <br/>
   <strong>Figure 1</strong>
   <br/>
@@ -59,7 +59,7 @@ Define the <strong>shape and resolution</strong> of your fishnet. You can use sq
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/figure2.png", height="300">
+  <img src="docs/pics/figure2.png", height="300">
   <br/>
   <strong>Figure 2</strong>
   <br/>
@@ -111,9 +111,9 @@ Speaking a "GIS" vocabulary (Geographic Information System), the procedure is th
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/figure3-1.png">
+  <img src="docs/pics/figure3-1.png">
   <br/>
-  <img src="tutorial_pics/figure3-2.png", height="300">
+  <img src="docs/pics/figure3-2.png", height="300">
   <br/>
   <strong>Figure 3</strong>
   <br/>
@@ -122,7 +122,7 @@ Speaking a "GIS" vocabulary (Geographic Information System), the procedure is th
 Each red dot is an intersection between an edge between cells and the network of interest (figure 4).
 <p align="center">
   <br/>
-  <img src="tutorial_pics/figure4.png", height="300">
+  <img src="docs/pics/figure4.png", height="300">
   <br/>
   <strong>Figure 4</strong>
   <br/>
@@ -157,7 +157,7 @@ Here is an example of the file structure:
 
 <p align="center">
   <br/>
-  <img src="tutorial_pics/figure5.png">
+  <img src="docs/pics/figure5.png">
   <br/>
   <strong>Figure 5</strong>
   <br/>

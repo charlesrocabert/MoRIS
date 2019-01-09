@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<img src="https://github.com/charlesrocabert/MoRIS/blob/master/docs/tutorial_pics/road_network.png">
+<img src="https://github.com/charlesrocabert/MoRIS/blob/master/docs/pics/road_network.png">
 <br/>
 </p>
 
@@ -90,4 +90,4 @@ This mode should only be used for test or development phases.
 Binary executable files are in <code>build/bin</code> folder.
 
 ## 7. Tutorial <a name="tutorial"></a>
-A tutorial to build MoRIS input files is available here: https://github.com/charlesrocabert/MoRIS/blob/master/docs/TUTORIAL.md.
+A tutorial to build MoRIS input files is available here: https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md.
