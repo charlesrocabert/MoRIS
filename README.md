@@ -6,6 +6,11 @@
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>&nbsp;<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/build-passing-green.svg" /></a>&nbsp;<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/license-GPL v3-blue.svg" /></a>&nbsp;
 </p>
 
+<p align="center">
+<img src="https://github.com/charlesrocabert/MoRIS/blob/master/docs/tutorial_pics/road_network.png">
+<br/>
+</p>
+
 ## Table of contents
 1. [Introduction](#introduction)
 2. [Publications](#publications)
