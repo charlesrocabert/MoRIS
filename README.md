@@ -12,15 +12,18 @@
 </p>
 
 ## Table of contents
-1. [Introduction](#introduction)
-2. [Publications](#publications)
-3. [Copyright](#copyright)
-4. [License](#license)
-5. [Download](#download)
-6. [Installation instructions](#installation_instructions)
-7. [Tutorial](#tutorial)
+- [Introduction](#introduction)
+- [Publications](#publications)
+- [Copyright](#copyright)
+- [License](#license)
+- [Download](#download)
+- [Installation instructions](#installation_instructions)
+  - [Supported platforms](#supported_platforms)
+  - [Required dependencies](#required_dependencies)
+  - [Software compilation](#software_compilation)
+- [Tutorial](#tutorial)
 
-## 1. Introduction <a name="introduction"></a>
+## Introduction <a name="introduction"></a>
 <p align="justify">
 Human-mediated dispersal acts as a vector for many exotic species, both at the introduction and secondary spread stages. Primary and secondary introductions arise from human-mediated long distance dispersal happening at global scales. Secondary spread occurs at smaller spatial and time scales (<em>e.g.</em> landscape) and results from either natural or human-mediated dispersal. Despite the importance of materials transportation (<em>e.g.</em> landscaping, construction) for the spread of invasive species, few studies have investigated short distance human-mediated dispersal and even less have tried to model it.
 </p>
@@ -33,34 +36,34 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
   MoRIS software requires input files built in a certain way. Here is a tutorial explaining this procedure in details: https://github.com/charlesrocabert/MoRIS/blob/master/docs/TUTORIAL.md.
 </p>
 
-## 2. Publications <a name="publications"></a>
+## Publications <a name="publications"></a>
 • J. M.W. Gippet, S. Fenet, A. Dumet, B. Kaufmann and C. Rocabert (2016, August). MoRIS: Model of Routes of Invasive Spread. Human-mediated dispersal, road network and invasion parameters. In <em>Proceedings of IENE 2016 conference. 5th International Conference on Ecology and Transportation: Integrating Transport Infrastructures with Living Landscapes</em> (Lyon, France). http://hal.cirad.fr/LJK_MAD_STEEP/hal-01412280v1
 
 • J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
 
-## 3. Copyright <a name="copyright"></a>
+## Copyright <a name="copyright"></a>
 Copyright &copy; 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet.
 All rights reserved.
 
 The full list of contributors is displayed in AUTHORS.md. 
 
-## 4. License <a name="license"></a>
+## License <a name="license"></a>
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-## 5. Download <a name="download"></a>
+## Download <a name="download"></a>
 Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>
 
-## 6. Installation instructions <a name="installation_instructions"></a>
+## Installation instructions <a name="installation_instructions"></a>
 Download the latest release of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
 
-### 6.1. Supported platforms
+### Supported platforms <a name="supported_platforms"></a>
 MoRIS software has been successfully tested on Ubuntu 12.04 LTS, Ubuntu 14.04 LTS, OSX 10.9.5 (Maverick) and OSX 10.10.1 (Yosemite).
 
-### 6.2. Required dependencies
+### Required dependencies <a name="required_dependencies"></a>
 * A C++ compiler (GCC, LLVM, ...)
 * CMake (command line version)
 * GSL for C/C++
@@ -68,7 +71,7 @@ MoRIS software has been successfully tested on Ubuntu 12.04 LTS, Ubuntu 14.04 LT
 * Python 2.7 or higher (Packages CMA-ES and numpy are required)
 * R (packages maptools, latticeExtra and RColorBrewer are required)
 
-### 6.3. Software compilation
+### Software compilation <a name="software_compilation"></a>
 
 #### User mode
 To compile MoRIS, run the following instructions on the command line:
