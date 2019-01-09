@@ -25,11 +25,13 @@ By default, the map file must be named `map.txt` (MoRIS offers the possibility t
 
 Here is an example of the file structure:
 
-| 1 | 0    | 2000 | 4000000 | 4000000 |
-|---|------|------|---------|---------|
-| 2 | 2000 | 2000 | 4000000 | 4000000 |
-| 3 | 4000 | 2000 | 4000000 | 4000000 |
-| 4 | ...  | ...  | ...     | ...     |
+```
+1 0 0 4000000 4000000
+2 2000 0 4000000 4000000
+3 4000 0 4000000 4000000
+4 6000 0 4000000 4000000
+5 8000 0 4000000 4000000
+```
 
 - Column 1 contains <strong>cell identifiers</strong>, which must be positive integer numbers (usually from `1` to `n` if the map contains `n` cells),
 - Column 2 contains <strong>the x-axis coordinate of the cell</strong>, here in meters. The coordinate of the centroid is preferred,
@@ -79,12 +81,13 @@ More precisely, the network file contains the <strong>undirected graph</strong> 
 
 Here is an example of the file structure:
 
-| 1   | -1  | 0   | 0   | 2   | 0   | 4   | 5   |
-|-----|-----|-----|-----|-----|-----|-----|-----|
-| 1   | 2   | 1   | 0   | 0   | 1   | 0   | 1   |
-| 1   | 3   | 0   | 2   | 0   | 0   | 2   | 3   |
-| 2   | 3   | 0   | 0   | 0   | 3   | 0   | 0   |
-| ... | ... | ... | ... | ... | ... | ... | ... |
+```
+1 -1 0 0 2 1 0 0
+1 2 0 0 1 0 0 0
+1 59 0 0 0 0 0 0
+2 -1 0 0 0 0 0 0
+2 3 0 0 1 1 1 0
+```
 
 - Column 1 contains the <strong>identifier of the first cell</strong>,
 - Column 2 contains the <strong>identifier of the second cell</strong>. <strong>Importantly, a link can lead to the exterior of the map. In this case, the second identifier is `-1`</strong>,
@@ -139,11 +142,13 @@ By default, the map file must be named `sample.txt` (MoRIS offers the possibilit
 
 Here is an example of the file structure:
 
-| 1   | 0   | 0   |
-|-----|-----|-----|
-| 2   | 4   | 28  |
-| 3   | 0   | 13  |
-| ... | ... | ... |
+```
+1 0 0
+2 0 1
+3 0 0
+4 3 4
+5 0 0
+```
 
 - Column 1 contains the <strong>cell identifier</strong> (corresponding to identifiers in the map and network files),
 - Column 2 contains the <strong>number of presences per cell (positive observations)</strong>,
