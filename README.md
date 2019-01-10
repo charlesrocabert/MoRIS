@@ -21,7 +21,7 @@
   - [Supported platforms](#supported_platforms)
   - [Required dependencies](#required_dependencies)
   - [Software compilation](#software_compilation)
-- [Tutorial](#tutorial)
+- [Input files tutorial](#tutorial)
 
 ## Introduction <a name="introduction"></a>
 <p align="justify">
@@ -42,7 +42,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 • J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
 
 ## Copyright <a name="copyright"></a>
-Copyright &copy; 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet.
+Copyright &copy; 2014-2019 <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme Gippet</a>, <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
 All rights reserved.
 
 The full list of contributors is displayed in AUTHORS.md. 
@@ -92,5 +92,5 @@ This mode should only be used for test or development phases.
 #### Executable files emplacement
 Binary executable files are in <code>build/bin</code> folder.
 
-## 7. Tutorial <a name="tutorial"></a>
+## Input files tutorial <a name="tutorial"></a>
 A tutorial to build MoRIS input files is available here: https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md.
