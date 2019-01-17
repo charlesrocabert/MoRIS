@@ -16,6 +16,7 @@
 - [Publications](#publications)
 - [Copyright](#copyright)
 - [License](#license)
+- [Community](#community)
 - [Download](#download)
 - [Installation instructions](#installation_instructions)
   - [Supported platforms](#supported_platforms)
@@ -53,6 +54,22 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+
+## Community <a name="community"></a>
+MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
+
+The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
+
+<p align="center">
+<table>
+    <tr>
+        <td><a href="http://umr5023.univ-lyon1.fr/"><img src="docs/pics/logo-lehna.png" height="80px"></a></td>
+        <td><a href="https://liris.cnrs.fr/"><img src="docs/pics/logo-liris.png" height="80px"></a></td>
+        <td><a href="http://www.in2p3.fr/"><img src="docs/pics/logo-in2p3.png" height="80px"></a></td>
+        <td><a href="http://www.ixxi.fr/"><img src="docs/pics/logo-ixxi.jpeg" height="80px"></a></td>
+    </tr>
+</table>
+</p>
 
 ## Download <a name="download"></a>
 Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>
