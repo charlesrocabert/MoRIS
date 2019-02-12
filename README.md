@@ -72,7 +72,7 @@ The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
 </p>
 
 ## Download <a name="download"></a>
-Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.7.0-orange.svg" /></a>
+Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.0-orange.svg" /></a>
 
 ## Installation instructions <a name="installation_instructions"></a>
 Download the latest release of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
