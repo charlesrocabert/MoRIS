@@ -2,14 +2,15 @@
  * \file      Enums.h
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Definition of enumerations
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,9 +46,21 @@ enum type_of_data
  */
 enum jump_distribution_law
 {
-  DIRAC     = 0, /*!< Dirac law     */
-  GAUSSIAN  = 1, /*!< Gaussian law  */
-  LOGNORMAL = 2  /*!< Lognormal law */
+  DIRAC      = 0, /*!< Dirac law      */
+  NORMAL     = 1, /*!< Normal law     */
+  LOG_NORMAL = 2, /*!< Log-normal law */
+  CAUCHY     = 3  /*!< Cauchy law     */
+};
+
+/**
+ * \brief   Optimization function
+ * \details --
+ */
+enum optimization_function
+{
+  LSS            = 0, /*!< Least-square-sum score            */
+  LOG_LIKELIHOOD = 1, /*!< Log likelihood score              */
+  LIKELIHOOD_LSS = 2  /*!< Likelihood least-square-sum score */
 };
 
 

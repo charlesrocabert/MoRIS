@@ -2,14 +2,15 @@
  * \file      Graph.h
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Graph class declaration
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,16 +72,11 @@ public:
   inline Node* get_first( void );
   inline Node* get_next( void );
   
-  /*--------------------------------------- GRAPH STATISTICS */
+  /*--------------------------------------- MINIMIZATION SCORES */
   
-  inline double get_maximum_weights_sum( void ) const;
-  inline double get_minimum_x_coordinate( void ) const;
-  inline double get_minimum_y_coordinate( void ) const;
-  inline double get_maximum_x_coordinate( void ) const;
-  inline double get_maximum_y_coordinate( void ) const;
-  
-  /*--------------------------------------- MINIMIZATION SCORE */
-  
+  inline double get_total_log_likelihood( void ) const;
+  inline double get_total_log_empty_likelihood( void ) const;
+  inline double get_total_log_maximum_likelihood( void ) const;
   inline double get_empty_score( void ) const;
   inline double get_score( void ) const;
   
@@ -94,8 +90,9 @@ public:
    *----------------------------*/
   void untag( void );
   void update_state( void );
-  void compute_score( void );
+  void compute_score( bool empty );
   void write_state( std::string filename );
+  void write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -106,14 +103,15 @@ protected:
   /*----------------------------
    * PROTECTED METHODS
    *----------------------------*/
-  int  get_introduction_node_from_coordinates( void );
-  void load_map( void );
-  void load_network( void );
-  void load_sample( void );
-  void compute_maximum_weight_sum( void );
-  void compute_jump_probability( void );
-  void reset_states( void );
-  void set_introduction_node( void );
+  int    get_introduction_node_from_coordinates( void );
+  void   load_map( void );
+  void   load_network( void );
+  void   load_sample( void );
+  void   compute_statistics( void );
+  void   compute_jump_probability( void );
+  void   reset_states( void );
+  void   set_introduction_node( void );
+  double compute_euclidean_distance( Node* node1, Node* node2 );
   
   /*----------------------------
    * PROTECTED ATTRIBUTES
@@ -130,17 +128,28 @@ protected:
   
   /*--------------------------------------- GRAPH STATISTICS */
   
-  int    _introduction_node;   /*!< Introduction node            */
-  double _maximum_weights_sum; /*!< Maximum weights sum in nodes */
-  double _min_x_coord;         /*!< Minimum x coordinate         */
-  double _min_y_coord;         /*!< Minimum y coordinate         */
-  double _max_x_coord;         /*!< Maximum x coordinate         */
-  double _max_y_coord;         /*!< Maximum y coordinate         */
+  int    _introduction_node;      /*!< Introduction node            */
+  double _min_x_coord;            /*!< Minimum x coordinate         */
+  double _max_x_coord;            /*!< Maximum x coordinate         */
+  double _min_y_coord;            /*!< Minimum y coordinate         */
+  double _max_y_coord;            /*!< Maximum y coordinate         */
+  double _min_weights_sum;        /*!< Minimum weights sum in nodes */
+  double _max_weights_sum;        /*!< Maximum weights sum in nodes */
+  double _min_population;         /*!< Minimum population size      */
+  double _max_population;         /*!< Maximum population size      */
+  double _min_population_density; /*!< Minimum population density   */
+  double _max_population_density; /*!< Maximum population density   */
+  double _min_road_density;       /*!< Minimum population size      */
+  double _max_road_density;       /*!< Maximum population size      */
   
   /*--------------------------------------- MINIMIZATION SCORE */
   
-  double _empty_score; /*!< Optimization score with empty map */
-  double _score;       /*!< Optimization score                */
+  double _total_log_likelihood;         /*!< Total log hypergeometric likelihood         */
+  double _total_log_empty_likelihood;   /*!< Total log empty hypergeometric likelihood   */
+  double _total_log_maximum_likelihood; /*!< Total log maximum hypergeometric likelihood */
+  double _empty_score;                  /*!< Optimization score with empty map           */
+  double _score;                        /*!< Optimization score                          */
+  
 };
 
 
@@ -204,64 +213,40 @@ inline Node* Graph::get_next( void )
   return _it->second;
 }
 
-/*--------------------------------------- GRAPH STATISTICS */
+/*--------------------------------------- MINIMIZATION SCORES */
 
 /**
- * \brief    Get the maximum weights sum in the graph
+ * \brief    Get the total log likelihood
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Graph::get_maximum_weights_sum( void ) const
+inline double Graph::get_total_log_likelihood( void ) const
 {
-  return _maximum_weights_sum;
+  return _total_log_likelihood;
 }
 
 /**
- * \brief    Get the minimum x coordinate
+ * \brief    Get the total log empty likelihood
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Graph::get_minimum_x_coordinate( void ) const
+inline double Graph::get_total_log_empty_likelihood( void ) const
 {
-  return _min_x_coord;
+  return _total_log_empty_likelihood;
 }
 
 /**
- * \brief    Get the minimum y coordinate
+ * \brief    Get the total log maximum likelihood
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Graph::get_minimum_y_coordinate( void ) const
+inline double Graph::get_total_log_maximum_likelihood( void ) const
 {
-  return _min_y_coord;
+  return _total_log_maximum_likelihood;
 }
-
-/**
- * \brief    Get the maximum x coordinate
- * \details  --
- * \param    void
- * \return   \e double
- */
-inline double Graph::get_maximum_x_coordinate( void ) const
-{
-  return _max_x_coord;
-}
-
-/**
- * \brief    Get the maximum y coordinate
- * \details  --
- * \param    void
- * \return   \e double
- */
-inline double Graph::get_maximum_y_coordinate( void ) const
-{
-  return _max_y_coord;
-}
-
-/*--------------------------------------- MINIMIZATION SCORE */
 
 /**
  * \brief    Get the optimization score with empty map

@@ -2,14 +2,15 @@
  * \file      MoRIS_run.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     MoRIS_run executable
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +75,7 @@ int main(int argc, char const** argv)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 3) Run the simulation                              */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  while (simulation->get_iteration() < parameters->get_number_of_iterations())
+  while (simulation->get_iteration() < parameters->get_iterations())
   {
     simulation->compute_next_iteration();
   }
@@ -86,18 +87,22 @@ int main(int argc, char const** argv)
   if (parameters->saveOutputs())
   {
     simulation->write_state("output/final_state.txt");
+    simulation->write_unique_pairs("output/evaluated_euclidean_distribution.txt", "output/observed_euclidean_distribution.txt", "output/simulated_euclidean_distribution.txt");
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 5) Return the score, free the memory and exit      */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  double empty_score = simulation->get_empty_score();
-  double score       = simulation->get_score();
+  double likelihood       = simulation->get_total_log_likelihood();
+  double empty_likelihood = simulation->get_total_log_empty_likelihood();
+  double max_likelihood   = simulation->get_total_log_maximum_likelihood();
+  double empty_score      = simulation->get_empty_score();
+  double score            = simulation->get_score();
   delete simulation;
   simulation = NULL;
   delete parameters;
   parameters = NULL;
-  std::cout << empty_score << " " << score << "\n";
+  std::cout << likelihood << " " << empty_likelihood << " " << max_likelihood << " " << empty_score << " " << score << "\n";
   return EXIT_SUCCESS;
 }
 
@@ -111,33 +116,30 @@ int main(int argc, char const** argv)
  */
 void readArgs( int argc, char const** argv, Parameters* parameters )
 {
-  double xcoord = 0.0;
-  double ycoord = 0.0;
-  std::vector<double> rweights;
-  rweights.assign(6, 0.0);
-  
   std::unordered_map<std::string, bool> options;
-  options["seed"]             = false;
-  options["typeofdata"]       = false;
-  options["network"]          = false;
-  options["map"]              = false;
-  options["sample"]           = false;
-  options["rep"]              = false;
-  options["iterations"]       = false;
-  options["xcoord"]           = false;
-  options["ycoord"]           = false;
-  options["p-intro"]          = false;
-  options["lambda"]           = false;
-  options["mu"]               = false;
-  options["sigma"]            = false;
-  options["law"]              = false;
-  options["wroad1"]           = false;
-  options["wroad2"]           = false;
-  options["wroad3"]           = false;
-  options["wroad4"]           = false;
-  options["wroad5"]           = false;
-  options["wroad6"]           = false;
-  options["min-connectivity"] = false;
+  options["seed"]       = false;
+  options["typeofdata"] = false;
+  options["network"]    = false;
+  options["map"]        = false;
+  options["sample"]     = false;
+  options["reps"]       = false;
+  options["iters"]      = false;
+  options["law"]        = false;
+  options["optimfunc"]  = false;
+  options["xintro"]     = false;
+  options["yintro"]     = false;
+  options["pintro"]     = false;
+  options["lambda"]     = false;
+  options["mu"]         = false;
+  options["sigma"]      = false;
+  options["gamma"]      = false;
+  options["w1"]         = false;
+  options["w2"]         = false;
+  options["w3"]         = false;
+  options["w4"]         = false;
+  options["w5"]         = false;
+  options["w6"]         = false;
+  options["wmin"]       = false;
   for (int i = 0; i < argc; i++)
   {
     if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
@@ -163,29 +165,17 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
         options["seed"] = true;
       }
     }
-    if (strcmp(argv[i], "-typeofdata") == 0 || strcmp(argv[i], "--type-of-data") == 0)
+    if (strcmp(argv[i], "-map") == 0 || strcmp(argv[i], "--map") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: typeofdata parameter is missing.\n";
+        std::cout << "Error: map filename is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        options["typeofdata"] = true;
-        if (strcmp(argv[i+1], "PRESENCE_ONLY") == 0)
-        {
-          parameters->set_type_of_data(PRESENCE_ONLY);
-        }
-        else if (strcmp(argv[i+1], "PRESENCE_ABSENCE") == 0)
-        {
-          parameters->set_type_of_data(PRESENCE_ABSENCE);
-        }
-        else
-        {
-          std::cout << "Error: wrong typeofdata value.\n";
-          exit(EXIT_FAILURE);
-        }
+        parameters->set_map_filename(argv[i+1]);
+        options["map"] = true;
       }
     }
     if (strcmp(argv[i], "-network") == 0 || strcmp(argv[i], "--network") == 0)
@@ -201,19 +191,6 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
         options["network"] = true;
       }
     }
-    if (strcmp(argv[i], "-map") == 0 || strcmp(argv[i], "--map") == 0)
-    {
-      if (i+1 == argc)
-      {
-        std::cout << "Error: map filename is missing.\n";
-        exit(EXIT_FAILURE);
-      }
-      else
-      {
-        parameters->set_map_filename(argv[i+1]);
-        options["map"] = true;
-      }
-    }
     if (strcmp(argv[i], "-sample") == 0 || strcmp(argv[i], "--sample") == 0)
     {
       if (i+1 == argc)
@@ -227,69 +204,156 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
         options["sample"] = true;
       }
     }
-    if (strcmp(argv[i], "-rep") == 0 || strcmp(argv[i], "--rep") == 0)
+    if (strcmp(argv[i], "-typeofdata") == 0 || strcmp(argv[i], "--type-of-data") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: rep value is missing.\n";
+        std::cout << "Error: typeofdata parameter is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        parameters->set_repetitions_by_simulation(atoi(argv[i+1]));
-        options["rep"] = true;
+        options["typeofdata"] = true;
+        if (strcmp(argv[i+1], "PRESENCE_ONLY") == 0)
+        {
+          parameters->set_typeofdata(PRESENCE_ONLY);
+        }
+        else if (strcmp(argv[i+1], "PRESENCE_ABSENCE") == 0)
+        {
+          parameters->set_typeofdata(PRESENCE_ABSENCE);
+        }
+        else
+        {
+          std::cout << "Error: wrong typeofdata value.\n";
+          exit(EXIT_FAILURE);
+        }
       }
     }
-    if (strcmp(argv[i], "-iterations") == 0 || strcmp(argv[i], "--iterations") == 0)
+    if (strcmp(argv[i], "-reps") == 0 || strcmp(argv[i], "--reps") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: iterations value is missing.\n";
+        std::cout << "Error: reps value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        parameters->set_number_of_iterations(atoi(argv[i+1]));
-        options["iterations"] = true;
+        parameters->set_repetitions(atoi(argv[i+1]));
+        options["reps"] = true;
       }
     }
-    if (strcmp(argv[i], "-xcoord") == 0 || strcmp(argv[i], "--xcoord") == 0)
+    if (strcmp(argv[i], "-iters") == 0 || strcmp(argv[i], "--iters") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: xcoord value is missing.\n";
+        std::cout << "Error: iters value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        xcoord = atof(argv[i+1]);
-        options["xcoord"] = true;
+        parameters->set_iterations(atoi(argv[i+1]));
+        options["iters"] = true;
       }
     }
-    if (strcmp(argv[i], "-ycoord") == 0 || strcmp(argv[i], "--ycoord") == 0)
+    if (strcmp(argv[i], "-law") == 0 || strcmp(argv[i], "--law") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: ycoord value is missing.\n";
+        std::cout << "Error: law name is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        ycoord = atof(argv[i+1]);
-        options["ycoord"] = true;
+        options["law"] = true;
+        if (strcmp(argv[i+1], "DIRAC") == 0)
+        {
+          parameters->set_jump_law(DIRAC);
+        }
+        else if (strcmp(argv[i+1], "NORMAL") == 0)
+        {
+          parameters->set_jump_law(NORMAL);
+        }
+        else if (strcmp(argv[i+1], "LOG_NORMAL") == 0)
+        {
+          parameters->set_jump_law(LOG_NORMAL);
+        }
+        else if (strcmp(argv[i+1], "CAUCHY") == 0)
+        {
+          parameters->set_jump_law(CAUCHY);
+        }
+        else
+        {
+          std::cout << "Error: wrong law value.\n";
+          exit(EXIT_FAILURE);
+        }
       }
     }
-    if (strcmp(argv[i], "-p-intro") == 0 || strcmp(argv[i], "--p-intro") == 0)
+    if (strcmp(argv[i], "-optimfunc") == 0 || strcmp(argv[i], "--optimfunc") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: p-intro value is missing.\n";
+        std::cout << "Error: optimfunc name is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        parameters->set_introduction_probability(atof(argv[i+1]));
-        options["p-intro"] = true;
+        options["optimfunc"] = true;
+        if (strcmp(argv[i+1], "LSS") == 0)
+        {
+          parameters->set_optimization_function(LSS);
+        }
+        else if (strcmp(argv[i+1], "LOG_LIKELIHOOD") == 0)
+        {
+          parameters->set_optimization_function(LOG_LIKELIHOOD);
+        }
+        else if (strcmp(argv[i+1], "LIKELIHOOD_LSS") == 0)
+        {
+          parameters->set_optimization_function(LIKELIHOOD_LSS);
+        }
+        else
+        {
+          std::cout << "Error: wrong optimfunc value.\n";
+          exit(EXIT_FAILURE);
+        }
+      }
+    }
+    if (strcmp(argv[i], "-xintro") == 0 || strcmp(argv[i], "--xintro") == 0)
+    {
+      if (i+1 == argc)
+      {
+        std::cout << "Error: xintro value is missing.\n";
+        exit(EXIT_FAILURE);
+      }
+      else
+      {
+        parameters->set_x_introduction(atof(argv[i+1]));
+        options["xintro"] = true;
+      }
+    }
+    if (strcmp(argv[i], "-yintro") == 0 || strcmp(argv[i], "--yintro") == 0)
+    {
+      if (i+1 == argc)
+      {
+        std::cout << "Error: yintro value is missing.\n";
+        exit(EXIT_FAILURE);
+      }
+      else
+      {
+        parameters->set_y_introduction(atof(argv[i+1]));
+        options["yintro"] = true;
+      }
+    }
+    if (strcmp(argv[i], "-pintro") == 0 || strcmp(argv[i], "--pintro") == 0)
+    {
+      if (i+1 == argc)
+      {
+        std::cout << "Error: pintro value is missing.\n";
+        exit(EXIT_FAILURE);
+      }
+      else
+      {
+        parameters->set_p_introduction(atof(argv[i+1]));
+        options["pintro"] = true;
       }
     }
     if (strcmp(argv[i], "-lambda") == 0 || strcmp(argv[i], "--lambda") == 0)
@@ -331,124 +395,108 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
         options["sigma"] = true;
       }
     }
-    if (strcmp(argv[i], "-law") == 0 || strcmp(argv[i], "--law") == 0)
+    if (strcmp(argv[i], "-gamma") == 0 || strcmp(argv[i], "--gamma") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: law name is missing.\n";
+        std::cout << "Error: gamma value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        options["law"] = true;
-        if (strcmp(argv[i+1], "DIRAC") == 0)
-        {
-          parameters->set_jump_law(DIRAC);
-        }
-        else if (strcmp(argv[i+1], "GAUSSIAN") == 0)
-        {
-          parameters->set_jump_law(GAUSSIAN);
-        }
-        else if (strcmp(argv[i+1], "LOGNORMAL") == 0)
-        {
-          parameters->set_jump_law(LOGNORMAL);
-        }
-        else
-        {
-          std::cout << "Error: wrong law value.\n";
-          exit(EXIT_FAILURE);
-        }
+        parameters->set_gamma(atof(argv[i+1]));
+        options["gamma"] = true;
       }
     }
-    if (strcmp(argv[i], "-wroad1") == 0 || strcmp(argv[i], "--wroad1") == 0)
+    if (strcmp(argv[i], "-w1") == 0 || strcmp(argv[i], "--w1") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: wroad1 value is missing.\n";
+        std::cout << "Error: w1 value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        rweights[0] = atof(argv[i+1]);
-        options["wroad1"] = true;
+        parameters->set_w1(atof(argv[i+1]));
+        options["w1"] = true;
       }
     }
-    if (strcmp(argv[i], "-wroad2") == 0 || strcmp(argv[i], "--wroad2") == 0)
+    if (strcmp(argv[i], "-w2") == 0 || strcmp(argv[i], "--w2") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: wroad2 value is missing.\n";
+        std::cout << "Error: w2 value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        rweights[1] = atof(argv[i+1]);
-        options["wroad2"] = true;
+        parameters->set_w2(atof(argv[i+1]));
+        options["w2"] = true;
       }
     }
-    if (strcmp(argv[i], "-wroad3") == 0 || strcmp(argv[i], "--wroad3") == 0)
+    if (strcmp(argv[i], "-w3") == 0 || strcmp(argv[i], "--w3") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: wroad3 value is missing.\n";
+        std::cout << "Error: w3 value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        rweights[2] = atof(argv[i+1]);
-        options["wroad3"] = true;
+        parameters->set_w3(atof(argv[i+1]));
+        options["w3"] = true;
       }
     }
-    if (strcmp(argv[i], "-wroad4") == 0 || strcmp(argv[i], "--wroad4") == 0)
+    if (strcmp(argv[i], "-w4") == 0 || strcmp(argv[i], "--w4") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: wroad4 value is missing.\n";
+        std::cout << "Error: w4 value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        rweights[3] = atof(argv[i+1]);
-        options["wroad4"] = true;
+        parameters->set_w4(atof(argv[i+1]));
+        options["w4"] = true;
       }
     }
-    if (strcmp(argv[i], "-wroad5") == 0 || strcmp(argv[i], "--wroad5") == 0)
+    if (strcmp(argv[i], "-w5") == 0 || strcmp(argv[i], "--w5") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: wroad5 value is missing.\n";
+        std::cout << "Error: w5 value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        rweights[4] = atof(argv[i+1]);
-        options["wroad5"] = true;
+        parameters->set_w5(atof(argv[i+1]));
+        options["w5"] = true;
       }
     }
-    if (strcmp(argv[i], "-wroad6") == 0 || strcmp(argv[i], "--wroad6") == 0)
+    if (strcmp(argv[i], "-w6") == 0 || strcmp(argv[i], "--w6") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: wroad6 value is missing.\n";
+        std::cout << "Error: w6 value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        rweights[5] = atof(argv[i+1]);
-        options["wroad6"] = true;
+        parameters->set_w6(atof(argv[i+1]));
+        options["w6"] = true;
       }
     }
-    if (strcmp(argv[i], "-min-connectivity") == 0 || strcmp(argv[i], "--min-connectivity") == 0)
+    if (strcmp(argv[i], "-wmin") == 0 || strcmp(argv[i], "--wmin") == 0)
     {
       if (i+1 == argc)
       {
-        std::cout << "Error: min-connectivity value is missing.\n";
+        std::cout << "Error: wmin value is missing.\n";
         exit(EXIT_FAILURE);
       }
       else
       {
-        parameters->set_minimal_connectivity(atof(argv[i+1]));
-        options["min-connectivity"] = true;
+        parameters->set_wmin(atof(argv[i+1]));
+        options["wmin"] = true;
       }
     }
     if (strcmp(argv[i], "-save-outputs") == 0 || strcmp(argv[i], "--save-outputs") == 0)
@@ -461,7 +509,7 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
   {
     if (!it->second)
     {
-      std::cout << "--" << it->first << " option is mandatory.\n";
+      std::cout << "-" << it->first << " option is mandatory.\n";
       parameter_lacking = true;
     }
   }
@@ -470,10 +518,6 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
     exit(EXIT_FAILURE);
   }
   options.clear();
-  std::pair<double, double> coordinates(xcoord, ycoord);
-  parameters->set_introduction_coordinates(&coordinates);
-  parameters->set_road_linear_combination(&rweights);
-  rweights.clear();
 }
 
 /**
@@ -493,8 +537,8 @@ void printUsage( void )
   std::cout << " " << PACKAGE << " " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << " ( release )\n";
 #endif
   std::cout << " MoRIS (Model of Routes of Invasive Spread)                           \n";
-  std::cout << "                                                                      \n";
-  std::cout << " Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet \n";
+  std::cout << " Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet \n";
+  std::cout << " Web: https://github.com/charlesrocabert/MoRIS                        \n";
   std::cout << "                                                                      \n";
   std::cout << " This program comes with ABSOLUTELY NO WARRANTY.                      \n";
   std::cout << " This is free software, and you are welcome to redistribute it under  \n";
@@ -517,38 +561,42 @@ void printUsage( void )
   std::cout << "        Specify the map file (default: map.txt)\n";
   std::cout << "  -sample, --sample <filename>\n";
   std::cout << "        Specify the sample file (default: sample.txt)\n";
-  std::cout << "  -rep, --rep <repetitions>\n";
+  std::cout << "  -reps, --reps <repetitions>\n";
   std::cout << "        Specify the number of repetitions by simulation\n";
-  std::cout << "  -iterations, --iterations <iterations>\n";
+  std::cout << "  -iters, --iters <iterations>\n";
   std::cout << "        Specify the number of iterations by simulation\n";
-  std::cout << "  -xcoord, --xcoord <coordinate>\n";
+  std::cout << "  -law, --law <law>\n";
+  std::cout << "        Specify the jump distribution law (DIRAC, NORMAL, LOGNORMAL, CAUCHY)\n";
+  std::cout << "  -optimfunc, --optimfunc <optimization_function>\n";
+  std::cout << "        Specify the optimization_function (LSS, LOG_LIKELIHOOD, LIKELIHOOD_LSS)\n";
+  std::cout << "  -xintro, --xintro <coordinate>\n";
   std::cout << "        Specify the x coordinate of the introduction cell\n";
-  std::cout << "  -ycoord, --ycoord <coordinate>\n";
+  std::cout << "  -yintro, --yintro <coordinate>\n";
   std::cout << "        Specify the y coordinate of the introduction cell\n";
-  std::cout << "  -p-intro, --p-intro <p-intro>\n";
-  std::cout << "        Specify the probability of introduction\n";
+  std::cout << "  -pintro, --pintro <p-intro>\n";
+  std::cout << "        Specify the prevalence of introduction\n";
   std::cout << "  -lambda, --lambda <lambda>\n";
   std::cout << "        Specify the mean number of jumps/cell/year\n";
   std::cout << "  -mu, --mu <mu>\n";
-  std::cout << "        Specify the mean of the jump distribution\n";
+  std::cout << "        Specify the mean of the jump distribution (DIRAC, NORMAL, LOGNORMAL)\n";
   std::cout << "  -sigma, --sigma <sigma>\n";
-  std::cout << "        Specify the variance of the jump distribution\n";
-  std::cout << "  -law, --law <law>\n";
-  std::cout << "        Specify the jump distribution law\n";
-  std::cout << "  -wroad1, --wroad1 <weight>\n";
+  std::cout << "        Specify the variance of the jump distribution (NORMAL, LOGNORMAL)\n";
+  std::cout << "  -gamma, --gamma <gamma>\n";
+  std::cout << "        Specify the gamma parameter of the jump distribution (CAUCHY)\n";
+  std::cout << "  -w1, --w1 <weight>\n";
   std::cout << "        Specify the weight of type I roads\n";
-  std::cout << "  -wroad2, --wroad2 <weight>\n";
+  std::cout << "  -w2, --w2 <weight>\n";
   std::cout << "        Specify the weight of type II roads\n";
-  std::cout << "  -wroad3, --wroad3 <weight>\n";
+  std::cout << "  -w3, --w3 <weight>\n";
   std::cout << "        Specify the weight of type III roads\n";
-  std::cout << "  -wroad4, --wroad4 <weight>\n";
+  std::cout << "  -w4, --w4 <weight>\n";
   std::cout << "        Specify the weight of type IV roads\n";
-  std::cout << "  -wroad5, --wroad5 <weight>\n";
+  std::cout << "  -w5, --w5 <weight>\n";
   std::cout << "        Specify the weight of type V roads\n";
-  std::cout << "  -wroad6, --wroad6 <weight>\n";
+  std::cout << "  -w6, --w6 <weight>\n";
   std::cout << "        Specify the weight of type VI roads\n";
-  std::cout << "  -min-connectivity, --min-connectivity <connectivity>\n";
-  std::cout << "        Specify the minimal connectivity between cells\n";
+  std::cout << "  -wmin, --wmin <weight>\n";
+  std::cout << "        Specify the minimal weight between cells\n";
   std::cout << "  -save-outputs, --save-outputs\n";
   std::cout << "        Save various simulation outputs (final state, lineage tree, ...)\n";
   std::cout << "\n";

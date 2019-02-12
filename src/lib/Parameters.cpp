@@ -2,14 +2,15 @@
  * \file      Parameters.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Parameters class definition
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,99 +46,43 @@ Parameters::Parameters( void )
   _prng = new Prng();
   _seed = 0;
   
-  /*------------------------------------------------------------------ Type of experimental data */
-  
-  _data = PRESENCE_ONLY;
-  
   /*------------------------------------------------------------------ Input data filenames */
   
   _map_filename     = "";
   _network_filename = "";
   _sample_filename  = "";
   
-  /*------------------------------------------------------------------ Number of repetitions by simulation */
+  /*------------------------------------------------------------------ Main parameters */
   
-  _repetitions_by_simulation = 0;
-  
-  /*------------------------------------------------------------------ Number of iterations by simulation */
-  
-  _number_of_iterations = 0;
+  _data           = PRESENCE_ABSENCE;
+  _repetitions    = 0;
+  _iterations     = 0;
+  _jump_law       = DIRAC;
+  _optim_function = LOG_LIKELIHOOD;
   
   /*------------------------------------------------------------------ Simulation parameters */
   
-  _introduction_coordinates = std::pair<double, double>(0.0, 0.0);
-  _introduction_probability = 0.0;
-  _lambda                   = 0.0;
-  _mu                       = 0.0;
-  _sigma                    = 0.0;
-  _jump_law                 = DIRAC;
+  _x_introduction = 0.0;
+  _y_introduction = 0.0;
+  _p_introduction = 0.0;
+  _lambda         = 0.0;
+  _mu             = 0.0;
+  _sigma          = 0.0;
+  _gamma          = 0.0;
   
   /*------------------------------------------------------------------ Linear combination of road categories */
   
-  _road_linear_combination.clear();
-  _road_linear_combination.assign(6, 0.0);
-  
-  /*------------------------------------------------------------------ Minimal connectivity of the connectivity graph */
-  
-  _minimal_connectivity = 0.0;
+  _w1   = 0.0;
+  _w2   = 0.0;
+  _w3   = 0.0;
+  _w4   = 0.0;
+  _w5   = 0.0;
+  _w6   = 0.0;
+  _wmin = 0.0;
   
   /*------------------------------------------------------------------ Extra statistics */
   
   _save_outputs = false;
-  
-}
-
-/**
- * \brief    Copy constructor
- * \details  --
- * \param    const Parameters& parameters
- * \return   \e void
- */
-Parameters::Parameters( const Parameters& parameters )
-{
-  /*------------------------------------------------------------------ Pseudorandom numbers generator */
-  
-  _prng = new Prng(*parameters._prng);
-  _seed = parameters._seed;
-  
-  /*------------------------------------------------------------------ Type of experimental data */
-  
-  _data = parameters._data;
-  
-  /*------------------------------------------------------------------ Input data filenames */
-  
-  _map_filename     = parameters._map_filename;
-  _network_filename = parameters._network_filename;
-  _sample_filename  = parameters._sample_filename;
-  
-  /*------------------------------------------------------------------ Number of repetitions by simulation */
-  
-  _repetitions_by_simulation = parameters._repetitions_by_simulation;
-  
-  /*------------------------------------------------------------------ Number of iterations by simulation */
-  
-  _number_of_iterations = parameters._number_of_iterations;
-  
-  /*------------------------------------------------------------------ Simulation parameters */
-  
-  _introduction_coordinates = std::pair<double, double>(parameters._introduction_coordinates.first, parameters._introduction_coordinates.second);
-  _introduction_probability = parameters._introduction_probability;
-  _lambda                   = parameters._lambda;
-  _mu                       = parameters._mu;
-  _sigma                    = parameters._sigma;
-  _jump_law                 = parameters._jump_law;
-  
-  /*------------------------------------------------------------------ Linear combination of road categories */
-  
-  _road_linear_combination = std::vector<double>(parameters._road_linear_combination);
-  
-  /*------------------------------------------------------------------ Minimal connectivity between two nodes */
-  
-  _minimal_connectivity = parameters._minimal_connectivity;
-  
-  /*------------------------------------------------------------------ Extra statistics */
-  
-  _save_outputs = parameters._save_outputs;
   
 }
 
@@ -170,41 +115,45 @@ Parameters::~Parameters( void )
  */
 void Parameters::write_parameters( std::string filename )
 {
-  /*--------------*/
-  /* 1) Open file */
-  /*--------------*/
+  /*~~~~~~~~~~~~~~~~~*/
+  /* 1) Open file    */
+  /*~~~~~~~~~~~~~~~~~*/
   std::ofstream file(filename, std::ios::out | std::ios::trunc);
   
-  /*-----------------*/
+  /*~~~~~~~~~~~~~~~~~*/
   /* 2) Write header */
-  /*-----------------*/
+  /*~~~~~~~~~~~~~~~~~*/
   file << "seed" << " ";
-  file << "type_of_data" << " ";
   file << "map" << " ";
   file << "network" << " ";
   file << "sample" << " ";
-  file << "repetitions" << " ";
-  file << "iterations" << " ";
-  file << "x_introduction" << " ";
-  file << "y_introduction" << " ";
-  file << "introduction_probability" << " ";
+  file << "typeofdata" << " ";
+  file << "reps" << " ";
+  file << "iters" << " ";
+  file << "law" << " ";
+  file << "xintro" << " ";
+  file << "yintro" << " ";
+  file << "pintro" << " ";
   file << "lambda" << " ";
   file << "mu" << " ";
   file << "sigma" << " ";
-  file << "jump_law" << " ";
-  file << "road1_weight" << " ";
-  file << "road2_weight" << " ";
-  file << "road3_weight" << " ";
-  file << "road4_weight" << " ";
-  file << "road5_weight" << " ";
-  file << "road6_weight" << " ";
-  file << "minimal_connectivity" << " ";
-  file << "save_outputs" << "\n";
+  file << "gamma" << " ";
+  file << "w1" << " ";
+  file << "w2" << " ";
+  file << "w3" << " ";
+  file << "w4" << " ";
+  file << "w5" << " ";
+  file << "w6" << " ";
+  file << "wmin" << " ";
+  file << "save-outputs" << "\n";
   
-  /*-----------------*/
+  /*~~~~~~~~~~~~~~~~~*/
   /* 3) Write data   */
-  /*-----------------*/
+  /*~~~~~~~~~~~~~~~~~*/
   file << _seed << " ";
+  file << _map_filename << " ";
+  file << _network_filename << " ";
+  file << _sample_filename << " ";
   if (_data == PRESENCE_ONLY)
   {
     file << "PRESENCE_ONLY" << " ";
@@ -213,25 +162,50 @@ void Parameters::write_parameters( std::string filename )
   {
     file << "PRESENCE_ABSENCE" << " ";
   }
-  file << _map_filename << " ";
-  file << _network_filename << " ";
-  file << _sample_filename << " ";
-  file << _repetitions_by_simulation << " ";
-  file << _number_of_iterations << " ";
-  file << _introduction_coordinates.first << " ";
-  file << _introduction_coordinates.second << " ";
-  file << _introduction_probability << " ";
+  file << _repetitions << " ";
+  file << _iterations << " ";
+  if (_jump_law == DIRAC)
+  {
+    file << "DIRAC" << " ";
+  }
+  else if (_jump_law == NORMAL)
+  {
+    file << "NORMAL" << " ";
+  }
+  else if (_jump_law == LOG_NORMAL)
+  {
+    file << "LOG_NORMAL" << " ";
+  }
+  else if (_jump_law == CAUCHY)
+  {
+    file << "CAUCHY" << " ";
+  }
+  if (_optim_function == LSS)
+  {
+    file << "LSS" << " ";
+  }
+  else if (_optim_function == LOG_LIKELIHOOD)
+  {
+    file << "LOG_LIKELIHOOD" << " ";
+  }
+  else if (_optim_function == LIKELIHOOD_LSS)
+  {
+    file << "LIKELIHOOD_LSS" << " ";
+  }
+  file << _x_introduction << " ";
+  file << _y_introduction << " ";
+  file << _p_introduction << " ";
   file << _lambda << " ";
   file << _mu << " ";
   file << _sigma << " ";
-  file << _jump_law << " ";
-  file << _road_linear_combination[0] << " ";
-  file << _road_linear_combination[1] << " ";
-  file << _road_linear_combination[2] << " ";
-  file << _road_linear_combination[3] << " ";
-  file << _road_linear_combination[4] << " ";
-  file << _road_linear_combination[5] << " ";
-  file << _minimal_connectivity << " ";
+  file << _gamma << " ";
+  file << _w1 << " ";
+  file << _w2 << " ";
+  file << _w3 << " ";
+  file << _w4 << " ";
+  file << _w5 << " ";
+  file << _w6 << " ";
+  file << _wmin << " ";
   file << _save_outputs << "\n";
   
   /*---------------*/

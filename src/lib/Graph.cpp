@@ -2,14 +2,15 @@
  * \file      Graph.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Graph class definition
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,16 +55,19 @@ Graph::Graph( Parameters* parameters )
   /*--------------------------------------- GRAPH STATISTICS */
   
   _introduction_node = get_introduction_node_from_coordinates();
-  compute_maximum_weight_sum();
+  compute_statistics();
   compute_jump_probability();
   reset_states();
   set_introduction_node();
   
   /*--------------------------------------- MINIMIZATION SCORE */
   
-  compute_score();
-  _empty_score = _score;
-  _score       = 0.0;
+  _total_log_likelihood         = 0.0;
+  _total_log_empty_likelihood   = 0.0;
+  _total_log_maximum_likelihood = 0.0;
+  _empty_score                  = 0.0;
+  _score                        = 0.0;
+  compute_score(true);
 }
 
 /*----------------------------
@@ -121,55 +125,52 @@ void Graph::update_state( void )
 /**
  * \brief    Compute the score
  * \details  --
- * \param    void
+ * \param    bool empty
  * \return   \e void
  */
-void Graph::compute_score( void )
+void Graph::compute_score( bool empty )
 {
-  _score = 0.0;
+  _total_log_likelihood         = 0.0;
+  _total_log_maximum_likelihood = 0.0;
+  _score                        = 0.0;
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 1) If data is presence-only, compute the LEAST SQUARE SUM score       */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  if (_parameters->get_type_of_data() == PRESENCE_ONLY)
+  if (_parameters->get_typeofdata() == PRESENCE_ONLY)
   {
     for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
     {
       double y_obs = it->second->get_y_obs();
       if (y_obs > 0.0)
       {
-        it->second->compute_mean_var_nb_introductions();
         double nb_intros  = it->second->get_mean_nb_introductions();
         _score           += (y_obs-nb_intros)*(y_obs-nb_intros);
       }
     }
   }
+  
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 2) Else if data is presence-absence, compute the HYPERGEOMETRIC score */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  else if (_parameters->get_type_of_data() == PRESENCE_ABSENCE)
+  else if (_parameters->get_typeofdata() == PRESENCE_ABSENCE)
   {
-    double count = 0.0;
     for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
     {
-      double y_sim = it->second->get_y_sim();
-      double n_sim = it->second->get_n_sim();
-      double y_obs = it->second->get_y_obs();
-      double n_obs = it->second->get_n_obs();
-      if (n_obs > 0.0)
+      if (it->second->get_n_obs() > 0.0)
       {
-        unsigned int a      = (unsigned int)(y_sim);
-        unsigned int b      = (unsigned int)(y_obs);
-        unsigned int c      = (unsigned int)(n_sim-y_sim);
-        unsigned int d      = (unsigned int)(n_obs-y_obs);
-        double current_FS   = gsl_ran_hypergeometric_pdf(a, a+b, c+d, a+c);
-        double current_MFS  = gsl_ran_hypergeometric_pdf(b, b+b, d+d, b+d);
-        _score             += (1.0-current_FS/current_MFS)*(1.0-current_FS/current_MFS);
-        count              += 1.0;
+        it->second->compute_score();
+        _total_log_likelihood         += it->second->get_log_likelihood();
+        _total_log_maximum_likelihood += it->second->get_log_maximum_likelihood();
+        _score                        += it->second->get_score();
       }
     }
-    _score /= count;
-    _score = log10(_score);
+    //_score = log10(_score);
+  }
+  if (empty)
+  {
+    _total_log_empty_likelihood = _total_log_likelihood;
+    _empty_score                = _score;
   }
 }
 
@@ -182,25 +183,108 @@ void Graph::compute_score( void )
 void Graph::write_state( std::string filename )
 {
   std::ofstream file(filename, std::ios::out | std::ios::trunc);
-  file << "id xcoord ycoord y n f_obs n_sim y_sim f_sim total_nb_intros mean_nb_intros var_nb_intros empty_score score\n";
+  file << "id x y y_obs n_obs p_obs total_nb_intros mean_nb_intros var_nb_intros y_sim n_sim p_sim L empty_L max_L empty_score score\n";
   Node* node = get_first();
   while (node != NULL)
   {
     file << node->get_identifier() << " ";
-    file << node->get_x_coord() << " ";
-    file << node->get_y_coord() << " ";
+    file << node->get_x() << " ";
+    file << node->get_y() << " ";
     file << node->get_y_obs() << " ";
     file << node->get_n_obs() << " ";
-    file << node->get_f_obs() << " ";
-    file << node->get_n_sim() << " ";
-    file << node->get_y_sim() << " ";
-    file << node->get_f_sim() << " ";
+    file << node->get_p_obs() << " ";
     file << node->get_total_nb_introductions() << " ";
     file << node->get_mean_nb_introductions() << " ";
     file << node->get_var_nb_introductions() << " ";
+    file << node->get_y_sim() << " ";
+    file << node->get_n_sim() << " ";
+    file << node->get_p_sim() << " ";
+    file << _total_log_likelihood << " ";
+    file << _total_log_empty_likelihood << " ";
+    file << _total_log_maximum_likelihood << " ";
     file << _empty_score << " ";
     file << _score << "\n";
     node = get_next();
+  }
+  file.close();
+}
+
+/**
+ * \brief    Write unique pairs of occupied nodes (simulated or observed)
+ * \details  --
+ * \param    std::string evaluated_filename
+ * \param    std::string observed_filename
+ * \param    std::string simulated_filename
+ * \return   \e void
+ */
+void Graph::write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename )
+{
+  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 1) Evaluated occupancy */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  std::ofstream file(evaluated_filename, std::ios::out | std::ios::trunc);
+  file << "start_node end_node euclidean_dist\n";
+  for (std::unordered_map<int, Node*>::iterator it1 = _map.begin(); it1 != _map.end(); ++it1)
+  {
+    for (std::unordered_map<int, Node*>::iterator it2 = _map.find(it1->first); it2 != _map.end(); ++it2)
+    {
+      if (it1->first != it2->first)
+      {
+        if (it1->second->get_n_obs() > 0.0 && it2->second->get_n_obs() > 0.0)
+        {
+          double dist = compute_euclidean_distance(it1->second, it2->second);
+          file << it1->first << " " << it2->first << " " << dist << "\n";
+        }
+      }
+    }
+  }
+  file.close();
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 2) Observed occupancy  */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  file.open(observed_filename, std::ios::out | std::ios::trunc);
+  file << "start_node end_node euclidean_dist\n";
+  for (std::unordered_map<int, Node*>::iterator it1 = _map.begin(); it1 != _map.end(); ++it1)
+  {
+    for (std::unordered_map<int, Node*>::iterator it2 = _map.find(it1->first); it2 != _map.end(); ++it2)
+    {
+      if (it1->first != it2->first)
+      {
+        double dist = compute_euclidean_distance(it1->second, it2->second);
+        if (it1->second->get_y_obs() > 0.0 && it2->second->get_y_obs() > 0.0)
+        {
+          for (double i = 0; i < it1->second->get_y_obs(); i++)
+          {
+            file << it1->first << " " << it2->first << " " << dist << "\n";
+          }
+        }
+      }
+    }
+  }
+  file.close();
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 3) Simulated occupancy */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  file.open(simulated_filename, std::ios::out | std::ios::trunc);
+  file << "start_node end_node euclidean_dist rep\n";
+  for (std::unordered_map<int, Node*>::iterator it1 = _map.begin(); it1 != _map.end(); ++it1)
+  {
+    for (std::unordered_map<int, Node*>::iterator it2 = _map.find(it1->first); it2 != _map.end(); ++it2)
+    {
+      if (it1->first != it2->first)
+      {
+        double dist = compute_euclidean_distance(it1->second, it2->second);
+        for (int i = 0; i < _parameters->get_repetitions(); i++)
+        {
+          if (it1->second->isOccupied(i) && it2->second->isOccupied(i))
+          {
+            file << it1->first << " " << it2->first << " " << dist << " " << i+1 << "\n";
+          }
+        }
+      }
+    }
   }
   file.close();
 }
@@ -217,13 +301,14 @@ void Graph::write_state( std::string filename )
  */
 int Graph::get_introduction_node_from_coordinates( void )
 {
-  std::pair<double, double>* coordinates = _parameters->get_introduction_coordinates();
-  double                     min_dist    = 1e+10;
-  int                        min_intro   = 0;
-  Node*                      node        = get_first();
+  double x_intro   = _parameters->get_x_introduction();
+  double y_intro   = _parameters->get_y_introduction();
+  double min_dist  = 1e+10;
+  int    min_intro = 0;
+  Node*  node      = get_first();
   while (node != NULL)
   {
-    double dist = sqrt((coordinates->first-node->get_x_coord())*(coordinates->first-node->get_x_coord()) + (coordinates->second-node->get_y_coord())*(coordinates->second-node->get_y_coord()));
+    double dist = sqrt((x_intro-node->get_x())*(x_intro-node->get_x()) + (y_intro-node->get_y())*(y_intro-node->get_y()));
     if (min_dist > dist)
     {
       min_dist  = dist;
@@ -243,42 +328,25 @@ int Graph::get_introduction_node_from_coordinates( void )
 void Graph::load_map( void )
 {
   _map.clear();
-  _min_x_coord = 1e+10;
-  _max_x_coord = 0.0;
-  _min_y_coord = 1e+10;
-  _max_y_coord = 0.0;
   std::ifstream file(_parameters->get_map_filename(), std::ios::in);
   assert(file);
   std::string line;
-  int    identifier    = 0;
-  double x_coord       = 0.0;
-  double y_coord       = 0.0;
-  double node_area     = 0.0;
-  double suitable_area = 0.0;
+  int    identifier         = 0;
+  double x_coord            = 0.0;
+  double y_coord            = 0.0;
+  double node_area          = 0.0;
+  double suitable_area      = 0.0;
+  double population         = 0.0;
+  double population_density = 0.0;
+  double road_density       = 0.0;
   while(getline(file, line))
   {
     std::stringstream flux;
     flux.str(line.c_str());
-    flux >> identifier >> x_coord >> y_coord >> node_area >> suitable_area;
-    if (_min_x_coord > x_coord)
-    {
-      _min_x_coord = x_coord;
-    }
-    if (_min_y_coord > y_coord)
-    {
-      _min_y_coord = y_coord;
-    }
-    if (_max_x_coord < x_coord)
-    {
-      _max_x_coord = x_coord;
-    }
-    if (_max_y_coord < y_coord)
-    {
-      _max_y_coord = y_coord;
-    }
+    flux >> identifier >> x_coord >> y_coord >> node_area >> suitable_area >> population >> population_density >> road_density;
     assert(_map.find(identifier) == _map.end());
-    _map[identifier] = new Node(_parameters->get_prng(), identifier, _parameters->get_repetitions_by_simulation(), _parameters->get_introduction_probability());
-    _map[identifier]->set_map_data(x_coord, y_coord, node_area, suitable_area);
+    _map[identifier] = new Node(_parameters, identifier);
+    _map[identifier]->set_map_data(x_coord, y_coord, node_area, suitable_area, population, population_density, road_density);
   }
   file.close();
 }
@@ -315,15 +383,15 @@ void Graph::load_network( void )
     assert(roads5 >= 0.0);
     assert(roads6 >= 0.0);
     double weight  = 0.0;
-    weight        += _parameters->get_road_linear_combination()->at(0)*roads1;
-    weight        += _parameters->get_road_linear_combination()->at(1)*roads2;
-    weight        += _parameters->get_road_linear_combination()->at(2)*roads3;
-    weight        += _parameters->get_road_linear_combination()->at(3)*roads4;
-    weight        += _parameters->get_road_linear_combination()->at(4)*roads5;
-    weight        += _parameters->get_road_linear_combination()->at(5)*roads6;
-    if (weight < _parameters->get_minimal_connectivity())
+    weight        += _parameters->get_w1()*roads1;
+    weight        += _parameters->get_w2()*roads2;
+    weight        += _parameters->get_w3()*roads3;
+    weight        += _parameters->get_w4()*roads4;
+    weight        += _parameters->get_w5()*roads5;
+    weight        += _parameters->get_w6()*roads6;
+    if (weight < _parameters->get_wmin())
     {
-      weight = _parameters->get_minimal_connectivity();
+      weight = _parameters->get_wmin();
     }
     if (identifier1 != -1 && identifier2 != -1)
     {
@@ -372,19 +440,85 @@ void Graph::load_sample( void )
 }
 
 /**
- * \brief    Compute the maximum weight sum
+ * \brief    Compute the statistics
  * \details  --
  * \param    void
  * \return   \e void
  */
-void Graph::compute_maximum_weight_sum( void )
+void Graph::compute_statistics( void )
 {
-  _maximum_weights_sum = 0.0;
+  _min_x_coord            = 1e+10;
+  _max_x_coord            = 0.0;
+  _min_y_coord            = 1e+10;
+  _max_y_coord            = 0.0;
+  _min_weights_sum        = 1e+10;
+  _max_weights_sum        = 0.0;
+  _min_population         = 1e+10;
+  _max_population         = 0.0;
+  _min_population_density = 1e+10;
+  _max_population_density = 0.0;
+  _min_road_density       = 1e+10;
+  _max_road_density       = 0.0;
   for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
   {
-    if (_maximum_weights_sum < it->second->get_weights_sum())
+    /*** X coordinate ***/
+    if (_min_x_coord > it->second->get_x())
     {
-      _maximum_weights_sum = it->second->get_weights_sum();
+      _min_x_coord = it->second->get_x();
+    }
+    if (_max_x_coord < it->second->get_x())
+    {
+      _max_x_coord = it->second->get_x();
+    }
+    
+    /*** Y coordinate ***/
+    if (_min_y_coord > it->second->get_y())
+    {
+      _min_y_coord = it->second->get_y();
+    }
+    if (_max_y_coord < it->second->get_y())
+    {
+      _max_y_coord = it->second->get_y();
+    }
+    
+    /*** Weight sum ***/
+    if (_min_weights_sum > it->second->get_weights_sum())
+    {
+      _min_weights_sum = it->second->get_weights_sum();
+    }
+    if (_max_weights_sum < it->second->get_weights_sum())
+    {
+      _max_weights_sum = it->second->get_weights_sum();
+    }
+    
+    /*** Population ***/
+    if (_min_population > it->second->get_population())
+    {
+      _min_population = it->second->get_population();
+    }
+    if (_max_population < it->second->get_population())
+    {
+      _max_population = it->second->get_population();
+    }
+    
+    /*** Population density ***/
+    if (_min_population_density > it->second->get_population_density())
+    {
+      _min_population_density = it->second->get_population_density();
+    }
+    if (_max_population_density < it->second->get_population_density())
+    {
+      _max_population_density = it->second->get_population_density();
+    }
+    
+    /*** Road density ***/
+    if (_min_road_density > it->second->get_road_density())
+    {
+      _min_road_density = it->second->get_road_density();
+    }
+    if (_max_road_density < it->second->get_road_density())
+    {
+      _max_road_density = it->second->get_road_density();
     }
   }
 }
@@ -399,8 +533,7 @@ void Graph::compute_jump_probability( void )
 {
   for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
   {
-    it->second->set_jump_probability(it->second->get_weights_sum()/_maximum_weights_sum);
-    //it->second->set_jump_probability(1.0);
+    it->second->set_jump_probability(it->second->get_population_density()/_max_population_density);
   }
 }
 
@@ -416,7 +549,9 @@ void Graph::reset_states( void )
   {
     it->second->reset_state();
   }
-  _score = 0.0;
+  _total_log_likelihood         = 0.0;
+  _total_log_maximum_likelihood = 0.0;
+  _score                        = 0.0;
 }
 
 /**
@@ -429,3 +564,20 @@ void Graph::set_introduction_node( void )
 {
   _map[_introduction_node]->set_as_introduction_node();
 }
+
+/**
+ * \brief    Compute the euclidean distance between two nodes
+ * \details  --
+ * \param    Node* node1
+ * \param    Node* node2
+ * \return   \e void
+ */
+double Graph::compute_euclidean_distance( Node* node1, Node* node2 )
+{
+  double x1 = node1->get_x();
+  double y1 = node1->get_y();
+  double x2 = node2->get_x();
+  double y2 = node2->get_y();
+  return sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+}
+

@@ -2,14 +2,15 @@
  * \file      Node.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Node class definition
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,50 +36,72 @@
 /**
  * \brief    Constructor
  * \details  --
- * \param    Prng* prng
+ * \param    Parameters* parameters
  * \param    int identifier
- * \param    int nb_repetitions
- * \param    double introduction_probability
  * \return   \e void
  */
-Node::Node( Prng* prng, int identifier, int nb_repetitions, double introduction_probability )
+Node::Node( Parameters* parameters, int identifier )
 {
-  /*--------------------------------------- SIMULATION VARIABLES */
+  assert(parameters != NULL);
   
-  _prng                     = prng;
-  _identifier               = identifier;
-  _nb_repetitions           = nb_repetitions;
-  _introduction_probability = introduction_probability;
-  _tagged                   = false;
-  _current_state            = new int[_nb_repetitions];
-  _next_state               = new int[_nb_repetitions];
-  _n_sim                    = (double)_nb_repetitions/_introduction_probability;
-  _y_sim                    = 0.0;
-  _f_sim                    = 0.0;
-  _nb_introductions         = new double[_nb_repetitions];
-  _total_nb_introductions   = 0.0;
-  _mean_nb_introductions    = 0.0;
-  _var_nb_introductions     = 0.0;
+  /*--------------------------------------- MAIN PARAMETERS */
   
-  /*--------------------------------------- GRAPH STRUCTURE */
+  _parameters = parameters;
+  _prng       = _parameters->get_prng();
+  _identifier = identifier;
   
-  _weights.clear();
+  /*--------------------------------------- MAP */
+  
+  _x                  = 0;
+  _y                  = 0;
+  _node_area          = 0.0;
+  _suitable_area      = 0.0;
+  _population         = 0.0;
+  _population_density = 0.0;
+  _road_density       = 0.0;
+  
+  /*--------------------------------------- NETWORK */
+  
   _neighbors.clear();
+  _weights.clear();
   _weights_sum      = 0.0;
   _jump_probability = 0.0;
   
-  /*--------------------------------------- MAP DATA */
-  
-  _x_coord       = 0;
-  _y_coord       = 0;
-  _node_area     = 0.0;
-  _suitable_area = 0.0;
-  
-  /*--------------------------------------- SAMPLING DATA */
+  /*--------------------------------------- SAMPLE */
   
   _y_obs = 0.0;
   _n_obs = 0.0;
-  _f_obs = 0.0;
+  _p_obs = 0.0;
+  
+  /*--------------------------------------- SIMULATION VARIABLES */
+  
+  _tagged                 = false;
+  _current_state          = new int[_parameters->get_repetitions()];
+  _next_state             = new int[_parameters->get_repetitions()];
+  _nb_introductions       = new double[_parameters->get_repetitions()];
+  _total_nb_introductions = 0.0;
+  _mean_nb_introductions  = 0.0;
+  _var_nb_introductions   = 0.0;
+  for (int i = 0; i < _parameters->get_repetitions(); i++)
+  {
+    _current_state[i]    = 0;
+    _next_state[i]       = 0;
+    _nb_introductions[i] = 0.0;
+  }
+  _n_sim = (double)_parameters->get_repetitions();
+  _y_sim = 0.0;
+  _p_sim = 0.0;
+  
+  /*--------------------------------------- SCORES */
+  
+  _likelihood             = 0.0;
+  _empty_likelihood       = 0.0;
+  _maximum_likelihood     = 0.0;
+  _log_likelihood         = 0.0;
+  _log_empty_likelihood   = 0.0;
+  _log_maximum_likelihood = 0.0;
+  _empty_score            = 0.0;
+  _score                  = 0.0;
 }
 
 /*----------------------------
@@ -93,6 +116,11 @@ Node::Node( Prng* prng, int identifier, int nb_repetitions, double introduction_
  */
 Node::~Node( void )
 {
+  /*--------------------------------------- NETWORK */
+  
+  _neighbors.clear();
+  _weights.clear();
+  
   /*--------------------------------------- SIMULATION VARIABLES */
   
   delete[] _current_state;
@@ -101,11 +129,6 @@ Node::~Node( void )
   _next_state = NULL;
   delete[] _nb_introductions;
   _nb_introductions = NULL;
-  
-  /*--------------------------------------- GRAPH STRUCTURE */
-  
-  _weights.clear();
-  _neighbors.clear();
 }
 
 /*----------------------------
@@ -135,7 +158,6 @@ Node* Node::jump( void )
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 2) If there is no way to escape the node, break             */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
   if (weight_sum == 0.0)
   {
     return this;
@@ -144,7 +166,6 @@ Node* Node::jump( void )
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /* 3) Or draw the next node with roulette wheel                */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
   double draw = _prng->uniform()*weight_sum;
   double sum  = 0.0;
   for (size_t i = 0; i < _neighbors.size(); i++)
@@ -170,17 +191,22 @@ Node* Node::jump( void )
  */
 void Node::update_state( void )
 {
-  /* memcpy not used because _probability_of_presence
-     must be computed */
-  _y_sim = 0.0;
-  _f_sim = 0.0;
-  for (int rep = 0; rep < _nb_repetitions; rep++)
+  _mean_nb_introductions = 0.0;
+  _var_nb_introductions  = 0.0;
+  _y_sim                 = 0.0;
+  _p_sim                 = 0.0;
+  for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
   {
-    _current_state[rep]  = _next_state[rep];
-    _y_sim              += (double)_next_state[rep];
-    _f_sim              += (double)_next_state[rep];
+    _current_state[rep]     = _next_state[rep];
+    _mean_nb_introductions += _nb_introductions[rep];
+    _var_nb_introductions  += _nb_introductions[rep]*_nb_introductions[rep];
+    _y_sim                 += (double)_current_state[rep];
+    _p_sim                 += (double)_current_state[rep];
   }
-  _f_sim /= _n_sim;
+  _mean_nb_introductions /= _n_sim;
+  _var_nb_introductions  /= _n_sim;
+  _var_nb_introductions  -= _mean_nb_introductions*_mean_nb_introductions;
+  _p_sim                 /= _n_sim;
 }
 
 /**
@@ -191,37 +217,51 @@ void Node::update_state( void )
  */
 void Node::reset_state( void )
 {
-  for (int rep = 0; rep < _nb_repetitions; rep++)
+  for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
   {
     _current_state[rep]    = 0;
     _next_state[rep]       = 0;
     _nb_introductions[rep] = 0.0;
   }
-  _y_sim                   = 0.0;
-  _f_sim                   = 0.0;
-  _total_nb_introductions  = 0.0;
-  _mean_nb_introductions   = 0.0;
-  _var_nb_introductions    = 0.0;
+  _total_nb_introductions = 0.0;
+  _mean_nb_introductions  = 0.0;
+  _var_nb_introductions   = 0.0;
+  _y_sim                  = 0.0;
+  _p_sim                  = 0.0;
 }
 
 /**
- * \brief    Compute the mean number of introductions
+ * \brief    Compute likelihoods and score
  * \details  --
  * \param    void
  * \return   \e void
  */
-void Node::compute_mean_var_nb_introductions( void )
+void Node::compute_score( void )
 {
-  _mean_nb_introductions = 0.0;
-  _var_nb_introductions  = 0.0;
-  for (int rep = 0; rep < _nb_repetitions; rep++)
+  unsigned int a           = (unsigned int)(_y_sim);
+  unsigned int b           = (unsigned int)(_y_obs);
+  unsigned int c           = (unsigned int)(_n_sim-_y_sim);
+  unsigned int d           = (unsigned int)(_n_obs-_y_obs);
+  double current_MFS       = gsl_ran_hypergeometric_pdf(b, b+b, d+d, b+d);
+  double current_FS        = gsl_ran_hypergeometric_pdf(a, a+b, c+d, a+c);
+  _likelihood              = current_FS;
+  _maximum_likelihood      = current_MFS;
+  _log_likelihood          = -log(current_FS);
+  _log_maximum_likelihood  = -log(current_MFS);
+  _score                   = 0.0;
+  if (_parameters->get_optimization_function() == LSS)
   {
-    _mean_nb_introductions += _nb_introductions[rep];
-    _var_nb_introductions  += _nb_introductions[rep]*_nb_introductions[rep];
+    _score = (_p_sim-_p_obs)*(_p_sim-_p_obs);
   }
-  _mean_nb_introductions /= (double)_nb_repetitions;
-  _var_nb_introductions  /= (double)_nb_repetitions;
-  _var_nb_introductions  -= _mean_nb_introductions*_mean_nb_introductions;
+  else if (_parameters->get_optimization_function() == LOG_LIKELIHOOD)
+  {
+    //_score = (_log_likelihood-_log_maximum_likelihood)*(_log_likelihood-_log_maximum_likelihood);
+    _score = _log_likelihood;
+  }
+  else if (_parameters->get_optimization_function() == LIKELIHOOD_LSS)
+  {
+    _score = (1.0-current_FS/current_MFS)*(1.0-current_FS/current_MFS);
+  }
 }
 
 /*----------------------------

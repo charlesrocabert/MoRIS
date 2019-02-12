@@ -2,14 +2,15 @@
  * \file      Prng.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      07-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Prng class definition
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,9 +178,25 @@ double Prng::gaussian( double mu, double sigma )
  */
 double Prng::lognormal( double mu, double sigma )
 {
-  assert(mu > 0.0);
   assert(sigma > 0.0);
   return gsl_ran_lognormal(_prng, mu, sigma);
+}
+
+/**
+ * \brief Returns a random variate from the Cauchy distribution with scale parameter gamma
+ * \details  --
+ * \param    double mu
+ * \param    double sigma
+ * \return   \e double
+ */
+double Prng::cauchy( double mu, double gamma )
+{
+  assert(gamma >= 0.0);
+  if (gamma > 0.0)
+  {
+    return mu+gsl_ran_cauchy(_prng, gamma);
+  }
+  return mu;
 }
 
 /**

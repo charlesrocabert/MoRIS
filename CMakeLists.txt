@@ -1,7 +1,7 @@
 
 #************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+# Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ set(PACKAGE "\"MoRIS\"")
 # Define the version number                                                        #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 7)
+set(VERSION_MINOR 8)
 set(VERSION_PATCH 0)
 
 

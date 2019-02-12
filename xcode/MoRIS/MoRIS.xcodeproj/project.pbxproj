@@ -44,96 +44,54 @@
 
 /* Begin PBXFileReference section */
 		B600E19B2145EE8A007F2221 /* MoRIS_artificial_data */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MoRIS_artificial_data; sourceTree = BUILT_PRODUCTS_DIR; };
-		B656907C214ADD58003CD5D1 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
+		B60E67B521F935510092E475 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		B60E67B621F935510092E475 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
+		B60E67B721F935510092E475 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
+		B60E67B821F935510092E475 /* urban2.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; path = urban2.dbf; sourceTree = "<group>"; };
+		B60E67B921F935510092E475 /* urban2.shp */ = {isa = PBXFileReference; lastKnownFileType = file; path = urban2.shp; sourceTree = "<group>"; };
+		B60E67BA21F935510092E475 /* urban2.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = urban2.shx; sourceTree = "<group>"; };
+		B60E67BB21F935510092E475 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
+		B60E67BD21F935510092E475 /* euclidean_distribution.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = euclidean_distribution.R; sourceTree = "<group>"; };
+		B60E67BE21F935510092E475 /* jump_size_distribution.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = jump_size_distribution.R; sourceTree = "<group>"; };
+		B60E67BF21F935510092E475 /* map.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = map.R; sourceTree = "<group>"; };
+		B60E67C021F935510092E475 /* optimization.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = optimization.R; sourceTree = "<group>"; };
+		B60E67C121F935510092E475 /* weight_distributions.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = weight_distributions.R; sourceTree = "<group>"; };
+		B60E67C321F935510092E475 /* convert.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert.py; sourceTree = "<group>"; };
+		B60E67C421F935510092E475 /* map.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.csv; sourceTree = "<group>"; };
+		B60E67C521F935510092E475 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		B60E67C621F935510092E475 /* map.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.xlsx; sourceTree = "<group>"; };
+		B60E67C721F935510092E475 /* map2.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = map2.csv; sourceTree = "<group>"; };
+		B60E67C821F935510092E475 /* map2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map2.txt; sourceTree = "<group>"; };
+		B60E67C921F935510092E475 /* map2.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = map2.xlsx; sourceTree = "<group>"; };
+		B60E67CA21F935510092E475 /* map3.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = map3.csv; sourceTree = "<group>"; };
+		B60E67CB21F935510092E475 /* map3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map3.txt; sourceTree = "<group>"; };
+		B60E67CC21F935510092E475 /* map3.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = map3.xlsx; sourceTree = "<group>"; };
+		B60E67CD21F935510092E475 /* network.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.csv; sourceTree = "<group>"; };
+		B60E67CE21F935510092E475 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
+		B60E67CF21F935510092E475 /* network.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = network.xlsx; sourceTree = "<group>"; };
+		B60E67D021F935510092E475 /* sample.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.csv; sourceTree = "<group>"; };
+		B60E67D121F935510092E475 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
+		B60E67D221F935510092E475 /* sample.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.xlsx; sourceTree = "<group>"; };
+		B644C96121F68B5E00216F1B /* figure1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure1.png; sourceTree = "<group>"; };
+		B644C96221F68B5E00216F1B /* figure2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure2.png; sourceTree = "<group>"; };
+		B644C96321F68B5E00216F1B /* figure3-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "figure3-1.png"; sourceTree = "<group>"; };
+		B644C96421F68B5E00216F1B /* figure3-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "figure3-2.png"; sourceTree = "<group>"; };
+		B644C96521F68B5E00216F1B /* figure4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure4.png; sourceTree = "<group>"; };
+		B644C96621F68B5E00216F1B /* figure5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure5.png; sourceTree = "<group>"; };
+		B644C96721F68B5E00216F1B /* logo-in2p3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-in2p3.png"; sourceTree = "<group>"; };
+		B644C96821F68B5E00216F1B /* logo-ixxi.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "logo-ixxi.jpeg"; sourceTree = "<group>"; };
+		B644C96921F68B5E00216F1B /* logo-lehna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-lehna.png"; sourceTree = "<group>"; };
+		B644C96A21F68B5E00216F1B /* logo-liris.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-liris.png"; sourceTree = "<group>"; };
+		B644C96B21F68B5E00216F1B /* road_network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = road_network.png; sourceTree = "<group>"; };
+		B644C96D21F68B8000216F1B /* make.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make.sh; sourceTree = "<group>"; };
+		B644C96E21F68B8000216F1B /* make_clean.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make_clean.sh; sourceTree = "<group>"; };
+		B644C96F21F68B8000216F1B /* make_debug.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make_debug.sh; sourceTree = "<group>"; };
+		B644C97121F68B8000216F1B /* Config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.h.in; sourceTree = "<group>"; };
+		B644C97221F68B8000216F1B /* FindGSL.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = FindGSL.cmake; sourceTree = "<group>"; };
+		B644C97321F68B8000216F1B /* FindTBB.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = FindTBB.cmake; sourceTree = "<group>"; };
+		B644C97621F6D8AB00216F1B /* MoRIS_optimizer.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = MoRIS_optimizer.py; sourceTree = "<group>"; };
 		B6690FF621459B6800274C93 /* AUTHORS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = AUTHORS.md; path = ../../../AUTHORS.md; sourceTree = "<group>"; };
-		B6690FF921459B6800274C93 /* MoRIS_artificial_data */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MoRIS_artificial_data; sourceTree = "<group>"; };
-		B6690FFA21459B6800274C93 /* MoRIS_run */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MoRIS_run; sourceTree = "<group>"; };
-		B6690FFC21459B6800274C93 /* cmake_install.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = cmake_install.cmake; sourceTree = "<group>"; };
-		B6690FFD21459B6800274C93 /* CMakeCache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeCache.txt; sourceTree = "<group>"; };
-		B669100021459B6800274C93 /* CMakeCCompiler.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeCCompiler.cmake; sourceTree = "<group>"; };
-		B669100121459B6800274C93 /* CMakeCXXCompiler.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeCXXCompiler.cmake; sourceTree = "<group>"; };
-		B669100221459B6800274C93 /* CMakeDetermineCompilerABI_C.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CMakeDetermineCompilerABI_C.bin; sourceTree = "<group>"; };
-		B669100321459B6800274C93 /* CMakeDetermineCompilerABI_CXX.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CMakeDetermineCompilerABI_CXX.bin; sourceTree = "<group>"; };
-		B669100421459B6800274C93 /* CMakeSystem.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeSystem.cmake; sourceTree = "<group>"; };
-		B669100621459B6800274C93 /* a.out */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = a.out; sourceTree = "<group>"; };
-		B669100721459B6800274C93 /* CMakeCCompilerId.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CMakeCCompilerId.c; sourceTree = "<group>"; };
-		B669100A21459B6800274C93 /* a.out */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = a.out; sourceTree = "<group>"; };
-		B669100B21459B6800274C93 /* CMakeCXXCompilerId.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CMakeCXXCompilerId.cpp; sourceTree = "<group>"; };
-		B669100D21459B6800274C93 /* cmake.check_cache */ = {isa = PBXFileReference; lastKnownFileType = text; path = cmake.check_cache; sourceTree = "<group>"; };
-		B669100E21459B6800274C93 /* CMakeDirectoryInformation.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeDirectoryInformation.cmake; sourceTree = "<group>"; };
-		B669100F21459B6800274C93 /* CMakeOutput.log */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeOutput.log; sourceTree = "<group>"; };
-		B669101121459B6800274C93 /* feature_tests.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = feature_tests.bin; sourceTree = "<group>"; };
-		B669101221459B6800274C93 /* feature_tests.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = feature_tests.c; sourceTree = "<group>"; };
-		B669101321459B6800274C93 /* feature_tests.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = feature_tests.cxx; sourceTree = "<group>"; };
-		B669101421459B6800274C93 /* Makefile.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.cmake; sourceTree = "<group>"; };
-		B669101521459B6800274C93 /* Makefile2 */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile2; sourceTree = "<group>"; };
-		B669101721459B6800274C93 /* build.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = build.make; sourceTree = "<group>"; };
-		B669101821459B6800274C93 /* cmake_clean.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = cmake_clean.cmake; sourceTree = "<group>"; };
-		B669101921459B6800274C93 /* cmake_clean_target.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = cmake_clean_target.cmake; sourceTree = "<group>"; };
-		B669101A21459B6800274C93 /* CXX.includecache */ = {isa = PBXFileReference; lastKnownFileType = text; path = CXX.includecache; sourceTree = "<group>"; };
-		B669101B21459B6800274C93 /* depend.internal */ = {isa = PBXFileReference; lastKnownFileType = text; path = depend.internal; sourceTree = "<group>"; };
-		B669101C21459B6800274C93 /* depend.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = depend.make; sourceTree = "<group>"; };
-		B669101D21459B6800274C93 /* DependInfo.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = DependInfo.cmake; sourceTree = "<group>"; };
-		B669101E21459B6800274C93 /* flags.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = flags.make; sourceTree = "<group>"; };
-		B669101F21459B6800274C93 /* link.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = link.txt; sourceTree = "<group>"; };
-		B669102021459B6800274C93 /* progress.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = progress.make; sourceTree = "<group>"; };
-		B669102321459B6800274C93 /* Graph.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Graph.cpp.o; sourceTree = "<group>"; };
-		B669102421459B6800274C93 /* Node.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Node.cpp.o; sourceTree = "<group>"; };
-		B669102521459B6800274C93 /* Parameters.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Parameters.cpp.o; sourceTree = "<group>"; };
-		B669102621459B6800274C93 /* Prng.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Prng.cpp.o; sourceTree = "<group>"; };
-		B669102721459B6800274C93 /* Simulation.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Simulation.cpp.o; sourceTree = "<group>"; };
-		B669102921459B6800274C93 /* build.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = build.make; sourceTree = "<group>"; };
-		B669102A21459B6800274C93 /* cmake_clean.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = cmake_clean.cmake; sourceTree = "<group>"; };
-		B669102B21459B6800274C93 /* CXX.includecache */ = {isa = PBXFileReference; lastKnownFileType = text; path = CXX.includecache; sourceTree = "<group>"; };
-		B669102C21459B6800274C93 /* depend.internal */ = {isa = PBXFileReference; lastKnownFileType = text; path = depend.internal; sourceTree = "<group>"; };
-		B669102D21459B6800274C93 /* depend.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = depend.make; sourceTree = "<group>"; };
-		B669102E21459B6800274C93 /* DependInfo.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = DependInfo.cmake; sourceTree = "<group>"; };
-		B669102F21459B6800274C93 /* flags.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = flags.make; sourceTree = "<group>"; };
-		B669103021459B6800274C93 /* link.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = link.txt; sourceTree = "<group>"; };
-		B669103121459B6800274C93 /* progress.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = progress.make; sourceTree = "<group>"; };
-		B669103321459B6800274C93 /* MoRIS_artificial_data.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = MoRIS_artificial_data.cpp.o; sourceTree = "<group>"; };
-		B669103521459B6800274C93 /* build.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = build.make; sourceTree = "<group>"; };
-		B669103621459B6800274C93 /* cmake_clean.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = cmake_clean.cmake; sourceTree = "<group>"; };
-		B669103721459B6800274C93 /* CXX.includecache */ = {isa = PBXFileReference; lastKnownFileType = text; path = CXX.includecache; sourceTree = "<group>"; };
-		B669103821459B6800274C93 /* depend.internal */ = {isa = PBXFileReference; lastKnownFileType = text; path = depend.internal; sourceTree = "<group>"; };
-		B669103921459B6800274C93 /* depend.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = depend.make; sourceTree = "<group>"; };
-		B669103A21459B6800274C93 /* DependInfo.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = DependInfo.cmake; sourceTree = "<group>"; };
-		B669103B21459B6800274C93 /* flags.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = flags.make; sourceTree = "<group>"; };
-		B669103C21459B6800274C93 /* link.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = link.txt; sourceTree = "<group>"; };
-		B669103D21459B6800274C93 /* progress.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = progress.make; sourceTree = "<group>"; };
-		B669103F21459B6800274C93 /* MoRIS_run.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = MoRIS_run.cpp.o; sourceTree = "<group>"; };
-		B669104021459B6800274C93 /* progress.marks */ = {isa = PBXFileReference; lastKnownFileType = text; path = progress.marks; sourceTree = "<group>"; };
-		B669104121459B6800274C93 /* TargetDirectories.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TargetDirectories.txt; sourceTree = "<group>"; };
-		B669104221459B6800274C93 /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		B669104321459B6800274C93 /* libMoRIS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMoRIS.a; sourceTree = "<group>"; };
-		B669104421459B6800274C93 /* make.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make.sh; sourceTree = "<group>"; };
-		B669104521459B6800274C93 /* make_clean.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make_clean.sh; sourceTree = "<group>"; };
-		B669104621459B6800274C93 /* make_debug.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make_debug.sh; sourceTree = "<group>"; };
-		B669104721459B6800274C93 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		B669104921459B6800274C93 /* Config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.h.in; sourceTree = "<group>"; };
-		B669104A21459B6800274C93 /* FindGSL.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = FindGSL.cmake; sourceTree = "<group>"; };
-		B669104B21459B6800274C93 /* FindTBB.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = FindTBB.cmake; sourceTree = "<group>"; };
 		B669104C21459B6800274C93 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeLists.txt; path = ../../../CMakeLists.txt; sourceTree = "<group>"; };
-		B669104E21459B6800274C93 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		B669104F21459B6800274C93 /* Meetmoris.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Meetmoris.jpg; sourceTree = "<group>"; };
-		B669105121459B6800274C93 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
-		B669105221459B6800274C93 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B669105321459B6800274C93 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
-		B669105421459B6800274C93 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
-		B669105521459B6800274C93 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
-		B669105621459B6800274C93 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
-		B669105821459B6800274C93 /* convert.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert.py; sourceTree = "<group>"; };
-		B669105921459B6800274C93 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
-		B669105A21459B6800274C93 /* map_OK.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = map_OK.csv; sourceTree = "<group>"; };
-		B669105B21459B6800274C93 /* map_OK.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = map_OK.xlsx; sourceTree = "<group>"; };
-		B669105C21459B6800274C93 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B669105D21459B6800274C93 /* network_OK.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = network_OK.csv; sourceTree = "<group>"; };
-		B669105E21459B6800274C93 /* network_OK.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = network_OK.xlsx; sourceTree = "<group>"; };
-		B669106021459B6800274C93 /* sample_OK_v1.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_OK_v1.xlsx; sourceTree = "<group>"; };
-		B669106121459B6800274C93 /* sample_OK_v2.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_OK_v2.xlsx; sourceTree = "<group>"; };
-		B669106221459B6800274C93 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
-		B669106321459B6800274C93 /* sample_OK.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample_OK.csv; sourceTree = "<group>"; };
-		B669106421459B6800274C93 /* sample_OK.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_OK.xlsx; sourceTree = "<group>"; };
 		B669106D21459B6800274C93 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../../LICENSE; sourceTree = "<group>"; };
 		B669106E21459B6800274C93 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
 		B669107121459B6800274C93 /* Enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
@@ -145,41 +103,27 @@
 		B669107721459B6800274C93 /* Parameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parameters.h; sourceTree = "<group>"; };
 		B669107821459B6800274C93 /* Prng.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Prng.cpp; sourceTree = "<group>"; };
 		B669107921459B6800274C93 /* Prng.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prng.h; sourceTree = "<group>"; };
-		B669107B21459B6800274C93 /* change_package_version.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = change_package_version.py; sourceTree = "<group>"; };
 		B669107C21459B6800274C93 /* Simulation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Simulation.cpp; sourceTree = "<group>"; };
 		B669107D21459B6800274C93 /* Simulation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Simulation.h; sourceTree = "<group>"; };
 		B669107E21459B6800274C93 /* MoRIS_artificial_data.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MoRIS_artificial_data.cpp; sourceTree = "<group>"; };
 		B669107F21459B6800274C93 /* MoRIS_artificial_data.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = MoRIS_artificial_data.py; sourceTree = "<group>"; };
-		B669108021459B6800274C93 /* MoRIS_minimizer.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = MoRIS_minimizer.py; sourceTree = "<group>"; };
 		B669108121459B6800274C93 /* MoRIS_run.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MoRIS_run.cpp; sourceTree = "<group>"; };
 		B669108521459B6800274C93 /* MoRIS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MoRIS.xcodeproj; sourceTree = "<group>"; };
 		B669108C21459BB100274C93 /* MoRIS_run */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MoRIS_run; sourceTree = BUILT_PRODUCTS_DIR; };
-		B696BE782149B5B500380CA8 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
-		B696BE792149B5B500380CA8 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B696BE7B2149B5B500380CA8 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
-		B696BE7D2149B5B500380CA8 /* final_state.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = final_state.txt; sourceTree = "<group>"; };
-		B696BE7E2149B5B500380CA8 /* lineage_tree.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = lineage_tree.txt; sourceTree = "<group>"; };
-		B696BE7F2149B5B500380CA8 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
-		B696BE812149B5B500380CA8 /* convert.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert.py; sourceTree = "<group>"; };
-		B696BE822149B5B500380CA8 /* map.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.csv; sourceTree = "<group>"; };
-		B696BE832149B5B500380CA8 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
-		B696BE842149B5B500380CA8 /* map.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.xlsx; sourceTree = "<group>"; };
-		B696BE852149B5B500380CA8 /* network.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.csv; sourceTree = "<group>"; };
-		B696BE862149B5B500380CA8 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B696BE872149B5B500380CA8 /* network.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = network.xlsx; sourceTree = "<group>"; };
-		B696BE882149B5B500380CA8 /* sample.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.csv; sourceTree = "<group>"; };
-		B696BE892149B5B500380CA8 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
-		B696BE8A2149B5B500380CA8 /* sample.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.xlsx; sourceTree = "<group>"; };
-		B6AC48C82148669500F783C5 /* map.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = map.R; sourceTree = "<group>"; };
-		B6AC48C92148669500F783C5 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
-		B6AC48CA2148669500F783C5 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
-		B6AC48CB2148669500F783C5 /* parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters.txt; sourceTree = "<group>"; };
-		B6AC48CC2148669500F783C5 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
-		B6AC48CD2148669500F783C5 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
-		B6AC48CE2148669500F783C5 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
-		B6AC48D1214866B500F783C5 /* map.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = map.R; sourceTree = "<group>"; };
-		B6AC48D5214866B500F783C5 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
-		B6AC48D6214866B500F783C5 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
+		B67104B921C692F700C68369 /* check_workflow.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = check_workflow.sh; sourceTree = "<group>"; };
+		B67104BA21C692F700C68369 /* collect_best_results.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = collect_best_results.py; sourceTree = "<group>"; };
+		B67104BB21C692F700C68369 /* collect_mean_results.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = collect_mean_results.py; sourceTree = "<group>"; };
+		B67104BC21C692F700C68369 /* count_optims.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = count_optims.py; sourceTree = "<group>"; };
+		B67104C021C692F700C68369 /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		B67104C121C692F700C68369 /* network.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = network.txt; sourceTree = "<group>"; };
+		B67104C221C692F700C68369 /* sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.txt; sourceTree = "<group>"; };
+		B67104C321C692F700C68369 /* urban2.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; path = urban2.dbf; sourceTree = "<group>"; };
+		B67104C421C692F700C68369 /* urban2.shp */ = {isa = PBXFileReference; lastKnownFileType = file; path = urban2.shp; sourceTree = "<group>"; };
+		B67104C521C692F700C68369 /* urban2.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = urban2.shx; sourceTree = "<group>"; };
+		B67104C621C692F700C68369 /* parameters_original.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = parameters_original.txt; sourceTree = "<group>"; };
+		B67104C721C692F700C68369 /* protocol.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = protocol.py; sourceTree = "<group>"; };
+		B67104C821C692F700C68369 /* plot.R */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.rez; path = plot.R; sourceTree = "<group>"; };
+		B67104CA21C692F700C68369 /* run_workflow.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_workflow.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +144,106 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B60E67B221F935510092E475 /* lasius_neglectus_example */ = {
+			isa = PBXGroup;
+			children = (
+				B60E67BB21F935510092E475 /* parameters.txt */,
+				B60E67B421F935510092E475 /* input */,
+				B60E67BC21F935510092E475 /* rscripts */,
+				B60E67C221F935510092E475 /* xlsx */,
+			);
+			name = lasius_neglectus_example;
+			path = ../../../lasius_neglectus_example;
+			sourceTree = "<group>";
+		};
+		B60E67B421F935510092E475 /* input */ = {
+			isa = PBXGroup;
+			children = (
+				B60E67B521F935510092E475 /* map.txt */,
+				B60E67B621F935510092E475 /* network.txt */,
+				B60E67B721F935510092E475 /* sample.txt */,
+				B60E67B821F935510092E475 /* urban2.dbf */,
+				B60E67B921F935510092E475 /* urban2.shp */,
+				B60E67BA21F935510092E475 /* urban2.shx */,
+			);
+			path = input;
+			sourceTree = "<group>";
+		};
+		B60E67BC21F935510092E475 /* rscripts */ = {
+			isa = PBXGroup;
+			children = (
+				B60E67BD21F935510092E475 /* euclidean_distribution.R */,
+				B60E67BE21F935510092E475 /* jump_size_distribution.R */,
+				B60E67BF21F935510092E475 /* map.R */,
+				B60E67C021F935510092E475 /* optimization.R */,
+				B60E67C121F935510092E475 /* weight_distributions.R */,
+			);
+			path = rscripts;
+			sourceTree = "<group>";
+		};
+		B60E67C221F935510092E475 /* xlsx */ = {
+			isa = PBXGroup;
+			children = (
+				B60E67C321F935510092E475 /* convert.py */,
+				B60E67C421F935510092E475 /* map.csv */,
+				B60E67C521F935510092E475 /* map.txt */,
+				B60E67C621F935510092E475 /* map.xlsx */,
+				B60E67C721F935510092E475 /* map2.csv */,
+				B60E67C821F935510092E475 /* map2.txt */,
+				B60E67C921F935510092E475 /* map2.xlsx */,
+				B60E67CA21F935510092E475 /* map3.csv */,
+				B60E67CB21F935510092E475 /* map3.txt */,
+				B60E67CC21F935510092E475 /* map3.xlsx */,
+				B60E67CD21F935510092E475 /* network.csv */,
+				B60E67CE21F935510092E475 /* network.txt */,
+				B60E67CF21F935510092E475 /* network.xlsx */,
+				B60E67D021F935510092E475 /* sample.csv */,
+				B60E67D121F935510092E475 /* sample.txt */,
+				B60E67D221F935510092E475 /* sample.xlsx */,
+			);
+			path = xlsx;
+			sourceTree = "<group>";
+		};
+		B644C96021F68B5E00216F1B /* pics */ = {
+			isa = PBXGroup;
+			children = (
+				B644C96121F68B5E00216F1B /* figure1.png */,
+				B644C96221F68B5E00216F1B /* figure2.png */,
+				B644C96321F68B5E00216F1B /* figure3-1.png */,
+				B644C96421F68B5E00216F1B /* figure3-2.png */,
+				B644C96521F68B5E00216F1B /* figure4.png */,
+				B644C96621F68B5E00216F1B /* figure5.png */,
+				B644C96721F68B5E00216F1B /* logo-in2p3.png */,
+				B644C96821F68B5E00216F1B /* logo-ixxi.jpeg */,
+				B644C96921F68B5E00216F1B /* logo-lehna.png */,
+				B644C96A21F68B5E00216F1B /* logo-liris.png */,
+				B644C96B21F68B5E00216F1B /* road_network.png */,
+			);
+			path = pics;
+			sourceTree = "<group>";
+		};
+		B644C96C21F68B8000216F1B /* cmake */ = {
+			isa = PBXGroup;
+			children = (
+				B644C96D21F68B8000216F1B /* make.sh */,
+				B644C96E21F68B8000216F1B /* make_clean.sh */,
+				B644C96F21F68B8000216F1B /* make_debug.sh */,
+				B644C97021F68B8000216F1B /* modules */,
+			);
+			name = cmake;
+			path = ../../../cmake;
+			sourceTree = "<group>";
+		};
+		B644C97021F68B8000216F1B /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				B644C97121F68B8000216F1B /* Config.h.in */,
+				B644C97221F68B8000216F1B /* FindGSL.cmake */,
+				B644C97321F68B8000216F1B /* FindTBB.cmake */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
 		B6690FE321459B3D00274C93 = {
 			isa = PBXGroup;
 			children = (
@@ -225,11 +269,10 @@
 				B6690FF621459B6800274C93 /* AUTHORS.md */,
 				B669104C21459B6800274C93 /* CMakeLists.txt */,
 				B669104D21459B6800274C93 /* docs */,
-				B6690FFB21459B6800274C93 /* cmake */,
+				B644C96C21F68B8000216F1B /* cmake */,
 				B6690FF721459B6800274C93 /* build */,
-				B6AC48C62148669500F783C5 /* example_lasius_neglectus_hexagons */,
-				B6AC48CF214866B500F783C5 /* example_lasius_neglectus_squares */,
-				B669105021459B6800274C93 /* example_gipsy_moth */,
+				B60E67B221F935510092E475 /* lasius_neglectus_example */,
+				B67104B821C692F700C68369 /* BRC_workflow */,
 				B669106F21459B6800274C93 /* src */,
 				B669108221459B6800274C93 /* xcode */,
 			);
@@ -248,255 +291,17 @@
 		B6690FF821459B6800274C93 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				B6690FF921459B6800274C93 /* MoRIS_artificial_data */,
-				B6690FFA21459B6800274C93 /* MoRIS_run */,
 			);
 			path = bin;
-			sourceTree = "<group>";
-		};
-		B6690FFB21459B6800274C93 /* cmake */ = {
-			isa = PBXGroup;
-			children = (
-				B6690FFC21459B6800274C93 /* cmake_install.cmake */,
-				B6690FFD21459B6800274C93 /* CMakeCache.txt */,
-				B6690FFE21459B6800274C93 /* CMakeFiles */,
-				B669104221459B6800274C93 /* Config.h */,
-				B669104321459B6800274C93 /* libMoRIS.a */,
-				B669104421459B6800274C93 /* make.sh */,
-				B669104521459B6800274C93 /* make_clean.sh */,
-				B669104621459B6800274C93 /* make_debug.sh */,
-				B669104721459B6800274C93 /* Makefile */,
-				B669104821459B6800274C93 /* modules */,
-			);
-			name = cmake;
-			path = ../../../cmake;
-			sourceTree = "<group>";
-		};
-		B6690FFE21459B6800274C93 /* CMakeFiles */ = {
-			isa = PBXGroup;
-			children = (
-				B6690FFF21459B6800274C93 /* 3.11.0 */,
-				B669100D21459B6800274C93 /* cmake.check_cache */,
-				B669100E21459B6800274C93 /* CMakeDirectoryInformation.cmake */,
-				B669100F21459B6800274C93 /* CMakeOutput.log */,
-				B669101021459B6800274C93 /* CMakeTmp */,
-				B669101121459B6800274C93 /* feature_tests.bin */,
-				B669101221459B6800274C93 /* feature_tests.c */,
-				B669101321459B6800274C93 /* feature_tests.cxx */,
-				B669101421459B6800274C93 /* Makefile.cmake */,
-				B669101521459B6800274C93 /* Makefile2 */,
-				B669101621459B6800274C93 /* MoRIS.dir */,
-				B669102821459B6800274C93 /* MoRIS_artificial_data.dir */,
-				B669103421459B6800274C93 /* MoRIS_run.dir */,
-				B669104021459B6800274C93 /* progress.marks */,
-				B669104121459B6800274C93 /* TargetDirectories.txt */,
-			);
-			path = CMakeFiles;
-			sourceTree = "<group>";
-		};
-		B6690FFF21459B6800274C93 /* 3.11.0 */ = {
-			isa = PBXGroup;
-			children = (
-				B669100021459B6800274C93 /* CMakeCCompiler.cmake */,
-				B669100121459B6800274C93 /* CMakeCXXCompiler.cmake */,
-				B669100221459B6800274C93 /* CMakeDetermineCompilerABI_C.bin */,
-				B669100321459B6800274C93 /* CMakeDetermineCompilerABI_CXX.bin */,
-				B669100421459B6800274C93 /* CMakeSystem.cmake */,
-				B669100521459B6800274C93 /* CompilerIdC */,
-				B669100921459B6800274C93 /* CompilerIdCXX */,
-			);
-			path = 3.11.0;
-			sourceTree = "<group>";
-		};
-		B669100521459B6800274C93 /* CompilerIdC */ = {
-			isa = PBXGroup;
-			children = (
-				B669100621459B6800274C93 /* a.out */,
-				B669100721459B6800274C93 /* CMakeCCompilerId.c */,
-				B669100821459B6800274C93 /* tmp */,
-			);
-			path = CompilerIdC;
-			sourceTree = "<group>";
-		};
-		B669100821459B6800274C93 /* tmp */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = tmp;
-			sourceTree = "<group>";
-		};
-		B669100921459B6800274C93 /* CompilerIdCXX */ = {
-			isa = PBXGroup;
-			children = (
-				B669100A21459B6800274C93 /* a.out */,
-				B669100B21459B6800274C93 /* CMakeCXXCompilerId.cpp */,
-				B669100C21459B6800274C93 /* tmp */,
-			);
-			path = CompilerIdCXX;
-			sourceTree = "<group>";
-		};
-		B669100C21459B6800274C93 /* tmp */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = tmp;
-			sourceTree = "<group>";
-		};
-		B669101021459B6800274C93 /* CMakeTmp */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CMakeTmp;
-			sourceTree = "<group>";
-		};
-		B669101621459B6800274C93 /* MoRIS.dir */ = {
-			isa = PBXGroup;
-			children = (
-				B669101721459B6800274C93 /* build.make */,
-				B669101821459B6800274C93 /* cmake_clean.cmake */,
-				B669101921459B6800274C93 /* cmake_clean_target.cmake */,
-				B669101A21459B6800274C93 /* CXX.includecache */,
-				B669101B21459B6800274C93 /* depend.internal */,
-				B669101C21459B6800274C93 /* depend.make */,
-				B669101D21459B6800274C93 /* DependInfo.cmake */,
-				B669101E21459B6800274C93 /* flags.make */,
-				B669101F21459B6800274C93 /* link.txt */,
-				B669102021459B6800274C93 /* progress.make */,
-				B669102121459B6800274C93 /* src */,
-			);
-			path = MoRIS.dir;
-			sourceTree = "<group>";
-		};
-		B669102121459B6800274C93 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				B669102221459B6800274C93 /* lib */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		B669102221459B6800274C93 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				B669102321459B6800274C93 /* Graph.cpp.o */,
-				B669102421459B6800274C93 /* Node.cpp.o */,
-				B669102521459B6800274C93 /* Parameters.cpp.o */,
-				B669102621459B6800274C93 /* Prng.cpp.o */,
-				B669102721459B6800274C93 /* Simulation.cpp.o */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		B669102821459B6800274C93 /* MoRIS_artificial_data.dir */ = {
-			isa = PBXGroup;
-			children = (
-				B669102921459B6800274C93 /* build.make */,
-				B669102A21459B6800274C93 /* cmake_clean.cmake */,
-				B669102B21459B6800274C93 /* CXX.includecache */,
-				B669102C21459B6800274C93 /* depend.internal */,
-				B669102D21459B6800274C93 /* depend.make */,
-				B669102E21459B6800274C93 /* DependInfo.cmake */,
-				B669102F21459B6800274C93 /* flags.make */,
-				B669103021459B6800274C93 /* link.txt */,
-				B669103121459B6800274C93 /* progress.make */,
-				B669103221459B6800274C93 /* src */,
-			);
-			path = MoRIS_artificial_data.dir;
-			sourceTree = "<group>";
-		};
-		B669103221459B6800274C93 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				B669103321459B6800274C93 /* MoRIS_artificial_data.cpp.o */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		B669103421459B6800274C93 /* MoRIS_run.dir */ = {
-			isa = PBXGroup;
-			children = (
-				B669103521459B6800274C93 /* build.make */,
-				B669103621459B6800274C93 /* cmake_clean.cmake */,
-				B669103721459B6800274C93 /* CXX.includecache */,
-				B669103821459B6800274C93 /* depend.internal */,
-				B669103921459B6800274C93 /* depend.make */,
-				B669103A21459B6800274C93 /* DependInfo.cmake */,
-				B669103B21459B6800274C93 /* flags.make */,
-				B669103C21459B6800274C93 /* link.txt */,
-				B669103D21459B6800274C93 /* progress.make */,
-				B669103E21459B6800274C93 /* src */,
-			);
-			path = MoRIS_run.dir;
-			sourceTree = "<group>";
-		};
-		B669103E21459B6800274C93 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				B669103F21459B6800274C93 /* MoRIS_run.cpp.o */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		B669104821459B6800274C93 /* modules */ = {
-			isa = PBXGroup;
-			children = (
-				B669104921459B6800274C93 /* Config.h.in */,
-				B669104A21459B6800274C93 /* FindGSL.cmake */,
-				B669104B21459B6800274C93 /* FindTBB.cmake */,
-			);
-			path = modules;
 			sourceTree = "<group>";
 		};
 		B669104D21459B6800274C93 /* docs */ = {
 			isa = PBXGroup;
 			children = (
-				B669104E21459B6800274C93 /* index.html */,
-				B669104F21459B6800274C93 /* Meetmoris.jpg */,
+				B644C96021F68B5E00216F1B /* pics */,
 			);
 			name = docs;
 			path = ../../../docs;
-			sourceTree = "<group>";
-		};
-		B669105021459B6800274C93 /* example_gipsy_moth */ = {
-			isa = PBXGroup;
-			children = (
-				B669105121459B6800274C93 /* map.txt */,
-				B669105221459B6800274C93 /* network.txt */,
-				B669105321459B6800274C93 /* parameters.txt */,
-				B669105421459B6800274C93 /* plot.R */,
-				B669105521459B6800274C93 /* run.sh */,
-				B669105621459B6800274C93 /* sample.txt */,
-				B669105721459B6800274C93 /* xlsx */,
-			);
-			name = example_gipsy_moth;
-			path = ../../../example_gipsy_moth;
-			sourceTree = "<group>";
-		};
-		B669105721459B6800274C93 /* xlsx */ = {
-			isa = PBXGroup;
-			children = (
-				B669105F21459B6800274C93 /* previous data */,
-				B669105821459B6800274C93 /* convert.py */,
-				B669105921459B6800274C93 /* map.txt */,
-				B669105A21459B6800274C93 /* map_OK.csv */,
-				B669105B21459B6800274C93 /* map_OK.xlsx */,
-				B669105C21459B6800274C93 /* network.txt */,
-				B669105D21459B6800274C93 /* network_OK.csv */,
-				B669105E21459B6800274C93 /* network_OK.xlsx */,
-				B669106221459B6800274C93 /* sample.txt */,
-				B669106321459B6800274C93 /* sample_OK.csv */,
-				B669106421459B6800274C93 /* sample_OK.xlsx */,
-			);
-			path = xlsx;
-			sourceTree = "<group>";
-		};
-		B669105F21459B6800274C93 /* previous data */ = {
-			isa = PBXGroup;
-			children = (
-				B669106021459B6800274C93 /* sample_OK_v1.xlsx */,
-				B669106121459B6800274C93 /* sample_OK_v2.xlsx */,
-			);
-			path = "previous data";
 			sourceTree = "<group>";
 		};
 		B669106F21459B6800274C93 /* src */ = {
@@ -504,7 +309,7 @@
 			children = (
 				B669108121459B6800274C93 /* MoRIS_run.cpp */,
 				B669107E21459B6800274C93 /* MoRIS_artificial_data.cpp */,
-				B669108021459B6800274C93 /* MoRIS_minimizer.py */,
+				B644C97621F6D8AB00216F1B /* MoRIS_optimizer.py */,
 				B669107F21459B6800274C93 /* MoRIS_artificial_data.py */,
 				B669107021459B6800274C93 /* lib */,
 			);
@@ -526,17 +331,8 @@
 				B669107321459B6800274C93 /* Graph.h */,
 				B669107C21459B6800274C93 /* Simulation.cpp */,
 				B669107D21459B6800274C93 /* Simulation.h */,
-				B669107A21459B6800274C93 /* scripts */,
 			);
 			path = lib;
-			sourceTree = "<group>";
-		};
-		B669107A21459B6800274C93 /* scripts */ = {
-			isa = PBXGroup;
-			children = (
-				B669107B21459B6800274C93 /* change_package_version.py */,
-			);
-			path = scripts;
 			sourceTree = "<group>";
 		};
 		B669108221459B6800274C93 /* xcode */ = {
@@ -569,71 +365,50 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B696BE772149B5B500380CA8 /* input */ = {
+		B67104B821C692F700C68369 /* BRC_workflow */ = {
 			isa = PBXGroup;
 			children = (
-				B696BE782149B5B500380CA8 /* map.txt */,
-				B696BE792149B5B500380CA8 /* network.txt */,
-				B696BE7B2149B5B500380CA8 /* sample.txt */,
+				B67104CA21C692F700C68369 /* run_workflow.sh */,
+				B67104B921C692F700C68369 /* check_workflow.sh */,
+				B67104BA21C692F700C68369 /* collect_best_results.py */,
+				B67104BB21C692F700C68369 /* collect_mean_results.py */,
+				B67104BC21C692F700C68369 /* count_optims.py */,
+				B67104C821C692F700C68369 /* plot.R */,
+				B67104BD21C692F700C68369 /* default */,
+				B67104C921C692F700C68369 /* results */,
+			);
+			name = BRC_workflow;
+			path = ../../../BRC_workflow;
+			sourceTree = "<group>";
+		};
+		B67104BD21C692F700C68369 /* default */ = {
+			isa = PBXGroup;
+			children = (
+				B67104BF21C692F700C68369 /* input */,
+				B67104C621C692F700C68369 /* parameters_original.txt */,
+				B67104C721C692F700C68369 /* protocol.py */,
+			);
+			path = default;
+			sourceTree = "<group>";
+		};
+		B67104BF21C692F700C68369 /* input */ = {
+			isa = PBXGroup;
+			children = (
+				B67104C021C692F700C68369 /* map.txt */,
+				B67104C121C692F700C68369 /* network.txt */,
+				B67104C221C692F700C68369 /* sample.txt */,
+				B67104C321C692F700C68369 /* urban2.dbf */,
+				B67104C421C692F700C68369 /* urban2.shp */,
+				B67104C521C692F700C68369 /* urban2.shx */,
 			);
 			path = input;
 			sourceTree = "<group>";
 		};
-		B696BE7C2149B5B500380CA8 /* output */ = {
+		B67104C921C692F700C68369 /* results */ = {
 			isa = PBXGroup;
 			children = (
-				B696BE7D2149B5B500380CA8 /* final_state.txt */,
-				B696BE7E2149B5B500380CA8 /* lineage_tree.txt */,
-				B696BE7F2149B5B500380CA8 /* parameters.txt */,
 			);
-			path = output;
-			sourceTree = "<group>";
-		};
-		B696BE802149B5B500380CA8 /* xlsx */ = {
-			isa = PBXGroup;
-			children = (
-				B696BE812149B5B500380CA8 /* convert.py */,
-				B696BE822149B5B500380CA8 /* map.csv */,
-				B696BE832149B5B500380CA8 /* map.txt */,
-				B696BE842149B5B500380CA8 /* map.xlsx */,
-				B696BE852149B5B500380CA8 /* network.csv */,
-				B696BE862149B5B500380CA8 /* network.txt */,
-				B696BE872149B5B500380CA8 /* network.xlsx */,
-				B696BE882149B5B500380CA8 /* sample.csv */,
-				B696BE892149B5B500380CA8 /* sample.txt */,
-				B696BE8A2149B5B500380CA8 /* sample.xlsx */,
-			);
-			path = xlsx;
-			sourceTree = "<group>";
-		};
-		B6AC48C62148669500F783C5 /* example_lasius_neglectus_hexagons */ = {
-			isa = PBXGroup;
-			children = (
-				B6AC48C82148669500F783C5 /* map.R */,
-				B6AC48C92148669500F783C5 /* map.txt */,
-				B6AC48CA2148669500F783C5 /* network.txt */,
-				B6AC48CB2148669500F783C5 /* parameters.txt */,
-				B6AC48CC2148669500F783C5 /* plot.R */,
-				B6AC48CD2148669500F783C5 /* run.sh */,
-				B6AC48CE2148669500F783C5 /* sample.txt */,
-			);
-			name = example_lasius_neglectus_hexagons;
-			path = ../../../example_lasius_neglectus_hexagons;
-			sourceTree = "<group>";
-		};
-		B6AC48CF214866B500F783C5 /* example_lasius_neglectus_squares */ = {
-			isa = PBXGroup;
-			children = (
-				B696BE772149B5B500380CA8 /* input */,
-				B696BE7C2149B5B500380CA8 /* output */,
-				B696BE802149B5B500380CA8 /* xlsx */,
-				B656907C214ADD58003CD5D1 /* parameters.txt */,
-				B6AC48D6214866B500F783C5 /* run.sh */,
-				B6AC48D5214866B500F783C5 /* plot.R */,
-				B6AC48D1214866B500F783C5 /* map.R */,
-			);
-			name = example_lasius_neglectus_squares;
-			path = ../../../example_lasius_neglectus_squares;
+			path = results;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

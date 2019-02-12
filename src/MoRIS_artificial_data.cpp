@@ -2,14 +2,15 @@
  * \file      MoRIS_artificial_data.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      07-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Generate artificial data from simulation parameters
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -593,8 +594,8 @@ void printUsage( void )
   std::cout << " " << PACKAGE << " " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << " ( release )\n";
 #endif
   std::cout << " MoRIS (Model of Routes of Invasive Spread)                           \n";
-  std::cout << "                                                                      \n";
-  std::cout << " Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet \n";
+  std::cout << " Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet \n";
+  std::cout << " Web: https://github.com/charlesrocabert/MoRIS                        \n";
   std::cout << "                                                                      \n";
   std::cout << " This program comes with ABSOLUTELY NO WARRANTY.                      \n";
   std::cout << " This is free software, and you are welcome to redistribute it under  \n";

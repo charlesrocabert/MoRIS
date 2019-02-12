@@ -2,14 +2,15 @@
  * \file      Simulation.h
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Simulation class declaration
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +64,9 @@ public:
    * GETTERS
    *----------------------------*/
   inline int    get_iteration( void ) const;
+  inline double get_total_log_likelihood( void ) const;
+  inline double get_total_log_empty_likelihood( void ) const;
+  inline double get_total_log_maximum_likelihood( void ) const;
   inline double get_empty_score( void ) const;
   inline double get_score( void ) const;
   
@@ -77,6 +81,7 @@ public:
   void compute_next_iteration( void );
   void compute_score( void );
   void write_state( std::string filename );
+  void write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
@@ -96,6 +101,7 @@ protected:
    *----------------------------*/
   
   Parameters* _parameters; /*!< Main parameters   */
+  Prng*       _prng;       /*!< Prng              */
   Graph*      _graph;      /*!< Graph structure   */
   int         _iteration;  /*!< Current iteration */
   
@@ -115,6 +121,39 @@ protected:
 inline int Simulation::get_iteration( void ) const
 {
   return _iteration;
+}
+
+/**
+ * \brief    Get the total log likelihood
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Simulation::get_total_log_likelihood( void ) const
+{
+  return _graph->get_total_log_likelihood();
+}
+
+/**
+ * \brief    Get the total log likelihood when map is empty
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Simulation::get_total_log_empty_likelihood( void ) const
+{
+  return _graph->get_total_log_empty_likelihood();
+}
+
+/**
+ * \brief    Get the total log maximum likelihood
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Simulation::get_total_log_maximum_likelihood( void ) const
+{
+  return _graph->get_total_log_maximum_likelihood();
 }
 
 /**

@@ -2,14 +2,15 @@
  * \file      Simulation.cpp
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Simulation class definition
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +47,7 @@ Simulation::Simulation( Parameters* parameters )
   /* 1) Initialize the simulation  */
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   _parameters = parameters;
+  _prng       = parameters->get_prng();
   _graph      = new Graph(_parameters);
   _iteration  = 0;
   
@@ -55,7 +57,7 @@ Simulation::Simulation( Parameters* parameters )
   if (_parameters->saveOutputs())
   {
     std::ofstream tree_file("output/lineage_tree.txt", std::ios::out | std::ios::trunc);
-    tree_file << "start_node end_node geodesic_distance euclidean_dist iteration\n";
+    tree_file << "repetition start_node end_node geodesic_distance euclidean_dist iteration\n";
     tree_file.close();
   }
 }
@@ -105,7 +107,7 @@ void Simulation::compute_next_iteration( void )
     /*-----------------------------------------------*/
     /* 1.1) For each repetition, run the jump module */
     /*-----------------------------------------------*/
-    for (int rep = 0; rep < _parameters->get_repetitions_by_simulation(); rep++)
+    for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
     {
       if (start_node->isOccupied(rep))
       {
@@ -141,7 +143,7 @@ void Simulation::compute_next_iteration( void )
             if (_parameters->saveOutputs())
             {
               double euclidean_dist = compute_euclidean_distance(start_node, current_node);
-              tree_file << start_node->get_identifier() << " " << current_node->get_identifier() << " " << distance << " " << euclidean_dist << " " << _iteration << "\n";
+              tree_file << rep+1 << " " << start_node->get_identifier() << " " << current_node->get_identifier() << " " << current_distance << " " << euclidean_dist << " " << _iteration << "\n";
             }
           }
           for (size_t i = 0; i < tagged_nodes.size(); i++)
@@ -178,7 +180,7 @@ void Simulation::compute_next_iteration( void )
  */
 void Simulation::compute_score( void )
 {
-  _graph->compute_score();
+  _graph->compute_score(false);
 }
 
 /**
@@ -190,6 +192,19 @@ void Simulation::compute_score( void )
 void Simulation::write_state( std::string filename )
 {
   _graph->write_state(filename);
+}
+
+/**
+ * \brief    Write unique pairs of occupied nodes with euclidean distances
+ * \details  --
+ * \param    std::string evaluated_filename
+ * \param    std::string observed_filename
+ * \param    std::string simulated_filename
+ * \return   \e void
+ */
+void Simulation::write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename )
+{
+  _graph->write_unique_pairs(evaluated_filename, observed_filename, simulated_filename);
 }
 
 /*----------------------------
@@ -205,9 +220,8 @@ void Simulation::write_state( std::string filename )
 int Simulation::draw_number_of_jumps( double jump_probability )
 {
   assert(jump_probability >= 0.0);
-  Prng*  prng     = _parameters->get_prng();
   double lambda   = _parameters->get_lambda();
-  int    nb_jumps = prng->poisson(lambda*jump_probability);
+  int    nb_jumps = _prng->poisson(jump_probability*lambda);
   return nb_jumps;
 }
 
@@ -222,19 +236,24 @@ double Simulation::draw_jump_size( void )
   Prng*                 prng     = _parameters->get_prng();
   double                mu       = _parameters->get_mu();
   double                sigma    = _parameters->get_sigma();
+  double                gamma    = _parameters->get_gamma();
   jump_distribution_law jump_law = _parameters->get_jump_law();
   double                distance = 0.0;
   if (jump_law == DIRAC)
   {
     distance = mu;
   }
-  else if (jump_law == GAUSSIAN)
+  else if (jump_law == NORMAL)
   {
     distance = prng->gaussian(mu, sigma);
   }
-  else if (jump_law == LOGNORMAL)
+  else if (jump_law == LOG_NORMAL)
   {
-    distance = pow(10.0, prng->gaussian(log10(mu), sigma));
+    distance = prng->lognormal(log(mu), sigma);
+  }
+  else if (jump_law == CAUCHY)
+  {
+    distance = fabs(prng->cauchy(0.0, gamma));
   }
   return distance;
 }
@@ -248,10 +267,10 @@ double Simulation::draw_jump_size( void )
  */
 double Simulation::compute_euclidean_distance( Node* node1, Node* node2 )
 {
-  double x1 = node1->get_x_coord();
-  double y1 = node1->get_y_coord();
-  double x2 = node2->get_x_coord();
-  double y2 = node2->get_y_coord();
+  double x1 = node1->get_x();
+  double y1 = node1->get_y();
+  double x2 = node2->get_x();
+  double y2 = node2->get_y();
   return sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
 }
 

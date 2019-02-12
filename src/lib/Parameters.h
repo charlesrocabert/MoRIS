@@ -2,14 +2,15 @@
  * \file      Parameters.h
  * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Parameters class declaration
  */
 
 /************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +51,7 @@ public:
    * CONSTRUCTORS
    *----------------------------*/
   Parameters( void );
-  Parameters( const Parameters& params );
+  Parameters( const Parameters& parameters ) = delete;
   
   /*----------------------------
    * DESTRUCTORS
@@ -66,40 +67,39 @@ public:
   inline Prng*             get_prng( void );
   inline unsigned long int get_prng_seed( void ) const;
   
-  /*------------------------------------------------------------------ Type of experimental data */
-  
-  inline type_of_data get_type_of_data( void ) const;
-  
   /*------------------------------------------------------------------ Input data filenames */
   
   inline std::string get_map_filename( void ) const;
   inline std::string get_network_filename( void ) const;
   inline std::string get_sample_filename( void ) const;
   
-  /*------------------------------------------------------------------ Number of repetitions by simulation */
+  /*------------------------------------------------------------------ Main parameters */
   
-  inline int get_repetitions_by_simulation( void ) const;
-  
-  /*------------------------------------------------------------------ Number of iterations by simulation */
-  
-  inline int get_number_of_iterations( void ) const;
+  inline type_of_data          get_typeofdata( void ) const;
+  inline int                   get_repetitions( void ) const;
+  inline int                   get_iterations( void ) const;
+  inline jump_distribution_law get_jump_law( void ) const;
+  inline optimization_function get_optimization_function( void ) const;
   
   /*------------------------------------------------------------------ Simulation parameters */
   
-  inline std::pair<double, double>* get_introduction_coordinates( void );
-  inline double                     get_introduction_probability( void ) const;
-  inline double                     get_lambda( void ) const;
-  inline double                     get_mu( void ) const;
-  inline double                     get_sigma( void ) const;
-  inline jump_distribution_law      get_jump_law( void ) const;
+  inline double get_x_introduction( void ) const;
+  inline double get_y_introduction( void ) const;
+  inline double get_p_introduction( void ) const;
+  inline double get_lambda( void ) const;
+  inline double get_mu( void ) const;
+  inline double get_sigma( void ) const;
+  inline double get_gamma( void ) const;
   
   /*------------------------------------------------------------------ Linear combination of road categories */
   
-  inline std::vector<double>* get_road_linear_combination( void );
-  
-  /*------------------------------------------------------------------ Minimal connectivity of the connectivity graph */
-  
-  inline double get_minimal_connectivity( void ) const;
+  inline double get_w1( void ) const;
+  inline double get_w2( void ) const;
+  inline double get_w3( void ) const;
+  inline double get_w4( void ) const;
+  inline double get_w5( void ) const;
+  inline double get_w6( void ) const;
+  inline double get_wmin( void ) const;
   
   /*------------------------------------------------------------------ Extra statistics */
   
@@ -115,40 +115,39 @@ public:
   
   inline void set_prng_seed( unsigned long int seed );
   
-  /*------------------------------------------------------------------ Type of experimental data */
-  
-  inline void set_type_of_data( type_of_data data );
-  
   /*------------------------------------------------------------------ Input data filenames */
   
   inline void set_map_filename( std::string filename );
   inline void set_network_filename( std::string filename );
   inline void set_sample_filename( std::string filename );
   
-  /*------------------------------------------------------------------ Number of repetitions by simulation */
+  /*------------------------------------------------------------------ Main parameters */
   
-  inline void set_repetitions_by_simulation( int repetitions_by_simulation );
-  
-  /*------------------------------------------------------------------ Number of iterations by simulation */
-  
-  inline void set_number_of_iterations( int number_of_iterations );
+  inline void set_typeofdata( type_of_data data );
+  inline void set_repetitions( int repetitions );
+  inline void set_iterations( int iterations );
+  inline void set_jump_law( jump_distribution_law jump_law );
+  inline void set_optimization_function( optimization_function optim_function );
   
   /*------------------------------------------------------------------ Simulation parameters */
   
-  inline void set_introduction_coordinates( std::pair<double, double>* introduction_coordinates );
-  inline void set_introduction_probability( double introduction_probability );
+  inline void set_x_introduction( double x );
+  inline void set_y_introduction( double y );
+  inline void set_p_introduction( double p );
   inline void set_lambda( double lambda );
   inline void set_mu( double mu );
   inline void set_sigma( double sigma );
-  inline void set_jump_law( jump_distribution_law jump_law );
+  inline void set_gamma( double gamma );
   
   /*------------------------------------------------------------------ Linear combination of road categories */
   
-  inline void set_road_linear_combination( std::vector<double>* road_linear_combination );
-  
-  /*------------------------------------------------------------------ Minimal connectivity of the connectivity graph */
-  
-  inline void set_minimal_connectivity( double minimal_connectivity );
+  inline void set_w1( double weight );
+  inline void set_w2( double weight );
+  inline void set_w3( double weight );
+  inline void set_w4( double weight );
+  inline void set_w5( double weight );
+  inline void set_w6( double weight );
+  inline void set_wmin( double weight );
   
   /*------------------------------------------------------------------ Extra statistics */
   
@@ -178,40 +177,40 @@ protected:
   Prng*             _prng; /*!< Pseudorandom numbers generator */
   unsigned long int _seed; /*!< Prng seed                      */
   
-  /*------------------------------------------------------------------ Type of experimental data */
-  
-  type_of_data _data; /*!< Type of experimental data (presence-only or presence-absence) */
-  
   /*------------------------------------------------------------------ Data filenames */
   
   std::string _map_filename;     /*!< Map filename     */
   std::string _network_filename; /*!< Network filename */
   std::string _sample_filename;  /*!< Sample filename  */
   
-  /*------------------------------------------------------------------ Number of repetitions by simulation */
+  /*------------------------------------------------------------------ Main parameters */
   
-  int _repetitions_by_simulation; /*!< Number of repetitions by simulation */
-  
-  /*------------------------------------------------------------------ Number of cycles by simulation */
-  
-  int _number_of_iterations; /*!< Number of iterations by simulation */
+  type_of_data          _data;           /*!< Type of experimental data           */
+  int                   _repetitions;    /*!< Number of repetitions by simulation */
+  int                   _iterations;     /*!< Number of iterations by simulation  */
+  jump_distribution_law _jump_law;       /*!< Jump distribution law               */
+  optimization_function _optim_function; /*!< Optimization function               */
   
   /*------------------------------------------------------------------ Simulation parameters */
   
-  std::pair<double, double> _introduction_coordinates; /*!< Coordinates of the introduction node */
-  double                    _introduction_probability; /*!< Introduction probability             */
-  double                    _lambda;                   /*!< Lambda                               */
-  double                    _mu;                       /*!< Mu                                   */
-  double                    _sigma;                    /*!< Sigma                                */
-  jump_distribution_law     _jump_law;                 /*!< Jump distribution law                */
+  double _x_introduction; /*!< X coordinate of the introduction node */
+  double _y_introduction; /*!< Y coordinate of the introduction node */
+  double _p_introduction; /*!< Introduction probability              */
+  double _lambda;         /*!< Lambda                                */
+  double _mu;             /*!< Mu                                    */
+  double _sigma;          /*!< Sigma                                 */
+  double _gamma;          /*!< Gamma                                 */
+  
   
   /*------------------------------------------------------------------ Linear combination of road categories */
   
-  std::vector<double> _road_linear_combination; /*!< Linear combination of the road categories */
-  
-  /*------------------------------------------------------------------ Minimal connectivity of the connectivity graph */
-  
-  double _minimal_connectivity; /*!< Minimal connectivity between cells */
+  double _w1;   /*!< Category I roads weight      */
+  double _w2;   /*!< Category II roads weight     */
+  double _w3;   /*!< Category III roads weight    */
+  double _w4;   /*!< Category IV roads weight     */
+  double _w5;   /*!< Category V roads weight      */
+  double _w6;   /*!< Category VI roads weight     */
+  double _wmin; /*!< Minimal weight between nodes */
   
   /*------------------------------------------------------------------ Extra statistics */
   
@@ -246,19 +245,6 @@ inline Prng* Parameters::get_prng( void )
 inline unsigned long int Parameters::get_prng_seed( void ) const
 {
   return _seed;
-}
-
-/*------------------------------------------------------------------ Type of experimental data */
-
-/**
- * \brief    Get the type of experimental data
- * \details  --
- * \param    void
- * \return   \e type_of_data
- */
-inline type_of_data Parameters::get_type_of_data( void ) const
-{
-  return _data;
 }
 
 /*------------------------------------------------------------------ Input data filenames */
@@ -296,7 +282,18 @@ inline std::string Parameters::get_sample_filename( void ) const
   return _sample_filename;
 }
 
-/*------------------------------------------------------------------ Number of repetitions by simulation */
+/*------------------------------------------------------------------ Main parameters */
+
+/**
+ * \brief    Get the type of experimental data
+ * \details  --
+ * \param    void
+ * \return   \e type_of_data
+ */
+inline type_of_data Parameters::get_typeofdata( void ) const
+{
+  return _data;
+}
 
 /**
  * \brief    Get the number of repetitions by simulation
@@ -304,12 +301,10 @@ inline std::string Parameters::get_sample_filename( void ) const
  * \param    void
  * \return   \e int
  */
-inline int Parameters::get_repetitions_by_simulation( void ) const
+inline int Parameters::get_repetitions( void ) const
 {
-  return _repetitions_by_simulation;
+  return _repetitions;
 }
-
-/*------------------------------------------------------------------ Number of iterations by simulation */
 
 /**
  * \brief    Get the number of iterations
@@ -317,33 +312,66 @@ inline int Parameters::get_repetitions_by_simulation( void ) const
  * \param    void
  * \return   \e int
  */
-inline int Parameters::get_number_of_iterations( void ) const
+inline int Parameters::get_iterations( void ) const
 {
-  return _number_of_iterations;
+  return _iterations;
+}
+
+/**
+ * \brief    Get jump distribution law
+ * \details  --
+ * \param    void
+ * \return   \e distribution_law
+ */
+inline jump_distribution_law Parameters::get_jump_law( void ) const
+{
+  return _jump_law;
+}
+
+/**
+ * \brief    Get the optimization function
+ * \details  --
+ * \param    void
+ * \return   \e optimization_function
+ */
+inline optimization_function Parameters::get_optimization_function( void ) const
+{
+  return _optim_function;
 }
 
 /*------------------------------------------------------------------ Simulation parameters */
 
 /**
- * \brief    Get the coordinates of the introduction node
- * \details  --
- * \param    void
- * \return   \e std::pair<double, double>*
- */
-inline std::pair<double, double>* Parameters::get_introduction_coordinates( void )
-{
-  return &_introduction_coordinates;
-}
-
-/**
- * \brief    Get the introduction probability
+ * \brief    Get the X coordinate of the introduction node
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Parameters::get_introduction_probability( void ) const
+inline double Parameters::get_x_introduction( void ) const
 {
-  return _introduction_probability;
+  return _x_introduction;
+}
+
+/**
+ * \brief    Get the Y coordinate of the introduction node
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_y_introduction( void ) const
+{
+  return _y_introduction;
+}
+
+/**
+ * \brief    Get the introduction prevalence
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_p_introduction( void ) const
+{
+  return _p_introduction;
 }
 
 /**
@@ -380,40 +408,93 @@ inline double Parameters::get_sigma( void ) const
 }
 
 /**
- * \brief    Get jump distribution law
+ * \brief    Get gamma parameter
  * \details  --
  * \param    void
- * \return   \e distribution_law
+ * \return   \e double
  */
-inline jump_distribution_law Parameters::get_jump_law( void ) const
+inline double Parameters::get_gamma( void ) const
 {
-  return _jump_law;
+  return _gamma;
 }
 
 /*------------------------------------------------------------------ Linear combination of road categories */
 
 /**
- * \brief    Get the road categories linear combination
- * \details  --
- * \param    void
- * \return   \e std::vector<double>*
- */
-inline std::vector<double>* Parameters::get_road_linear_combination( void )
-{
-  return &_road_linear_combination;
-}
-
-/*------------------------------------------------------------------ Minimal connectivity of the connectivity graph */
-
-/**
- * \brief    Get the minimal connectivity between cells
+ * \brief    Get the road category I weight
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Parameters::get_minimal_connectivity( void ) const
+inline double Parameters::get_w1( void ) const
 {
-  return _minimal_connectivity;
+  return _w1;
+}
+
+/**
+ * \brief    Get the road category II weight
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_w2( void ) const
+{
+  return _w2;
+}
+
+/**
+ * \brief    Get the road category III weight
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_w3( void ) const
+{
+  return _w3;
+}
+
+/**
+ * \brief    Get the road category IV weight
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_w4( void ) const
+{
+  return _w4;
+}
+
+/**
+ * \brief    Get the road category V weight
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_w5( void ) const
+{
+  return _w5;
+}
+
+/**
+ * \brief    Get the road category VI weight
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_w6( void ) const
+{
+  return _w6;
+}
+
+/**
+ * \brief    Get the minimal weight between nodes
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Parameters::get_wmin( void ) const
+{
+  return _wmin;
 }
 
 /*------------------------------------------------------------------ Extra statistics */
@@ -458,19 +539,6 @@ inline void Parameters::set_prng_seed( unsigned long int seed )
   _prng->set_seed(seed);
 }
 
-/*------------------------------------------------------------------ Type of experimental data */
-
-/**
- * \brief    Set the type of experimental data
- * \details  --
- * \param    type_of_data data
- * \return   \e void
- */
-inline void Parameters::set_type_of_data( type_of_data data )
-{
-  _data = data;
-}
-
 /*------------------------------------------------------------------ Input data filenames */
 
 /**
@@ -506,59 +574,100 @@ inline void Parameters::set_sample_filename( std::string filename )
   _sample_filename = std::string(filename);
 }
 
-/*------------------------------------------------------------------ Number of repetitions by simulation */
+/*------------------------------------------------------------------ Main parameters */
+
+/**
+ * \brief    Set the type of experimental data
+ * \details  --
+ * \param    type_of_data data
+ * \return   \e void
+ */
+inline void Parameters::set_typeofdata( type_of_data data )
+{
+  _data = data;
+}
 
 /**
  * \brief    Set the number of repetitions by simulation
  * \details  --
- * \param    int repetitions_by_simulation
+ * \param    int repetitions
  * \return   \e void
  */
-inline void Parameters::set_repetitions_by_simulation( int repetitions_by_simulation )
+inline void Parameters::set_repetitions( int repetitions )
 {
-  assert(repetitions_by_simulation > 0);
-  _repetitions_by_simulation = repetitions_by_simulation;
+  assert(repetitions > 0);
+  _repetitions = repetitions;
 }
-
-/*------------------------------------------------------------------ Number of iterations by simulation */
 
 /**
  * \brief    Set the number of iterations
  * \details  --
- * \param    int number_of_iterations
+ * \param    int iterations
  * \return   \e void
  */
-inline void Parameters::set_number_of_iterations( int number_of_iterations )
+inline void Parameters::set_iterations( int iterations )
 {
-  assert(number_of_iterations > 0);
-  _number_of_iterations = number_of_iterations;
+  assert(iterations > 0);
+  _iterations = iterations;
+}
+
+/**
+ * \brief    Set jump law
+ * \details  --
+ * \param    jump_distribution_law jump_law
+ * \return   \e void
+ */
+inline void Parameters::set_jump_law( jump_distribution_law jump_law )
+{
+  _jump_law = jump_law;
+}
+
+/**
+ * \brief    Set the optimization function
+ * \details  --
+ * \param    optimization_function optim_function
+ * \return   \e void
+ */
+inline void Parameters::set_optimization_function( optimization_function optim_function )
+{
+  _optim_function = optim_function;
 }
 
 /*------------------------------------------------------------------ Simulation parameters */
 
 /**
- * \brief    Set coordinates of the introduction node
+ * \brief    Set X coordinate of the introduction node
  * \details  --
- * \param    std::pair<double, double>* introduction_coordinates
+ * \param    double x
  * \return   \e void
  */
-inline void Parameters::set_introduction_coordinates( std::pair<double, double>* introduction_coordinates )
+inline void Parameters::set_x_introduction( double x )
 {
-  _introduction_coordinates.first  = introduction_coordinates->first;
-  _introduction_coordinates.second = introduction_coordinates->second;
+  _x_introduction = x;
 }
 
 /**
- * \brief    Set the introduction probability
+ * \brief    Set Y coordinate of the introduction node
  * \details  --
- * \param    double introduction_probability
+ * \param    double y
  * \return   \e void
  */
-inline void Parameters::set_introduction_probability( double introduction_probability )
+inline void Parameters::set_y_introduction( double y )
 {
-  assert(introduction_probability >= 0.0);
-  assert(introduction_probability <= 1.0);
-  _introduction_probability = introduction_probability;
+  _y_introduction = y;
+}
+
+/**
+ * \brief    Set the introduction prevalence
+ * \details  --
+ * \param    double p
+ * \return   \e void
+ */
+inline void Parameters::set_p_introduction( double p )
+{
+  assert(p >= 0.0);
+  assert(p <= 1.0);
+  _p_introduction = p;
 }
 
 /**
@@ -598,45 +707,108 @@ inline void Parameters::set_sigma( double sigma )
 }
 
 /**
- * \brief    Set jump law
+ * \brief    Set gamma
  * \details  --
- * \param    jump_distribution_law jump_law
+ * \param    double gamma
  * \return   \e void
  */
-inline void Parameters::set_jump_law( jump_distribution_law jump_law )
+inline void Parameters::set_gamma( double gamma )
 {
-  _jump_law = jump_law;
+  assert(gamma >= 0.0);
+  _gamma = gamma;
 }
 
 /*------------------------------------------------------------------ Linear combination of road categories */
 
 /**
- * \brief    Set road linear combination
+ * \brief    Set roads category I weight
  * \details  --
- * \param    std::vector<double>* road_linear_combination
+ * \param    double weight
  * \return   \e void
  */
-inline void Parameters::set_road_linear_combination( std::vector<double>* road_linear_combination )
+inline void Parameters::set_w1( double weight )
 {
-  _road_linear_combination.clear();
-  for (size_t i = 0; i < road_linear_combination->size(); i++)
-  {
-    _road_linear_combination.push_back(road_linear_combination->at(i));
-  }
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _w1 = weight;
 }
 
-/*------------------------------------------------------------------ Minimal connectivity of the connectivity graph */
-
 /**
- * \brief    Set minimal connectivity
+ * \brief    Set roads category II weight
  * \details  --
- * \param    distribution_law jump_law
+ * \param    double weight
  * \return   \e void
  */
-inline void Parameters::set_minimal_connectivity( double minimal_connectivity )
+inline void Parameters::set_w2( double weight )
 {
-  assert(minimal_connectivity >= 0.0);
-  _minimal_connectivity = minimal_connectivity;
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _w2 = weight;
+}
+
+/**
+ * \brief    Set roads category III weight
+ * \details  --
+ * \param    double weight
+ * \return   \e void
+ */
+inline void Parameters::set_w3( double weight )
+{
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _w3 = weight;
+}
+
+/**
+ * \brief    Set roads category IV weight
+ * \details  --
+ * \param    double weight
+ * \return   \e void
+ */
+inline void Parameters::set_w4( double weight )
+{
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _w4 = weight;
+}
+
+/**
+ * \brief    Set roads category V weight
+ * \details  --
+ * \param    double weight
+ * \return   \e void
+ */
+inline void Parameters::set_w5( double weight )
+{
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _w5 = weight;
+}
+
+/**
+ * \brief    Set roads category VI weight
+ * \details  --
+ * \param    double weight
+ * \return   \e void
+ */
+inline void Parameters::set_w6( double weight )
+{
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _w6 = weight;
+}
+
+/**
+ * \brief    Set minimal weight between nodes
+ * \details  --
+ * \param    double weight
+ * \return   \e void
+ */
+inline void Parameters::set_wmin( double weight )
+{
+  assert(weight >= 0.0);
+  assert(weight <= 1.0);
+  _wmin = weight;
 }
 
 /*------------------------------------------------------------------ Extra statistics */
