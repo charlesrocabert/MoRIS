@@ -34,7 +34,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 </p>
 
 <p align="justify">
-  MoRIS software requires input files built in a certain way. Here is a tutorial explaining this procedure in details: https://github.com/charlesrocabert/MoRIS/blob/master/docs/TUTORIAL.md.
+  MoRIS software requires input files built in a certain way. Here is a <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">tutorial</a> explaining this procedure in details.
 </p>
 
 ## Publications <a name="publications"></a>
@@ -111,3 +111,4 @@ Binary executable files are in <code>build/bin</code> folder.
 
 ## Input files tutorial <a name="tutorial"></a>
 A tutorial to build MoRIS input files is <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">available here</a>.
+
