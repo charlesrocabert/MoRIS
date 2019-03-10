@@ -87,7 +87,7 @@ int main(int argc, char const** argv)
   if (parameters->saveOutputs())
   {
     simulation->write_state("output/final_state.txt");
-    simulation->write_unique_pairs("output/evaluated_euclidean_distribution.txt", "output/observed_euclidean_distribution.txt", "output/simulated_euclidean_distribution.txt");
+    simulation->write_invasion_euclidean_distributions("output/observed_euclidean_distribution.txt", "output/simulated_euclidean_distribution.txt");
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -566,7 +566,7 @@ void printUsage( void )
   std::cout << "  -iters, --iters <iterations>\n";
   std::cout << "        Specify the number of iterations by simulation\n";
   std::cout << "  -law, --law <law>\n";
-  std::cout << "        Specify the jump distribution law (DIRAC, NORMAL, LOGNORMAL, CAUCHY)\n";
+  std::cout << "        Specify the jump distribution law (DIRAC, NORMAL, LOG_NORMAL, CAUCHY)\n";
   std::cout << "  -optimfunc, --optimfunc <optimization_function>\n";
   std::cout << "        Specify the optimization_function (LSS, LOG_LIKELIHOOD, LIKELIHOOD_LSS)\n";
   std::cout << "  -xintro, --xintro <coordinate>\n";
@@ -578,11 +578,11 @@ void printUsage( void )
   std::cout << "  -lambda, --lambda <lambda>\n";
   std::cout << "        Specify the mean number of jumps/cell/year\n";
   std::cout << "  -mu, --mu <mu>\n";
-  std::cout << "        Specify the mean of the jump distribution (DIRAC, NORMAL, LOGNORMAL)\n";
+  std::cout << "        Specify the mean of the jump distribution (with DIRAC, NORMAL, LOG_NORMAL)\n";
   std::cout << "  -sigma, --sigma <sigma>\n";
-  std::cout << "        Specify the variance of the jump distribution (NORMAL, LOGNORMAL)\n";
+  std::cout << "        Specify the variance of the jump distribution (with NORMAL, LOG_NORMAL)\n";
   std::cout << "  -gamma, --gamma <gamma>\n";
-  std::cout << "        Specify the gamma parameter of the jump distribution (CAUCHY)\n";
+  std::cout << "        Specify the gamma parameter of the jump distribution (with CAUCHY)\n";
   std::cout << "  -w1, --w1 <weight>\n";
   std::cout << "        Specify the weight of type I roads\n";
   std::cout << "  -w2, --w2 <weight>\n";

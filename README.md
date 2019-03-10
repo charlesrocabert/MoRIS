@@ -1,13 +1,13 @@
-<h1 align="center">:ant: MoRIS</h1>
+<h1 align="center">MoRIS</h1>
 <p align="center">
 <em>Model of Routes of Invasive Spread</em>
 <br />
 <br />
-<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.0-orange.svg" /></a>&nbsp;<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/build-passing-green.svg" /></a>&nbsp;<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/license-GPL v3-blue.svg" /></a>&nbsp;
+<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.1-orange.svg" /></a>&nbsp;<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/build-passing-green.svg" /></a>&nbsp;<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/license-GPL v3-blue.svg" /></a>
 </p>
 
 <p align="center">
-<img src="https://github.com/charlesrocabert/MoRIS/blob/master/docs/pics/road_network.png">
+<img src="docs/pics/spread.png" width=300>
 <br/>
 </p>
 
@@ -72,7 +72,7 @@ The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
 </p>
 
 ## Download <a name="download"></a>
-Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.0-orange.svg" /></a>
+Download the latest pre-release: <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.1-orange.svg" /></a>
 
 ## Installation instructions <a name="installation_instructions"></a>
 Download the latest release of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
@@ -111,4 +111,11 @@ Binary executable files are in <code>build/bin</code> folder.
 
 ## Input files tutorial <a name="tutorial"></a>
 A tutorial to build MoRIS input files is <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">available here</a>.
+
+<br />
+<br />
+<br />
+<p align="center">
+  :truck: :ant::ant::ant:
+</p>
 

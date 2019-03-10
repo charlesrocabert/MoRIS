@@ -81,7 +81,7 @@ public:
   void compute_next_iteration( void );
   void compute_score( void );
   void write_state( std::string filename );
-  void write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename );
+  void write_invasion_euclidean_distributions( std::string observed_filename, std::string simulated_filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES

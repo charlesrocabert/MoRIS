@@ -210,40 +210,18 @@ void Graph::write_state( std::string filename )
 }
 
 /**
- * \brief    Write unique pairs of occupied nodes (simulated or observed)
+ * \brief    Write the euclidean distance distribution of invaded nodes (simulated or observed)
  * \details  --
- * \param    std::string evaluated_filename
  * \param    std::string observed_filename
  * \param    std::string simulated_filename
  * \return   \e void
  */
-void Graph::write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename )
+void Graph::write_invasion_euclidean_distributions( std::string observed_filename, std::string simulated_filename )
 {
-  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 1) Evaluated occupancy */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
-  std::ofstream file(evaluated_filename, std::ios::out | std::ios::trunc);
-  file << "start_node end_node euclidean_dist\n";
-  for (std::unordered_map<int, Node*>::iterator it1 = _map.begin(); it1 != _map.end(); ++it1)
-  {
-    for (std::unordered_map<int, Node*>::iterator it2 = _map.find(it1->first); it2 != _map.end(); ++it2)
-    {
-      if (it1->first != it2->first)
-      {
-        if (it1->second->get_n_obs() > 0.0 && it2->second->get_n_obs() > 0.0)
-        {
-          double dist = compute_euclidean_distance(it1->second, it2->second);
-          file << it1->first << " " << it2->first << " " << dist << "\n";
-        }
-      }
-    }
-  }
-  file.close();
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 2) Observed occupancy  */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
-  file.open(observed_filename, std::ios::out | std::ios::trunc);
+  /*~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 1) Observed invasion  */
+  /*~~~~~~~~~~~~~~~~~~~~~~~*/
+  std::ofstream file(observed_filename, std::ios::out | std::ios::trunc);
   file << "start_node end_node euclidean_dist\n";
   for (std::unordered_map<int, Node*>::iterator it1 = _map.begin(); it1 != _map.end(); ++it1)
   {
@@ -264,9 +242,9 @@ void Graph::write_unique_pairs( std::string evaluated_filename, std::string obse
   }
   file.close();
   
-  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 3) Simulated occupancy */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~*/
+  /* 3) Simulated invasion */
+  /*~~~~~~~~~~~~~~~~~~~~~~~*/
   file.open(simulated_filename, std::ios::out | std::ios::trunc);
   file << "start_node end_node euclidean_dist rep\n";
   for (std::unordered_map<int, Node*>::iterator it1 = _map.begin(); it1 != _map.end(); ++it1)

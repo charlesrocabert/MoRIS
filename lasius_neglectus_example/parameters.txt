@@ -1,7 +1,8 @@
 
 /************************************************************************
 / MoRIS (Model of Routes of Invasive Spread)
-/ Copyright (c) 2014-2018 Charles Rocabert, Jérôme Gippet, Serge Fenet
+/ Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+/ Web: https://github.com/charlesrocabert/MoRIS
 /
 / This program is free software: you can redistribute it and/or modify
 / it under the terms of the GNU General Public License as published by
@@ -35,74 +36,80 @@ SAMPLE_FILE   input/sample.txt
 
 
 ///////////////////////////////////////////////////////////////
-// Seed main parameters
+// Set main parameters
 ///////////////////////////////////////////////////////////////
 
-SEED                       238409
+SEED                       987654
 TYPE_OF_DATA               PRESENCE_ABSENCE
-REPETITIONS_BY_SIMULATION  100
+REPETITIONS_BY_SIMULATION  500
 NUMBER_OF_ITERATIONS       25
-JUMP_LAW                   GAUSSIAN
+JUMP_LAW                   LOG_NORMAL
+OPTIMIZATION_FUNCTION      LOG_LIKELIHOOD
 
 ///////////////////////////////////////////////////////////////
-// Set the default parameter values
+// Set default parameter values
 ///////////////////////////////////////////////////////////////
 
-X_DEFAULT        30000
-Y_DEFAULT        30000
-P_INTRO_DEFAULT  1.0
-LAMBDA_DEFAULT   1.0
-MU_DEFAULT       10.0
-SIGMA_DEFAULT    0.0
-W1_DEFAULT       1.0
-W2_DEFAULT       0.5
-W3_DEFAULT       0.25
-W4_DEFAULT       0.125
-W5_DEFAULT       0.0
-W6_DEFAULT       0.0
-MIN_W_DEFAULT    0.0
-
-
-///////////////////////////////////////////////////////////////
-// Set the parameters to optimize
-///////////////////////////////////////////////////////////////
-
-OPTIMIZE_X        TRUE
-OPTIMIZE_Y        TRUE
-OPTIMIZE_P_INTRO  TRUE
-OPTIMIZE_LAMBDA   TRUE
-OPTIMIZE_MU       TRUE
-OPTIMIZE_SIGMA    TRUE
-OPTIMIZE_W1       FALSE
-OPTIMIZE_W2       FALSE
-OPTIMIZE_W3       FALSE
-OPTIMIZE_W4       FALSE
-OPTIMIZE_W5       FALSE
-OPTIMIZE_W6       FALSE
-OPTIMIZE_MIN_W    FALSE
+XINTRO_DEFAULT  30000
+YINTRO_DEFAULT  30000
+PINTRO_DEFAULT  1.0
+LAMBDA_DEFAULT  1.0
+MU_DEFAULT      0.0
+SIGMA_DEFAULT   0.0
+GAMMA_DEFAULT   0.0
+W1_DEFAULT      1.0
+W2_DEFAULT      1.0
+W3_DEFAULT      1.0
+W4_DEFAULT      1.0
+W5_DEFAULT      0.0
+W6_DEFAULT      0.0
+WMIN_DEFAULT    0.0
 
 
 ///////////////////////////////////////////////////////////////
-// Set the parameters ranges
+// Set parameters to optimize
 ///////////////////////////////////////////////////////////////
 
-X_MIN  20000
-X_MAX  88000
+OPTIMIZE_XINTRO  TRUE
+OPTIMIZE_YINTRO  TRUE
+OPTIMIZE_PINTRO  FALSE
+OPTIMIZE_LAMBDA  TRUE
+OPTIMIZE_MU      TRUE
+OPTIMIZE_SIGMA   TRUE
+OPTIMIZE_GAMMA   FALSE
+OPTIMIZE_W1      FALSE
+OPTIMIZE_W2      FALSE
+OPTIMIZE_W3      FALSE
+OPTIMIZE_W4      FALSE
+OPTIMIZE_W5      FALSE
+OPTIMIZE_W6      FALSE
+OPTIMIZE_WMIN    FALSE
 
-Y_MIN  14000
-Y_MAX  104000
 
-P_INTRO_MIN  0.0
-P_INTRO_MAX  1.0
+///////////////////////////////////////////////////////////////
+// Set parameters ranges
+///////////////////////////////////////////////////////////////
+
+XINTRO_MIN  20000
+XINTRO_MAX  88000
+
+YINTRO_MIN  14000
+YINTRO_MAX  104000
+
+PINTRO_MIN  0.0
+PINTRO_MAX  1.0
 
 LAMBDA_MIN  0.0
-LAMBDA_MAX  3.0
+LAMBDA_MAX  30.0
 
 MU_MIN  0.0
-MU_MAX  20.0
+MU_MAX  30.0
 
 SIGMA_MIN  0.0
-SIGMA_MAX  20.0
+SIGMA_MAX  3.0
+
+GAMMA_MIN  0.0
+GAMMA_MAX  10.0
 
 W1_MIN  0.0
 W1_MAX  1.0
@@ -122,6 +129,5 @@ W5_MAX  1.0
 W6_MIN  0.0
 W6_MAX  1.0
 
-MIN_W_MIN  0.0
-MIN_W_MAX  1.0
-
+WMIN_MIN  0.0
+WMIN_MAX  1.0

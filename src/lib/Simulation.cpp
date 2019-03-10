@@ -57,7 +57,7 @@ Simulation::Simulation( Parameters* parameters )
   if (_parameters->saveOutputs())
   {
     std::ofstream tree_file("output/lineage_tree.txt", std::ios::out | std::ios::trunc);
-    tree_file << "repetition start_node end_node geodesic_distance euclidean_dist iteration\n";
+    tree_file << "repetition start_node end_node geodesic_dist euclidean_dist iteration\n";
     tree_file.close();
   }
 }
@@ -197,14 +197,13 @@ void Simulation::write_state( std::string filename )
 /**
  * \brief    Write unique pairs of occupied nodes with euclidean distances
  * \details  --
- * \param    std::string evaluated_filename
  * \param    std::string observed_filename
  * \param    std::string simulated_filename
  * \return   \e void
  */
-void Simulation::write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename )
+void Simulation::write_invasion_euclidean_distributions( std::string observed_filename, std::string simulated_filename )
 {
-  _graph->write_unique_pairs(evaluated_filename, observed_filename, simulated_filename);
+  _graph->write_invasion_euclidean_distributions(observed_filename, simulated_filename);
 }
 
 /*----------------------------

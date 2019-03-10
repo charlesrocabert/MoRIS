@@ -92,7 +92,7 @@ public:
   void update_state( void );
   void compute_score( bool empty );
   void write_state( std::string filename );
-  void write_unique_pairs( std::string evaluated_filename, std::string observed_filename, std::string simulated_filename );
+  void write_invasion_euclidean_distributions( std::string observed_filename, std::string simulated_filename );
   
   /*----------------------------
    * PUBLIC ATTRIBUTES
