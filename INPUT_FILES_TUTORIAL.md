@@ -1,4 +1,4 @@
-<h1 align="center">:ant: MoRIS input files tutorial</h1>
+<h1 align="center">MoRIS input files tutorial</h1>
 <p align="center">
 J. M. W. Gippet, C. Rocabert
 </p>
