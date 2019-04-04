@@ -1,15 +1,15 @@
 /**
  * \file      Graph.cpp
- * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Graph class definition
  */
 
-/************************************************************************
+/****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ************************************************************************/
+ ****************************************************************************/
 
 #include "Graph.h"
 
@@ -165,7 +165,6 @@ void Graph::compute_score( bool empty )
         _score                        += it->second->get_score();
       }
     }
-    //_score = log10(_score);
   }
   if (empty)
   {
@@ -183,7 +182,7 @@ void Graph::compute_score( bool empty )
 void Graph::write_state( std::string filename )
 {
   std::ofstream file(filename, std::ios::out | std::ios::trunc);
-  file << "id x y y_obs n_obs p_obs total_nb_intros mean_nb_intros var_nb_intros y_sim n_sim p_sim L empty_L max_L empty_score score\n";
+  file << "id x y y_obs n_obs p_obs total_nb_intros mean_nb_intros var_nb_intros y_sim n_sim p_sim mean_first_invasion var_first_invasion mean_last_invasion var_last_invasion L empty_L max_L empty_score score\n";
   Node* node = get_first();
   while (node != NULL)
   {
@@ -199,6 +198,10 @@ void Graph::write_state( std::string filename )
     file << node->get_y_sim() << " ";
     file << node->get_n_sim() << " ";
     file << node->get_p_sim() << " ";
+    file << node->get_mean_first_invasion_age() << " ";
+    file << node->get_var_first_invasion_age() << " ";
+    file << node->get_mean_last_invasion_age() << " ";
+    file << node->get_var_last_invasion_age() << " ";
     file << _total_log_likelihood << " ";
     file << _total_log_empty_likelihood << " ";
     file << _total_log_maximum_likelihood << " ";

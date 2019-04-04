@@ -1,15 +1,15 @@
 /**
  * \file      Node.h
- * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Node class declaration
  */
 
-/************************************************************************
+/****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ************************************************************************/
+ ****************************************************************************/
 
 #ifndef __MoRIS__Node__
 #define __MoRIS__Node__
@@ -98,6 +98,12 @@ public:
   inline double get_n_sim( void ) const;
   inline double get_y_sim( void ) const;
   inline double get_p_sim( void ) const;
+  inline double get_first_invasion_age( int rep ) const;
+  inline double get_last_invasion_age( int rep ) const;
+  inline double get_mean_first_invasion_age( void ) const;
+  inline double get_mean_last_invasion_age( void ) const;
+  inline double get_var_first_invasion_age( void ) const;
+  inline double get_var_last_invasion_age( void ) const;
   
   /*--------------------------------------- SCORES */
   
@@ -134,6 +140,7 @@ public:
   inline void untag( void );
   inline void add_introduction( int rep );
   inline void set_as_introduction_node( void );
+  inline void update_invasion_age( double age, int rep );
   
   /*----------------------------
    * PUBLIC METHODS
@@ -188,16 +195,22 @@ protected:
   
   /*--------------------------------------- SIMULATION VARIABLES */
   
-  bool    _tagged;                 /*!< Node tag state                          */
-  int*    _current_state;          /*!< Hexagon current state                   */
-  int*    _next_state;             /*!< Hexagon next state                      */
-  double* _nb_introductions;       /*!< Number of introductions                 */
-  double  _total_nb_introductions; /*!< Total number of introductions           */
-  double  _mean_nb_introductions;  /*!< Mean number of introductions            */
-  double  _var_nb_introductions;   /*!< Variance of the number of introductions */
-  double  _n_sim;                  /*!< Number of virtual sampled cells         */
-  double  _y_sim;                  /*!< Number of occupied cells                */
-  double  _p_sim;                  /*!< Simulated prevalence                    */
+  bool    _tagged;                  /*!< Node tag state                          */
+  int*    _current_state;           /*!< Hexagon current state                   */
+  int*    _next_state;              /*!< Hexagon next state                      */
+  double* _nb_introductions;        /*!< Number of introductions                 */
+  double  _total_nb_introductions;  /*!< Total number of introductions           */
+  double  _mean_nb_introductions;   /*!< Mean number of introductions            */
+  double  _var_nb_introductions;    /*!< Variance of the number of introductions */
+  double  _n_sim;                   /*!< Number of virtual sampled cells         */
+  double  _y_sim;                   /*!< Number of occupied cells                */
+  double  _p_sim;                   /*!< Simulated prevalence                    */
+  double* _first_invasion_age;      /*!< Age of the first invasion               */
+  double* _last_invasion_age;       /*!< Age of the last invasion                */
+  double  _mean_first_invasion_age; /*!< Mean age of the first invasion          */
+  double  _mean_last_invasion_age;  /*!< Mean age of the last invasion           */
+  double  _var_first_invasion_age;  /*!< Variance of age of the first invasion   */
+  double  _var_last_invasion_age;   /*!< Variance of age of the last invasion    */
   
   /*--------------------------------------- SCORES */
   
@@ -481,6 +494,76 @@ inline double Node::get_p_sim( void ) const
   return _p_sim;
 }
 
+/**
+ * \brief    Get the age of the first invasion
+ * \details  --
+ * \param    int rep
+ * \return   \e double
+ */
+inline double Node::get_first_invasion_age( int rep ) const
+{
+  assert(rep >= 0);
+  assert(rep < _parameters->get_repetitions());
+  return _first_invasion_age[rep];
+}
+
+/**
+ * \brief    Get the age of the last invasion
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_last_invasion_age( int rep ) const
+{
+  assert(rep >= 0);
+  assert(rep < _parameters->get_repetitions());
+  return _last_invasion_age[rep];
+}
+
+/**
+ * \brief    Get the mean age of the first invasion
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_mean_first_invasion_age( void ) const
+{
+  return _mean_first_invasion_age;
+}
+
+/**
+ * \brief    Get the mean age of the last invasion
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_mean_last_invasion_age( void ) const
+{
+  return _mean_last_invasion_age;
+}
+
+/**
+ * \brief    Get the variance of the age of the first invasion
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_var_first_invasion_age( void ) const
+{
+  return _var_first_invasion_age;
+}
+
+/**
+ * \brief    Get the variance of the age of the last invasion
+ * \details  --
+ * \param    void
+ * \return   \e double
+ */
+inline double Node::get_var_last_invasion_age( void ) const
+{
+  return _var_last_invasion_age;
+}
+
 /*--------------------------------------- SCORES */
 
 /**
@@ -694,14 +777,7 @@ inline void Node::add_introduction( int rep )
 {
   assert(rep >= 0);
   assert(rep < _parameters->get_repetitions());
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 1) Set state at time t+1                 */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  _next_state[rep] = 1;
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  /* 2) Increment the number of introductions */
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  _next_state[rep]         = 1;
   _nb_introductions[rep]  += 1.0;
   _total_nb_introductions += 1.0;
 }
@@ -731,16 +807,25 @@ inline void Node::set_as_introduction_node( void )
     }
   }
   _p_sim = _y_sim/_n_sim;
-  /*
-  for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
+}
+
+/**
+ * \brief    Update the age(s) of the invasion
+ * \details  --
+ * \param    double age
+ * \param    int rep
+ * \return   \e void
+ */
+inline void Node::update_invasion_age( double age, int rep )
+{
+  assert(age >= 0.0);
+  assert(rep >= 0);
+  assert(rep < _parameters->get_repetitions());
+  if (_first_invasion_age[rep] == -1.0)
   {
-    _current_state[rep]     = 1;
-    _next_state[rep]        = 1;
-    _nb_introductions[rep] += 1.0;
+    _first_invasion_age[rep] = age;
   }
-  _y_sim = (double)_parameters->get_repetitions();
-  _p_sim = _parameters->get_p_introduction();
-   */
+  _last_invasion_age[rep] = age;
 }
 
 

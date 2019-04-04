@@ -1,15 +1,15 @@
 /**
  * \file      Parameters.h
- * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Parameters class declaration
  */
 
-/************************************************************************
+/****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ************************************************************************/
+ ****************************************************************************/
 
 #ifndef __MoRIS__Parameters__
 #define __MoRIS__Parameters__
@@ -105,6 +105,8 @@ public:
   
   inline bool get_save_outputs( void ) const;
   inline bool saveOutputs( void ) const;
+  inline bool get_save_all_states( void ) const;
+  inline bool saveAllStates( void ) const;
   
   /*----------------------------
    * SETTERS
@@ -152,6 +154,7 @@ public:
   /*------------------------------------------------------------------ Extra statistics */
   
   inline void set_save_outputs( bool save_outputs );
+  inline void set_save_all_states( bool save_all_states );
   
   /*----------------------------
    * PUBLIC METHODS
@@ -214,7 +217,8 @@ protected:
   
   /*------------------------------------------------------------------ Extra statistics */
   
-  bool _save_outputs; /*!< Save simulation outputs */
+  bool _save_outputs;    /*!< Save simulation outputs    */
+  bool _save_all_states; /*!< Save all simulation states */
   
 };
 
@@ -521,6 +525,28 @@ inline bool Parameters::saveOutputs( void ) const
   return _save_outputs;
 }
 
+/**
+ * \brief    Get save simulation state at all times
+ * \details  --
+ * \param    void
+ * \return   \e bool
+ */
+inline bool Parameters::get_save_all_states( void ) const
+{
+  return _save_all_states;
+}
+
+/**
+ * \brief    Save simulation state at all times?
+ * \details  --
+ * \param    void
+ * \return   \e bool
+ */
+inline bool Parameters::saveAllStates( void ) const
+{
+  return _save_all_states;
+}
+
 /*----------------------------
  * SETTERS
  *----------------------------*/
@@ -822,6 +848,17 @@ inline void Parameters::set_wmin( double weight )
 inline void Parameters::set_save_outputs( bool save_outputs )
 {
   _save_outputs = save_outputs;
+}
+
+/**
+ * \brief    Set save simulation state at all times
+ * \details  --
+ * \param    bool save_all_states
+ * \return   \e void
+ */
+inline void Parameters::set_save_all_states( bool save_all_states )
+{
+  _save_all_states = save_all_states;
 }
 
 

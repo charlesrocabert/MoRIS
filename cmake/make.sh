@@ -1,8 +1,9 @@
 #!/bin/bash
+# coding: utf-8
 
-#***********************************************************************
+#***************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+# Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
 # Web: https://github.com/charlesrocabert/MoRIS
 #
 # This program is free software: you can redistribute it and/or modify
@@ -17,7 +18,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#***********************************************************************
+#***************************************************************************
 
 bash make_clean.sh
 cmake -DCMAKE_BUILD_TYPE=Release ..

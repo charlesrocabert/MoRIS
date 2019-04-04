@@ -1,15 +1,15 @@
 /**
  * \file      MoRIS_run.cpp
- * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     MoRIS_run executable
  */
 
-/************************************************************************
+/****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ************************************************************************/
+ ****************************************************************************/
 
 #include "../cmake/Config.h"
 
@@ -77,6 +77,12 @@ int main(int argc, char const** argv)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   while (simulation->get_iteration() < parameters->get_iterations())
   {
+    if (parameters->saveAllStates())
+    {
+      std::stringstream filename;
+      filename << "output/state_" << simulation->get_iteration() << ".txt";
+      simulation->write_state(filename.str());
+    }
     simulation->compute_next_iteration();
   }
   
@@ -503,6 +509,10 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
     {
       parameters->set_save_outputs(true);
     }
+    if (strcmp(argv[i], "-save-all-states") == 0 || strcmp(argv[i], "--save-all-states") == 0)
+    {
+      parameters->set_save_all_states(true);
+    }
   }
   bool parameter_lacking = false;
   for (auto it = options.begin(); it != options.end(); ++it)
@@ -529,21 +539,21 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
 void printUsage( void )
 {
   std::cout << "\n";
-  std::cout << "**********************************************************************\n";
+  std::cout << "***************************************************************************\n";
 #ifdef DEBUG
   std::cout << " " << PACKAGE << " " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << " ( debug )\n";
 #endif
 #ifdef NDEBUG
   std::cout << " " << PACKAGE << " " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << " ( release )\n";
 #endif
-  std::cout << " MoRIS (Model of Routes of Invasive Spread)                           \n";
-  std::cout << " Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet \n";
-  std::cout << " Web: https://github.com/charlesrocabert/MoRIS                        \n";
-  std::cout << "                                                                      \n";
-  std::cout << " This program comes with ABSOLUTELY NO WARRANTY.                      \n";
-  std::cout << " This is free software, and you are welcome to redistribute it under  \n";
-  std::cout << " certain conditions; See the GNU General Public License for details   \n";
-  std::cout << "**********************************************************************\n";
+  std::cout << " MoRIS (Model of Routes of Invasive Spread)                                \n";
+  std::cout << " Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet \n";
+  std::cout << " Web: https://github.com/charlesrocabert/MoRIS                             \n";
+  std::cout << "                                                                           \n";
+  std::cout << " This program comes with ABSOLUTELY NO WARRANTY.                           \n";
+  std::cout << " This is free software, and you are welcome to redistribute it under       \n";
+  std::cout << " certain conditions; See the GNU General Public License for details        \n";
+  std::cout << "***************************************************************************\n";
   std::cout << "Usage: MoRIS_run -h or --help\n";
   std::cout << "   or: MoRIS_run [list of mandatory parameters]\n";
   std::cout << "Options are:\n";

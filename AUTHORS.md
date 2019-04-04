@@ -1,6 +1,6 @@
 # Original authors
 * Charles Rocabert
-* Jérôme Gippet
+* Jérôme M.W. Gippet
 * Serge Fenet
 
 # Major Contributors

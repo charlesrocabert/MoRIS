@@ -1,15 +1,15 @@
 /**
  * \file      Node.cpp
- * \author    Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Node class definition
  */
 
-/************************************************************************
+/****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme Gippet, Serge Fenet
+ * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ************************************************************************/
+ ****************************************************************************/
 
 #include "Node.h"
 
@@ -88,9 +88,20 @@ Node::Node( Parameters* parameters, int identifier )
     _next_state[i]       = 0;
     _nb_introductions[i] = 0.0;
   }
-  _n_sim = (double)_parameters->get_repetitions();
-  _y_sim = 0.0;
-  _p_sim = 0.0;
+  _n_sim              = (double)_parameters->get_repetitions();
+  _y_sim              = 0.0;
+  _p_sim              = 0.0;
+  _first_invasion_age = new double[_parameters->get_repetitions()];
+  _last_invasion_age  = new double[_parameters->get_repetitions()];
+  for (int i = 0; i < _parameters->get_repetitions(); i++)
+  {
+    _first_invasion_age[i] = -1.0;
+    _last_invasion_age[i]  = -1.0;
+  }
+  _mean_first_invasion_age = 0.0;
+  _mean_last_invasion_age  = 0.0;
+  _var_first_invasion_age  = 0.0;
+  _var_last_invasion_age   = 0.0;
   
   /*--------------------------------------- SCORES */
   
@@ -129,6 +140,10 @@ Node::~Node( void )
   _next_state = NULL;
   delete[] _nb_introductions;
   _nb_introductions = NULL;
+  delete[] _first_invasion_age;
+  _first_invasion_age = NULL;
+  delete[] _last_invasion_age;
+  _last_invasion_age = NULL;
 }
 
 /*----------------------------
@@ -191,22 +206,52 @@ Node* Node::jump( void )
  */
 void Node::update_state( void )
 {
-  _mean_nb_introductions = 0.0;
-  _var_nb_introductions  = 0.0;
-  _y_sim                 = 0.0;
-  _p_sim                 = 0.0;
+  _mean_nb_introductions      = 0.0;
+  _var_nb_introductions       = 0.0;
+  _y_sim                      = 0.0;
+  _p_sim                      = 0.0;
+  _mean_first_invasion_age    = 0.0;
+  _mean_last_invasion_age     = 0.0;
+  _var_first_invasion_age     = 0.0;
+  _var_last_invasion_age      = 0.0;
+  double first_invasion_count = 0.0;
+  double last_invasion_count  = 0.0;
   for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
   {
-    _current_state[rep]     = _next_state[rep];
-    _mean_nb_introductions += _nb_introductions[rep];
-    _var_nb_introductions  += _nb_introductions[rep]*_nb_introductions[rep];
-    _y_sim                 += (double)_current_state[rep];
-    _p_sim                 += (double)_current_state[rep];
+    _current_state[rep]       = _next_state[rep];
+    _mean_nb_introductions   += _nb_introductions[rep];
+    _var_nb_introductions    += _nb_introductions[rep]*_nb_introductions[rep];
+    _y_sim                   += (double)_current_state[rep];
+    _p_sim                   += (double)_current_state[rep];
+    if (_first_invasion_age[rep] != -1.0)
+    {
+      _mean_first_invasion_age += _first_invasion_age[rep];
+      _var_first_invasion_age  += _first_invasion_age[rep]*_first_invasion_age[rep];
+      first_invasion_count     += 1.0;
+    }
+    if (_last_invasion_age[rep] != -1.0)
+    {
+      _mean_last_invasion_age += _last_invasion_age[rep];
+      _var_last_invasion_age  += _last_invasion_age[rep]*_last_invasion_age[rep];
+      last_invasion_count     += 1.0;
+    }
   }
-  _mean_nb_introductions /= _n_sim;
-  _var_nb_introductions  /= _n_sim;
-  _var_nb_introductions  -= _mean_nb_introductions*_mean_nb_introductions;
-  _p_sim                 /= _n_sim;
+  _mean_nb_introductions   /= _n_sim;
+  _var_nb_introductions    /= _n_sim;
+  _var_nb_introductions    -= _mean_nb_introductions*_mean_nb_introductions;
+  _p_sim                   /= _n_sim;
+  if (first_invasion_count > 0.0)
+  {
+    _mean_first_invasion_age /= first_invasion_count;
+    _var_first_invasion_age  /= first_invasion_count;
+    _var_first_invasion_age  -= _mean_first_invasion_age*_mean_first_invasion_age;
+  }
+  if (last_invasion_count > 0.0)
+  {
+    _mean_last_invasion_age  /= last_invasion_count;
+    _var_last_invasion_age   /= last_invasion_count;
+    _var_last_invasion_age   -= _mean_last_invasion_age*_mean_last_invasion_age;
+  }
 }
 
 /**
@@ -228,6 +273,15 @@ void Node::reset_state( void )
   _var_nb_introductions   = 0.0;
   _y_sim                  = 0.0;
   _p_sim                  = 0.0;
+  for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
+  {
+    _first_invasion_age[rep] = -1.0;
+    _last_invasion_age[rep]  = -1.0;
+  }
+  _mean_first_invasion_age = 0.0;
+  _mean_last_invasion_age  = 0.0;
+  _var_first_invasion_age  = 0.0;
+  _var_last_invasion_age   = 0.0;
 }
 
 /**
