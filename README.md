@@ -3,7 +3,7 @@
 <em>Model of Routes of Invasive Spread</em>
 <br />
 <br />
-<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.1-orange.svg" /></a>&nbsp;<a href="https://github.com/charlesrocabert/MoRIS/releases/latest">&nbsp;<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/license-GPL v3-blue.svg" /></a>
+<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-RC 0.8.2-orange.svg" /></a>&nbsp;<a href="https://github.com/charlesrocabert/MoRIS/releases/latest">&nbsp;<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/license-GPL v3-blue.svg" /></a>
 </p>
 
 <p align="center">
@@ -43,7 +43,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 • J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
 
 ## Copyright <a name="copyright"></a>
-Copyright &copy; 2014-2019 <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme Gippet</a>, <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
+Copyright &copy; 2014-2019 <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme M.W Gippet</a>, <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
 All rights reserved.
 
 The full list of contributors is displayed in AUTHORS.md. 
@@ -56,7 +56,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
 ## Community <a name="community"></a>
-MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
+MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme M.W Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
 
 The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
 
