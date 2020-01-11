@@ -63,11 +63,11 @@ The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
 <p align="center">
 <table>
     <tr>
-        <td><a href="http://umr5023.univ-lyon1.fr/"><img src="docs/pics/logo-lehna.png" height="80px"></a></td>
-        <td><a href="https://liris.cnrs.fr/"><img src="docs/pics/logo-liris.png" height="80px"></a></td>
-        <td><a href="http://www.in2p3.fr/"><img src="docs/pics/logo-in2p3.png" height="80px"></a></td>
-        <td><a href="http://www.ixxi.fr/"><img src="docs/pics/logo-ixxi.jpeg" height="80px"></a></td>
-        <td><a href="https://www.unil.ch/central/en/home.html/"><img src="docs/pics/logo-lausanne-univ.png" height="80px"></a></td>
+        <td><a href="http://umr5023.univ-lyon1.fr/"><img src="docs/pics/logo-lehna.png" height="60px"></a></td>
+        <td><a href="https://liris.cnrs.fr/"><img src="docs/pics/logo-liris.png" height="60px"></a></td>
+        <td><a href="http://www.in2p3.fr/"><img src="docs/pics/logo-in2p3.png" height="60px"></a></td>
+        <td><a href="http://www.ixxi.fr/"><img src="docs/pics/logo-ixxi.jpeg" height="60px"></a></td>
+        <td><a href="https://www.unil.ch/central/en/home.html/"><img src="docs/pics/logo-lausanne-univ.png" height="60px"></a></td>
     </tr>
 </table>
 </p>
