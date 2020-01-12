@@ -3,7 +3,7 @@
 
 #***************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+# Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
 # Web: https://github.com/charlesrocabert/MoRIS
 #
 # This program is free software: you can redistribute it and/or modify
@@ -259,7 +259,7 @@ def printHelp():
 	print "                           * MoRIS Mantel Test *                           "
 	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	print " MoRIS (Model of Routes of Invasive Spread)                                "
-	print " Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet "
+	print " Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet "
 	print " Web: https://github.com/charlesrocabert/MoRIS                             "
 	print "                                                                           "
 	print " This program comes with ABSOLUTELY NO WARRANTY.                           "
@@ -285,7 +285,7 @@ def printHeader():
 	print "                           * MoRIS Mantel Test *                           "
 	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	print " MoRIS (Model of Routes of Invasive Spread)                                "
-	print " Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet "
+	print " Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet "
 	print " Web: https://github.com/charlesrocabert/MoRIS                             "
 	print "                                                                           "
 	print " This program comes with ABSOLUTELY NO WARRANTY.                           "

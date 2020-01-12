@@ -2,14 +2,14 @@
  * \file      Graph.h
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Graph class declaration
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -108,7 +108,7 @@ protected:
   void   load_network( void );
   void   load_sample( void );
   void   compute_statistics( void );
-  void   compute_jump_probability( void );
+  void   compute_human_activity_index( void );
   void   reset_states( void );
   void   set_introduction_node( void );
   double compute_euclidean_distance( Node* node1, Node* node2 );
@@ -128,19 +128,25 @@ protected:
   
   /*--------------------------------------- GRAPH STATISTICS */
   
-  int    _introduction_node;      /*!< Introduction node            */
-  double _min_x_coord;            /*!< Minimum x coordinate         */
-  double _max_x_coord;            /*!< Maximum x coordinate         */
-  double _min_y_coord;            /*!< Minimum y coordinate         */
-  double _max_y_coord;            /*!< Maximum y coordinate         */
-  double _min_weights_sum;        /*!< Minimum weights sum in nodes */
-  double _max_weights_sum;        /*!< Maximum weights sum in nodes */
-  double _min_population;         /*!< Minimum population size      */
-  double _max_population;         /*!< Maximum population size      */
-  double _min_population_density; /*!< Minimum population density   */
-  double _max_population_density; /*!< Maximum population density   */
-  double _min_road_density;       /*!< Minimum population size      */
-  double _max_road_density;       /*!< Maximum population size      */
+  int    _introduction_node;       /*!< Introduction node            */
+  double _min_x_coord;             /*!< Minimum X coordinate         */
+  double _mean_x_coord;            /*!< Mean X coordinate            */
+  double _max_x_coord;             /*!< Maximum X coordinate         */
+  double _min_y_coord;             /*!< Minimum Y coordinate         */
+  double _mean_y_coord;            /*!< Mean Y coordinate            */
+  double _max_y_coord;             /*!< Maximum Y coordinate         */
+  double _min_weights_sum;         /*!< Minimum weights sum in nodes */
+  double _mean_weights_sum;        /*!< Mean weights sum in nodes    */
+  double _max_weights_sum;         /*!< Maximum weights sum in nodes */
+  double _min_population;          /*!< Minimum population size      */
+  double _mean_population;         /*!< Mean population size         */
+  double _max_population;          /*!< Maximum population size      */
+  double _min_population_density;  /*!< Minimum population density   */
+  double _mean_population_density; /*!< Mean population density      */
+  double _max_population_density;  /*!< Maximum population density   */
+  double _min_road_density;        /*!< Minimum population size      */
+  double _mean_road_density;       /*!< Mean population size         */
+  double _max_road_density;        /*!< Maximum population size      */
   
   /*--------------------------------------- MINIMIZATION SCORE */
   

@@ -1,7 +1,7 @@
 
 #***************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+# Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
 # Web: https://github.com/charlesrocabert/MoRIS
 #
 # This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ set(PACKAGE "\"MoRIS\"")
 # Define the version number                                                        #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 8)
+set(VERSION_MINOR 9)
 set(VERSION_PATCH 2)
 
 
@@ -111,7 +111,6 @@ add_library(
 
 target_link_libraries(MoRIS gsl gslcblas)
 target_link_libraries(${RUN_EXECUTABLE} MoRIS)
-#target_link_libraries(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} MoRIS)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -122,4 +121,3 @@ configure_file(
   "${PROJECT_BINARY_DIR}/Config.h"
 )
 include_directories("${PROJECT_BINARY_DIR}")
-

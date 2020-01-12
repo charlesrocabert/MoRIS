@@ -2,14 +2,14 @@
  * \file      Prng.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      07-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Prng class definition
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -179,7 +179,7 @@ double Prng::gaussian( double mu, double sigma )
 double Prng::lognormal( double mu, double sigma )
 {
   assert(sigma > 0.0);
-  return gsl_ran_lognormal(_prng, mu, sigma);
+  return gsl_ran_lognormal(_prng, gsl_sf_log(mu), sigma);
 }
 
 /**
@@ -219,7 +219,7 @@ int Prng::exponential( double mu )
 int Prng::poisson( double lambda )
 {
   assert(lambda >= 0.0);
-  return gsl_ran_poisson(_prng, lambda);
+  return (int)gsl_ran_poisson(_prng, lambda);
 }
 
 /**

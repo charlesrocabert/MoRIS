@@ -1,6 +1,6 @@
 <h1 align="center">MoRIS</h1>
 <p align="center">
-<em>Model of Routes of Invasive Spread</em>
+Model of Routes of Invasive Spread
 <br />
 <br />
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
@@ -43,12 +43,6 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 
 • J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
 
-## Copyright <a name="copyright"></a>
-Copyright &copy; 2014-2019 <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme M.W Gippet</a>, <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
-All rights reserved.
-
-The full list of contributors is displayed in AUTHORS.md. 
-
 ## License <a name="license"></a>
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -59,7 +53,11 @@ You should have received a copy of the GNU General Public License along with thi
 ## Community <a name="community"></a>
 MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme M.W Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
 
-The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
+#### Major contributors
+* Aymeric Bonnamour
+
+#### Other contributors
+* Vivek Srivastava
 
 <p align="center">
 <table>
@@ -113,11 +111,3 @@ Binary executable files are in <code>build/bin</code> folder.
 
 ## Input files tutorial <a name="tutorial"></a>
 A tutorial to build MoRIS input files is <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">available here</a>.
-
-<br />
-<br />
-<br />
-<p align="center">
-  :truck: :ant::ant::ant:
-</p>
-

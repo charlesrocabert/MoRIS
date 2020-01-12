@@ -2,14 +2,14 @@
  * \file      Simulation.h
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Simulation class declaration
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <cmath>
 #include <cstring>
 #include <stdlib.h>
 #include <assert.h>
@@ -92,7 +93,7 @@ protected:
   /*----------------------------
    * PROTECTED METHODS
    *----------------------------*/
-  int    draw_number_of_jumps( double jump_probability );
+  int    draw_number_of_jumps( double human_activity_index );
   double draw_jump_size( void );
   double compute_euclidean_distance( Node* node1, Node* node2 );
   

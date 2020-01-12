@@ -2,14 +2,14 @@
  * \file      Node.h
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Node class declaration
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -80,7 +80,7 @@ public:
   inline std::vector<Node*>*  get_neighbors( void );
   inline std::vector<double>* get_weights( void );
   inline double               get_weights_sum( void ) const;
-  inline double               get_jump_probability( void ) const;
+  inline double               get_human_activity_index( void ) const;
   
   /*--------------------------------------- SAMPLE */
   
@@ -128,7 +128,7 @@ public:
   /*--------------------------------------- NETWORK */
   
   inline void add_neighbor( double weight, Node* node );
-  inline void set_jump_probability( double jump_probability );
+  inline void set_human_activity_index( double human_activity_index );
   
   /*--------------------------------------- SAMPLE */
   
@@ -172,10 +172,10 @@ protected:
   
   /*--------------------------------------- NETWORK */
   
-  std::vector<Node*>  _neighbors;        /*!< Vector of neighbors */
-  std::vector<double> _weights;          /*!< Vector of weights   */
-  double              _weights_sum;      /*!< Sum of weights      */
-  double              _jump_probability; /*!< Jump probability    */
+  std::vector<Node*>  _neighbors;            /*!< Vector of neighbors  */
+  std::vector<double> _weights;              /*!< Vector of weights    */
+  double              _weights_sum;          /*!< Sum of weights       */
+  double              _human_activity_index; /*!< Human activity index */
   
   /*--------------------------------------- MAP */
   
@@ -357,14 +357,14 @@ inline double Node::get_weights_sum( void ) const
 }
 
 /**
- * \brief    Get jump probability
+ * \brief    Get Human activity index
  * \details  --
  * \param    void
  * \return   \e double
  */
-inline double Node::get_jump_probability( void ) const
+inline double Node::get_human_activity_index( void ) const
 {
-  return _jump_probability;
+  return _human_activity_index;
 }
 
 /*--------------------------------------- SAMPLE */
@@ -708,16 +708,16 @@ inline void Node::add_neighbor( double weight, Node* node )
 }
 
 /**
- * \brief    Set jump probability
+ * \brief    Set the Human activity index
  * \details  --
- * \param    double jump_probability
+ * \param    double human_activity_index
  * \return   \e void
  */
-inline void Node::set_jump_probability( double jump_probability )
+inline void Node::set_human_activity_index( double human_activity_index )
 {
-  assert(jump_probability >= 0.0);
-  assert(jump_probability <= 1.0);
-  _jump_probability = jump_probability;
+  assert(human_activity_index >= 0.0);
+  assert(human_activity_index <= 1.0);
+  _human_activity_index = human_activity_index;
 }
 
 /*--------------------------------------- SAMPLE */

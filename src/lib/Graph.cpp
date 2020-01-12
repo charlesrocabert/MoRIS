@@ -2,14 +2,14 @@
  * \file      Graph.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Graph class definition
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ Graph::Graph( Parameters* parameters )
   
   _introduction_node = get_introduction_node_from_coordinates();
   compute_statistics();
-  compute_jump_probability();
+  compute_human_activity_index();
   reset_states();
   set_introduction_node();
   
@@ -102,9 +102,11 @@ Graph::~Graph( void )
  */
 void Graph::untag( void )
 {
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+  Node* node = get_first();
+  while (node != NULL)
   {
-    it->second->untag();
+    node->untag();
+    node = get_next();
   }
 }
 
@@ -116,9 +118,11 @@ void Graph::untag( void )
  */
 void Graph::update_state( void )
 {
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+  Node* node = get_first();
+  while (node != NULL)
   {
-    it->second->update_state();
+    node->update_state();
+    node = get_next();
   }
 }
 
@@ -139,14 +143,16 @@ void Graph::compute_score( bool empty )
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   if (_parameters->get_typeofdata() == PRESENCE_ONLY)
   {
-    for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+    Node* node = get_first();
+    while (node != NULL)
     {
-      double y_obs = it->second->get_y_obs();
+      double y_obs = node->get_y_obs();
       if (y_obs > 0.0)
       {
-        double nb_intros  = it->second->get_mean_nb_introductions();
+        double nb_intros  = node->get_mean_nb_introductions();
         _score           += (y_obs-nb_intros)*(y_obs-nb_intros);
       }
+      node = get_next();
     }
   }
   
@@ -155,15 +161,17 @@ void Graph::compute_score( bool empty )
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   else if (_parameters->get_typeofdata() == PRESENCE_ABSENCE)
   {
-    for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+    Node* node = get_first();
+    while (node != NULL)
     {
-      if (it->second->get_n_obs() > 0.0)
+      if (node->get_n_obs() > 0.0)
       {
-        it->second->compute_score();
-        _total_log_likelihood         += it->second->get_log_likelihood();
-        _total_log_maximum_likelihood += it->second->get_log_maximum_likelihood();
-        _score                        += it->second->get_score();
+        node->compute_score();
+        _total_log_likelihood         += node->get_log_likelihood();
+        _total_log_maximum_likelihood += node->get_log_maximum_likelihood();
+        _score                        += node->get_score();
       }
+      node = get_next();
     }
   }
   if (empty)
@@ -370,10 +378,7 @@ void Graph::load_network( void )
     weight        += _parameters->get_w4()*roads4;
     weight        += _parameters->get_w5()*roads5;
     weight        += _parameters->get_w6()*roads6;
-    if (weight < _parameters->get_wmin())
-    {
-      weight = _parameters->get_wmin();
-    }
+    weight         = (weight < _parameters->get_wmin() ? _parameters->get_wmin() : weight);
     if (identifier1 != -1 && identifier2 != -1)
     {
       assert(_map.find(identifier1) != _map.end());
@@ -428,93 +433,126 @@ void Graph::load_sample( void )
  */
 void Graph::compute_statistics( void )
 {
-  _min_x_coord            = 1e+10;
-  _max_x_coord            = 0.0;
-  _min_y_coord            = 1e+10;
-  _max_y_coord            = 0.0;
-  _min_weights_sum        = 1e+10;
-  _max_weights_sum        = 0.0;
-  _min_population         = 1e+10;
-  _max_population         = 0.0;
-  _min_population_density = 1e+10;
-  _max_population_density = 0.0;
-  _min_road_density       = 1e+10;
-  _max_road_density       = 0.0;
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+  _min_x_coord             = 1e+10;
+  _mean_x_coord            = 0.0;
+  _max_x_coord             = 0.0;
+  _min_y_coord             = 1e+10;
+  _mean_y_coord            = 0.0;
+  _max_y_coord             = 0.0;
+  _min_weights_sum         = 1e+10;
+  _mean_weights_sum        = 0.0;
+  _max_weights_sum         = 0.0;
+  _min_population          = 1e+10;
+  _mean_population         = 0.0;
+  _max_population          = 0.0;
+  _min_population_density  = 1e+10;
+  _mean_population_density = 0.0;
+  _max_population_density  = 0.0;
+  _min_road_density        = 1e+10;
+  _mean_road_density       = 0.0;
+  _max_road_density        = 0.0;
+  double n                 = 0.0;
+  Node*  node              = get_first();
+  while (node != NULL)
   {
     /*** X coordinate ***/
-    if (_min_x_coord > it->second->get_x())
+    if (_min_x_coord > node->get_x())
     {
-      _min_x_coord = it->second->get_x();
+      _min_x_coord = node->get_x();
     }
-    if (_max_x_coord < it->second->get_x())
+    if (_max_x_coord < node->get_x())
     {
-      _max_x_coord = it->second->get_x();
+      _max_x_coord = node->get_x();
     }
+    _mean_x_coord += node->get_x();
     
     /*** Y coordinate ***/
-    if (_min_y_coord > it->second->get_y())
+    if (_min_y_coord > node->get_y())
     {
-      _min_y_coord = it->second->get_y();
+      _min_y_coord = node->get_y();
     }
-    if (_max_y_coord < it->second->get_y())
+    if (_max_y_coord < node->get_y())
     {
-      _max_y_coord = it->second->get_y();
+      _max_y_coord = node->get_y();
     }
+    _mean_y_coord += node->get_y();
     
     /*** Weight sum ***/
-    if (_min_weights_sum > it->second->get_weights_sum())
+    if (_min_weights_sum > node->get_weights_sum())
     {
-      _min_weights_sum = it->second->get_weights_sum();
+      _min_weights_sum = node->get_weights_sum();
     }
-    if (_max_weights_sum < it->second->get_weights_sum())
+    if (_max_weights_sum < node->get_weights_sum())
     {
-      _max_weights_sum = it->second->get_weights_sum();
+      _max_weights_sum = node->get_weights_sum();
     }
+    _mean_weights_sum += node->get_weights_sum();
     
     /*** Population ***/
-    if (_min_population > it->second->get_population())
+    if (_min_population > node->get_population())
     {
-      _min_population = it->second->get_population();
+      _min_population = node->get_population();
     }
-    if (_max_population < it->second->get_population())
+    if (_max_population < node->get_population())
     {
-      _max_population = it->second->get_population();
+      _max_population = node->get_population();
     }
+    _mean_population += node->get_population();
     
     /*** Population density ***/
-    if (_min_population_density > it->second->get_population_density())
+    if (_min_population_density > node->get_population_density())
     {
-      _min_population_density = it->second->get_population_density();
+      _min_population_density = node->get_population_density();
     }
-    if (_max_population_density < it->second->get_population_density())
+    if (_max_population_density < node->get_population_density())
     {
-      _max_population_density = it->second->get_population_density();
+      _max_population_density = node->get_population_density();
     }
+    _mean_population_density += node->get_population_density();
     
     /*** Road density ***/
-    if (_min_road_density > it->second->get_road_density())
+    if (_min_road_density > node->get_road_density())
     {
-      _min_road_density = it->second->get_road_density();
+      _min_road_density = node->get_road_density();
     }
-    if (_max_road_density < it->second->get_road_density())
+    if (_max_road_density < node->get_road_density())
     {
-      _max_road_density = it->second->get_road_density();
+      _max_road_density = node->get_road_density();
     }
+    _mean_road_density += node->get_road_density();
+    
+    /*** Increment n ***/
+    n    += 1.0;
+    node  = get_next();
   }
+  _mean_x_coord            /= n;
+  _mean_y_coord            /= n;
+  _mean_weights_sum        /= n;
+  _mean_population         /= n;
+  _mean_population_density /= n;
+  _mean_road_density       /= n;
 }
 
 /**
- * \brief    Compute the jump probability
+ * \brief    Compute the Human activity index
  * \details  --
  * \param    void
  * \return   \e void
  */
-void Graph::compute_jump_probability( void )
+void Graph::compute_human_activity_index( void )
 {
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+  Node* node = get_first();
+  while (node != NULL)
   {
-    it->second->set_jump_probability(it->second->get_population_density()/_max_population_density);
+    if (_parameters->get_human_activity_index())
+    {
+      node->set_human_activity_index(node->get_population_density()/_max_population_density);
+    }
+    else
+    {
+      node->set_human_activity_index(_mean_population_density/_max_population_density);
+    }
+    node = get_next();
   }
 }
 
@@ -526,9 +564,11 @@ void Graph::compute_jump_probability( void )
  */
 void Graph::reset_states( void )
 {
-  for (std::unordered_map<int, Node*>::iterator it = _map.begin(); it != _map.end(); ++it)
+  Node* node = get_first();
+  while (node != NULL)
   {
-    it->second->reset_state();
+    node->reset_state();
+    node = get_next();
   }
   _total_log_likelihood         = 0.0;
   _total_log_maximum_likelihood = 0.0;

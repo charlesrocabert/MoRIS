@@ -2,14 +2,14 @@
  * \file      Parameters.h
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Parameters class declaration
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -80,6 +80,7 @@ public:
   inline int                   get_iterations( void ) const;
   inline jump_distribution_law get_jump_law( void ) const;
   inline optimization_function get_optimization_function( void ) const;
+  inline bool                  get_human_activity_index( void ) const;
   
   /*------------------------------------------------------------------ Simulation parameters */
   
@@ -130,6 +131,7 @@ public:
   inline void set_iterations( int iterations );
   inline void set_jump_law( jump_distribution_law jump_law );
   inline void set_optimization_function( optimization_function optim_function );
+  inline void set_human_activity_index( bool usage );
   
   /*------------------------------------------------------------------ Simulation parameters */
   
@@ -188,11 +190,12 @@ protected:
   
   /*------------------------------------------------------------------ Main parameters */
   
-  type_of_data          _data;           /*!< Type of experimental data           */
-  int                   _repetitions;    /*!< Number of repetitions by simulation */
-  int                   _iterations;     /*!< Number of iterations by simulation  */
-  jump_distribution_law _jump_law;       /*!< Jump distribution law               */
-  optimization_function _optim_function; /*!< Optimization function               */
+  type_of_data          _data;                 /*!< Type of experimental data           */
+  int                   _repetitions;          /*!< Number of repetitions by simulation */
+  int                   _iterations;           /*!< Number of iterations by simulation  */
+  jump_distribution_law _jump_law;             /*!< Jump distribution law               */
+  optimization_function _optim_function;       /*!< Optimization function               */
+  bool                  _human_activity_index; /*!< Usage of the human activity index   */
   
   /*------------------------------------------------------------------ Simulation parameters */
   
@@ -341,6 +344,17 @@ inline jump_distribution_law Parameters::get_jump_law( void ) const
 inline optimization_function Parameters::get_optimization_function( void ) const
 {
   return _optim_function;
+}
+
+/**
+ * \brief    Get the human activity index usage
+ * \details  --
+ * \param    void
+ * \return   \e bool
+ */
+inline bool Parameters::get_human_activity_index( void ) const
+{
+  return _human_activity_index;
 }
 
 /*------------------------------------------------------------------ Simulation parameters */
@@ -657,6 +671,17 @@ inline void Parameters::set_jump_law( jump_distribution_law jump_law )
 inline void Parameters::set_optimization_function( optimization_function optim_function )
 {
   _optim_function = optim_function;
+}
+
+/**
+ * \brief    Set the human activity index usage
+ * \details  --
+ * \param    bool usage
+ * \return   \e void
+ */
+inline void Parameters::set_human_activity_index( bool usage )
+{
+  _human_activity_index = usage;
 }
 
 /*------------------------------------------------------------------ Simulation parameters */

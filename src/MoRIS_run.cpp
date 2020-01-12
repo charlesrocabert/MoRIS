@@ -2,14 +2,14 @@
  * \file      MoRIS_run.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     MoRIS_run executable
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -123,29 +123,30 @@ int main(int argc, char const** argv)
 void readArgs( int argc, char const** argv, Parameters* parameters )
 {
   std::unordered_map<std::string, bool> options;
-  options["seed"]       = false;
-  options["typeofdata"] = false;
-  options["network"]    = false;
-  options["map"]        = false;
-  options["sample"]     = false;
-  options["reps"]       = false;
-  options["iters"]      = false;
-  options["law"]        = false;
-  options["optimfunc"]  = false;
-  options["xintro"]     = false;
-  options["yintro"]     = false;
-  options["pintro"]     = false;
-  options["lambda"]     = false;
-  options["mu"]         = false;
-  options["sigma"]      = false;
-  options["gamma"]      = false;
-  options["w1"]         = false;
-  options["w2"]         = false;
-  options["w3"]         = false;
-  options["w4"]         = false;
-  options["w5"]         = false;
-  options["w6"]         = false;
-  options["wmin"]       = false;
+  options["seed"]          = false;
+  options["typeofdata"]    = false;
+  options["network"]       = false;
+  options["map"]           = false;
+  options["sample"]        = false;
+  options["reps"]          = false;
+  options["iters"]         = false;
+  options["law"]           = false;
+  options["optimfunc"]     = false;
+  options["humanactivity"] = false;
+  options["xintro"]        = false;
+  options["yintro"]        = false;
+  options["pintro"]        = false;
+  options["lambda"]        = false;
+  options["mu"]            = false;
+  options["sigma"]         = false;
+  options["gamma"]         = false;
+  options["w1"]            = false;
+  options["w2"]            = false;
+  options["w3"]            = false;
+  options["w4"]            = false;
+  options["w5"]            = false;
+  options["w6"]            = false;
+  options["wmin"]          = false;
   for (int i = 0; i < argc; i++)
   {
     if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
@@ -319,6 +320,31 @@ void readArgs( int argc, char const** argv, Parameters* parameters )
         else
         {
           std::cout << "Error: wrong optimfunc value.\n";
+          exit(EXIT_FAILURE);
+        }
+      }
+    }
+    if (strcmp(argv[i], "-humanactivity") == 0 || strcmp(argv[i], "--humanactivity") == 0)
+    {
+      if (i+1 == argc)
+      {
+        std::cout << "Error: humanactivity name is missing.\n";
+        exit(EXIT_FAILURE);
+      }
+      else
+      {
+        options["humanactivity"] = true;
+        if (strcmp(argv[i+1], "NO") == 0)
+        {
+          parameters->set_human_activity_index(false);
+        }
+        else if (strcmp(argv[i+1], "YES") == 0)
+        {
+          parameters->set_human_activity_index(true);
+        }
+        else
+        {
+          std::cout << "Error: wrong humanactivity value.\n";
           exit(EXIT_FAILURE);
         }
       }
@@ -547,7 +573,7 @@ void printUsage( void )
   std::cout << " " << PACKAGE << " " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << " ( release )\n";
 #endif
   std::cout << " MoRIS (Model of Routes of Invasive Spread)                                \n";
-  std::cout << " Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet \n";
+  std::cout << " Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet \n";
   std::cout << " Web: https://github.com/charlesrocabert/MoRIS                             \n";
   std::cout << "                                                                           \n";
   std::cout << " This program comes with ABSOLUTELY NO WARRANTY.                           \n";
@@ -579,6 +605,8 @@ void printUsage( void )
   std::cout << "        Specify the jump distribution law (DIRAC, NORMAL, LOG_NORMAL, CAUCHY)\n";
   std::cout << "  -optimfunc, --optimfunc <optimization_function>\n";
   std::cout << "        Specify the optimization_function (LSS, LOG_LIKELIHOOD, LIKELIHOOD_LSS)\n";
+  std::cout << "  -humanactivity, --humanactivity <human_activity_index>\n";
+  std::cout << "        Specify if the human activity index should be used to weight the number of jump events (NO, YES)\n";
   std::cout << "  -xintro, --xintro <coordinate>\n";
   std::cout << "        Specify the x coordinate of the introduction cell\n";
   std::cout << "  -yintro, --yintro <coordinate>\n";
@@ -608,7 +636,9 @@ void printUsage( void )
   std::cout << "  -wmin, --wmin <weight>\n";
   std::cout << "        Specify the minimal weight between cells\n";
   std::cout << "  -save-outputs, --save-outputs\n";
-  std::cout << "        Save various simulation outputs (final state, lineage tree, ...)\n";
+  std::cout << "        Save simulation outputs (final state, lineage tree, ...)\n";
+  std::cout << "  -save-all-states, --save--all-states\n";
+  std::cout << "        Save simulation state at any time\n";
   std::cout << "\n";
 }
 

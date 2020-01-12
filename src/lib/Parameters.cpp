@@ -2,14 +2,14 @@
  * \file      Parameters.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Parameters class definition
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -54,11 +54,12 @@ Parameters::Parameters( void )
   
   /*------------------------------------------------------------------ Main parameters */
   
-  _data           = PRESENCE_ABSENCE;
-  _repetitions    = 0;
-  _iterations     = 0;
-  _jump_law       = DIRAC;
-  _optim_function = LOG_LIKELIHOOD;
+  _data                 = PRESENCE_ABSENCE;
+  _repetitions          = 0;
+  _iterations           = 0;
+  _jump_law             = DIRAC;
+  _optim_function       = LOG_LIKELIHOOD;
+  _human_activity_index = false;
   
   /*------------------------------------------------------------------ Simulation parameters */
   
@@ -133,6 +134,7 @@ void Parameters::write_parameters( std::string filename )
   file << "iters" << " ";
   file << "law" << " ";
   file << "optimfunc" << " ";
+  file << "humanactivity" << " ";
   file << "xintro" << " ";
   file << "yintro" << " ";
   file << "pintro" << " ";
@@ -194,6 +196,14 @@ void Parameters::write_parameters( std::string filename )
   else if (_optim_function == LIKELIHOOD_LSS)
   {
     file << "LIKELIHOOD_LSS" << " ";
+  }
+  if (_human_activity_index)
+  {
+    file << "YES" << " ";
+  }
+  else
+  {
+    file << "NO" << " ";
   }
   file << _x_introduction << " ";
   file << _y_introduction << " ";

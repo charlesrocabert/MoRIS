@@ -2,14 +2,14 @@
  * \file      Simulation.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Simulation class definition
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -111,10 +111,9 @@ void Simulation::compute_next_iteration( void )
     {
       if (start_node->isOccupied(rep))
       {
-        int number_of_jumps = draw_number_of_jumps(start_node->get_jump_probability());
+        int number_of_jumps = draw_number_of_jumps(start_node->get_human_activity_index());
         for (int jump = 0; jump < number_of_jumps; jump++)
         {
-          
           Node*  current_node     = start_node;
           int    current_id       = current_node->get_identifier();
           double distance         = draw_jump_size();
@@ -129,13 +128,16 @@ void Simulation::compute_next_iteration( void )
             {
               break;
             }
-            /*** If the current node is itself, stop walking ***/
-            if (current_node->get_identifier() == current_id)
+            /*** If the current node is self, stop walking ***/
+            else if (current_node->get_identifier() == current_id)
             {
               break;
             }
             /*** Else increment the distance ***/
-            current_distance += 1.0;
+            else
+            {
+              current_distance += 1.0;
+            }
           }
           if (current_node != NULL)
           {
@@ -214,15 +216,17 @@ void Simulation::write_invasion_euclidean_distributions( std::string observed_fi
 /**
  * \brief    Draw the number of jumps
  * \details  --
- * \param    double jump_probability
+ * \param    double human_activity_index
  * \return   \e int
  */
-int Simulation::draw_number_of_jumps( double jump_probability )
+int Simulation::draw_number_of_jumps( double human_activity_index )
 {
-  assert(jump_probability >= 0.0);
-  double lambda   = _parameters->get_lambda();
-  int    nb_jumps = _prng->poisson(jump_probability*lambda);
-  return nb_jumps;
+  /* Nb effective jumps = sampling_probability ([0,1]) * Poisson(Lambda*Human_activity_index).
+   Human_activity_index = normalized population density ([0,1]).
+   */
+  assert(human_activity_index >= 0.0);
+  assert(human_activity_index <= 1.0);
+  return _prng->poisson(human_activity_index*_parameters->get_lambda());
 }
 
 /**
@@ -249,13 +253,13 @@ double Simulation::draw_jump_size( void )
   }
   else if (jump_law == LOG_NORMAL)
   {
-    distance = prng->lognormal(log(mu), sigma);
+    distance = prng->lognormal(mu, sigma);
   }
   else if (jump_law == CAUCHY)
   {
     distance = fabs(prng->cauchy(0.0, gamma));
   }
-  return distance;
+  return floor(distance);
 }
 
 /**

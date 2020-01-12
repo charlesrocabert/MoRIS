@@ -2,14 +2,14 @@
  * \file      Node.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      16-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Node class definition
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2019 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,8 +64,8 @@ Node::Node( Parameters* parameters, int identifier )
   
   _neighbors.clear();
   _weights.clear();
-  _weights_sum      = 0.0;
-  _jump_probability = 0.0;
+  _weights_sum          = 0.0;
+  _human_activity_index = 0.0;
   
   /*--------------------------------------- SAMPLE */
   
@@ -151,7 +151,7 @@ Node::~Node( void )
  *----------------------------*/
 
 /**
- * \brief    Jump to the next cell
+ * \brief    Jump to the next node
  * \details  --
  * \param    void
  * \return   \e Node*
@@ -194,7 +194,7 @@ Node* Node::jump( void )
       }
     }
   }
-  printf("Error during jump (Cell::jump() method)...\n");
+  printf("Error during jump (Node::jump() method)...\n");
   exit(EXIT_FAILURE);
 }
 
@@ -218,11 +218,11 @@ void Node::update_state( void )
   double last_invasion_count  = 0.0;
   for (int rep = 0; rep < _parameters->get_repetitions(); rep++)
   {
-    _current_state[rep]       = _next_state[rep];
-    _mean_nb_introductions   += _nb_introductions[rep];
-    _var_nb_introductions    += _nb_introductions[rep]*_nb_introductions[rep];
-    _y_sim                   += (double)_current_state[rep];
-    _p_sim                   += (double)_current_state[rep];
+    _current_state[rep]     = _next_state[rep];
+    _mean_nb_introductions += _nb_introductions[rep];
+    _var_nb_introductions  += _nb_introductions[rep]*_nb_introductions[rep];
+    _y_sim                 += (double)_current_state[rep];
+    _p_sim                 += (double)_current_state[rep];
     if (_first_invasion_age[rep] != -1.0)
     {
       _mean_first_invasion_age += _first_invasion_age[rep];
@@ -236,10 +236,10 @@ void Node::update_state( void )
       last_invasion_count     += 1.0;
     }
   }
-  _mean_nb_introductions   /= _n_sim;
-  _var_nb_introductions    /= _n_sim;
-  _var_nb_introductions    -= _mean_nb_introductions*_mean_nb_introductions;
-  _p_sim                   /= _n_sim;
+  _mean_nb_introductions /= _n_sim;
+  _var_nb_introductions  /= _n_sim;
+  _var_nb_introductions  -= _mean_nb_introductions*_mean_nb_introductions;
+  _p_sim                 /= _n_sim;
   if (first_invasion_count > 0.0)
   {
     _mean_first_invasion_age /= first_invasion_count;
@@ -248,9 +248,9 @@ void Node::update_state( void )
   }
   if (last_invasion_count > 0.0)
   {
-    _mean_last_invasion_age  /= last_invasion_count;
-    _var_last_invasion_age   /= last_invasion_count;
-    _var_last_invasion_age   -= _mean_last_invasion_age*_mean_last_invasion_age;
+    _mean_last_invasion_age /= last_invasion_count;
+    _var_last_invasion_age  /= last_invasion_count;
+    _var_last_invasion_age  -= _mean_last_invasion_age*_mean_last_invasion_age;
   }
 }
 
@@ -292,29 +292,28 @@ void Node::reset_state( void )
  */
 void Node::compute_score( void )
 {
-  unsigned int a           = (unsigned int)(_y_sim);
-  unsigned int b           = (unsigned int)(_y_obs);
-  unsigned int c           = (unsigned int)(_n_sim-_y_sim);
-  unsigned int d           = (unsigned int)(_n_obs-_y_obs);
-  double current_MFS       = gsl_ran_hypergeometric_pdf(b, b+b, d+d, b+d);
-  double current_FS        = gsl_ran_hypergeometric_pdf(a, a+b, c+d, a+c);
-  _likelihood              = current_FS;
-  _maximum_likelihood      = current_MFS;
-  _log_likelihood          = -log(current_FS);
-  _log_maximum_likelihood  = -log(current_MFS);
-  _score                   = 0.0;
+  unsigned int a          = (unsigned int)(_y_sim);
+  unsigned int b          = (unsigned int)(_y_obs);
+  unsigned int c          = (unsigned int)(_n_sim-_y_sim);
+  unsigned int d          = (unsigned int)(_n_obs-_y_obs);
+  double current_MFS      = gsl_ran_hypergeometric_pdf(b, b+b, d+d, b+d);
+  double current_FS       = gsl_ran_hypergeometric_pdf(a, a+b, c+d, a+c);
+  _likelihood             = current_FS;
+  _maximum_likelihood     = current_MFS;
+  _log_likelihood         = -log(current_FS);
+  _log_maximum_likelihood = -log(current_MFS);
+  _score                  = 0.0;
   if (_parameters->get_optimization_function() == LSS)
   {
     _score = (_p_sim-_p_obs)*(_p_sim-_p_obs);
   }
   else if (_parameters->get_optimization_function() == LOG_LIKELIHOOD)
   {
-    //_score = (_log_likelihood-_log_maximum_likelihood)*(_log_likelihood-_log_maximum_likelihood);
     _score = _log_likelihood;
   }
   else if (_parameters->get_optimization_function() == LIKELIHOOD_LSS)
   {
-    _score = (1.0-current_FS/current_MFS)*(1.0-current_FS/current_MFS);
+    _score = (1.0-_likelihood/_maximum_likelihood)*(1.0-_likelihood/_maximum_likelihood);
   }
 }
 
