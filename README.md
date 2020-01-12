@@ -74,7 +74,7 @@ The list of contributors is displayed in [AUTHORS.md](AUTHORS.md).
 </p>
 
 ## Download <a name="download"></a>
-Download the latest <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest">pre-release</a>.
+Download the latest <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest">version</a>.
 
 ## Installation instructions <a name="installation_instructions"></a>
 Download the latest release of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
