@@ -3,8 +3,8 @@
 <em>Model of Routes of Invasive Spread</em>
 <br />
 <br />
-<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/badge/version-0.8.2-green.svg" /></a>&nbsp;
-<a href="https://github.com/charlesrocabert/MetEvolSim/LICENSE.html"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
+<a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
+<a href="https://github.com/charlesrocabert/MoRIS/LICENSE.html"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
 </p>
 
 <p align="center">
