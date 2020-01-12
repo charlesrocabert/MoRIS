@@ -4,7 +4,7 @@
 * Serge Fenet
 
 # Major Contributors
---
+* Aymeric Bonnamour
 
 # Other Contributors
 * Vivek Srivastava
