@@ -1,7 +1,7 @@
 
 #***************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+# Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
 # Web: https://github.com/charlesrocabert/MoRIS
 #
 # This program is free software: you can redistribute it and/or modify
@@ -107,7 +107,6 @@ add_library(
   src/lib/Simulation.cpp
   src/lib/Simulation.h
 )
-
 
 target_link_libraries(MoRIS gsl gslcblas)
 target_link_libraries(${RUN_EXECUTABLE} MoRIS)

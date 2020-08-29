@@ -2,14 +2,14 @@
  * \file      MoRIS_run.cpp
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     MoRIS_run executable
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
@@ -93,7 +93,7 @@ int main(int argc, char const** argv)
   if (parameters->saveOutputs())
   {
     simulation->write_state("output/final_state.txt");
-    simulation->write_invasion_euclidean_distributions("output/observed_euclidean_distribution.txt", "output/simulated_euclidean_distribution.txt");
+    //simulation->write_invasion_euclidean_distributions("output/observed_euclidean_distribution.txt", "output/simulated_euclidean_distribution.txt");
   }
   
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -573,7 +573,7 @@ void printUsage( void )
   std::cout << " " << PACKAGE << " " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << " ( release )\n";
 #endif
   std::cout << " MoRIS (Model of Routes of Invasive Spread)                                \n";
-  std::cout << " Copyright (c) 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet \n";
+  std::cout << " Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   \n";
   std::cout << " Web: https://github.com/charlesrocabert/MoRIS                             \n";
   std::cout << "                                                                           \n";
   std::cout << " This program comes with ABSOLUTELY NO WARRANTY.                           \n";
