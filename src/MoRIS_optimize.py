@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 #***************************************************************************
@@ -153,7 +153,7 @@ class MoRIS_Optimizer:
 		try:
 			f = open(self.param_path, "r")
 		except:
-			print "Error: file "+self.param_path+ " not found."
+			print("Error: file "+self.param_path+ " not found.")
 			sys.exit()
 		else:
 			l = f.readline()
@@ -203,7 +203,7 @@ class MoRIS_Optimizer:
 					if data[1] == "NO" or data[1] == "YES":
 						self.human_activity_index = data[1]
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("WMIN"):
 					data = self.parse_line(l)
@@ -260,7 +260,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["xintro"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_YINTRO"):
 					data = self.parse_line(l)
@@ -269,7 +269,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["yintro"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_PINTRO"):
 					data = self.parse_line(l)
@@ -278,7 +278,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["pintro"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_LAMBDA"):
 					data = self.parse_line(l)
@@ -287,7 +287,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["lambda"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_MU"):
 					data = self.parse_line(l)
@@ -296,7 +296,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["mu"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_SIGMA"):
 					data = self.parse_line(l)
@@ -305,7 +305,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["sigma"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_GAMMA"):
 					data = self.parse_line(l)
@@ -314,7 +314,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["gamma"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_W1"):
 					data = self.parse_line(l)
@@ -323,7 +323,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["w1"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_W2"):
 					data = self.parse_line(l)
@@ -332,7 +332,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["w2"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_W3"):
 					data = self.parse_line(l)
@@ -341,7 +341,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["w3"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_W4"):
 					data = self.parse_line(l)
@@ -350,7 +350,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["w4"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_W5"):
 					data = self.parse_line(l)
@@ -359,7 +359,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["w5"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 				elif l.startswith("OPTIMIZE_W6"):
 					data = self.parse_line(l)
@@ -368,7 +368,7 @@ class MoRIS_Optimizer:
 					elif data[1] == "YES":
 						self.to_optimize["w6"] = True
 					else:
-						print data[0]+" must be NO or YES."
+						print(data[0]+" must be NO or YES.")
 						sys.exit()
 
 				#------------------------- PARAMETERS RANGE #
@@ -652,7 +652,7 @@ class MoRIS_Optimizer:
 			l = f.readline()
 		f.close()
 		if best_id == -1:
-			print "Error during cell id extraction from coordinates. Exit."
+			print("Error during cell id extraction from coordinates. Exit.")
 			sys.exit()
 		return best_id
 
@@ -667,7 +667,7 @@ class MoRIS_Optimizer:
 
 	### Open output file ###
 	def open_output_file( self ):
-		self.output_file = open("optimization.txt", "w", 0)
+		self.output_file = open("optimization.txt", "w")
 
 	### Close output file ###
 	def close_output_file( self ):
@@ -679,6 +679,7 @@ class MoRIS_Optimizer:
 		for param in self.default_parameters.keys():
 			line += " "+param
 		self.output_file.write(line+"\n")
+		self.output_file.flush()
 
 	### Write output file data ###
 	def write_output_file_data( self ):
@@ -691,6 +692,7 @@ class MoRIS_Optimizer:
 			else:
 				line += " "+str(self.default_parameters[param])
 		self.output_file.write(line+"\n")
+		self.output_file.flush()
 
 	### Minimization method provided to CMA-ES ###
 	def minimization_function( self, params_vector ):
@@ -703,7 +705,7 @@ class MoRIS_Optimizer:
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 		moris_cmd_line = self.build_moris_command_line()
 		moris_process  = subprocess.Popen([moris_cmd_line], stdout=subprocess.PIPE, shell=True)
-		moris_output   = moris_process.stdout.read()
+		moris_output   = moris_process.stdout.read().decode('utf8')
 		self.read_moris_output(moris_output)
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 		# 3) Save the data and return the score  #
@@ -814,50 +816,50 @@ class MoRIS_Optimizer:
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 		# 6) Run command lines                  #
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-		print "> Run MoRIS with best parameters"
+		print("> Run MoRIS with best parameters")
 		os.system(best_cmd_line)
 		os.system("cp -r output best_output")
-		print "> Run MoRIS with mean parameters"
+		print("> Run MoRIS with mean parameters")
 		os.system(mean_cmd_line)
 		os.system("cp -r output mean_output")
 		os.system("rm -rf output")
 
 ### Print help ###
 def printHelp():
-	print ""
-	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	print "                            * MoRIS Optimize *                             "
-	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	print " MoRIS (Model of Routes of Invasive Spread)                                "
-	print " Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   "
-	print " Web: https://github.com/charlesrocabert/MoRIS                             "
-	print "                                                                           "
-	print " This program comes with ABSOLUTELY NO WARRANTY.                           "
-	print " This is free software, and you are welcome to redistribute                "
-	print " it under certain conditions; See the GNU General Public                   "
-	print " License for details.                                                      "
-	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	print "Usage: python MoRIS_optimize.py -h or --help";
-	print "   or: python MoRIS_optimize.py [no arguments needed]";
-	print "To run, MoRIS_optimize needs a parameters file and the input files."
-	print ""
+	print("")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print("                            * MoRIS Optimize *                             ")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print(" MoRIS (Model of Routes of Invasive Spread)                                ")
+	print(" Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   ")
+	print(" Web: https://github.com/charlesrocabert/MoRIS                             ")
+	print("                                                                           ")
+	print(" This program comes with ABSOLUTELY NO WARRANTY.                           ")
+	print(" This is free software, and you are welcome to redistribute                ")
+	print(" it under certain conditions; See the GNU General Public                   ")
+	print(" License for details.                                                      ")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print("Usage: python MoRIS_optimize.py -h or --help")
+	print("   or: python MoRIS_optimize.py [no arguments needed]")
+	print("To run, MoRIS_optimize needs a parameters file and the input files.")
+	print("")
 
 ### Print header ###
 def printHeader():
-	print ""
-	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	print "                            * MoRIS Optimize *                             "
-	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	print " MoRIS (Model of Routes of Invasive Spread)                                "
-	print " Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   "
-	print " Web: https://github.com/charlesrocabert/MoRIS                             "
-	print "                                                                           "
-	print " This program comes with ABSOLUTELY NO WARRANTY.                           "
-	print " This is free software, and you are welcome to redistribute                "
-	print " it under certain conditions; See the GNU General Public                   "
-	print " License for details.                                                      "
-	print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	print ""
+	print("")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print("                            * MoRIS Optimize *                             ")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print(" MoRIS (Model of Routes of Invasive Spread)                                ")
+	print(" Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   ")
+	print(" Web: https://github.com/charlesrocabert/MoRIS                             ")
+	print("                                                                           ")
+	print(" This program comes with ABSOLUTELY NO WARRANTY.                           ")
+	print(" This is free software, and you are welcome to redistribute                ")
+	print(" it under certain conditions; See the GNU General Public                   ")
+	print(" License for details.                                                      ")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print("")
 
 ### Read command line arguments ###
 def readArgs( argv ):
@@ -901,7 +903,7 @@ if __name__ == '__main__':
 		end       = time.time()
 		optimizer.close_output_file()
 		if end-start < TIME_THRESHOLD:
-			print ">> Optimization failure, restart"
+			print(">> Optimization failure, restart")
 		else:
 			score   = cmaes_res[1]
 			xbest   = cmaes_res[0]

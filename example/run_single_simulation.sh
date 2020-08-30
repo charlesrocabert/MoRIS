@@ -4,7 +4,7 @@
 -sample ./input/sample.txt \
 -typeofdata PRESENCE_ABSENCE \
 -seed 123 \
--reps 500 \
+-reps 1000 \
 -iters 25 \
 -law LOG_NORMAL \
 -optimfunc LOG_LIKELIHOOD \
@@ -24,3 +24,5 @@
 -w5 0.0 \
 -w6 0.0 \
 -save-outputs
+
+Rscript ./rscripts/plot_single_simulation.R $(pwd)
