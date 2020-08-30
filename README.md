@@ -12,20 +12,8 @@ Model of Routes of Invasive Spread
 <a href="https://github.com/charlesrocabert/MoRIS/LICENSE.html"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
 </p>
 
-## Table of contents
-- [Introduction](#introduction)
-- [Publications](#publications)
-- [Copyright](#copyright)
-- [License](#license)
-- [Community](#community)
-- [Download](#download)
-- [Installation instructions](#installation_instructions)
-  - [Supported platforms](#supported_platforms)
-  - [Required dependencies](#required_dependencies)
-  - [Software compilation](#software_compilation)
-- [Input files tutorial](#tutorial)
+-----------------
 
-## Introduction <a name="introduction"></a>
 <p align="justify">
 Human-mediated dispersal acts as a vector for many exotic species, both at the introduction and secondary spread stages. Primary and secondary introductions arise from human-mediated long distance dispersal happening at global scales. Secondary spread occurs at smaller spatial and time scales (<em>e.g.</em> landscape) and results from either natural or human-mediated dispersal. Despite the importance of materials transportation (<em>e.g.</em> landscaping, construction) for the spread of invasive species, few studies have investigated short distance human-mediated dispersal and even less have tried to model it.
 </p>
@@ -37,6 +25,18 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 <p align="justify">
   MoRIS software requires input files built in a certain way. Here is a <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">tutorial</a> explaining this procedure in details.
 </p>
+
+## Table of contents
+- [Publications](#publications)
+- [Copyright](#copyright)
+- [License](#license)
+- [Community](#community)
+- [Download](#download)
+- [Installation instructions](#installation_instructions)
+  - [Supported platforms](#supported_platforms)
+  - [Required dependencies](#required_dependencies)
+  - [Software compilation](#software_compilation)
+- [Input files tutorial](#tutorial)
 
 ## Publications <a name="publications"></a>
 • J. M.W. Gippet, S. Fenet, A. Dumet, B. Kaufmann and C. Rocabert (2016, August). MoRIS: Model of Routes of Invasive Spread. Human-mediated dispersal, road network and invasion parameters. In <em>Proceedings of IENE 2016 conference. 5th International Conference on Ecology and Transportation: Integrating Transport Infrastructures with Living Landscapes</em> (Lyon, France). http://hal.cirad.fr/LJK_MAD_STEEP/hal-01412280v1
