@@ -4,6 +4,7 @@ Model of Routes of Invasive Spread
 <br />
 <br />
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
+<a href="https://action-badges.now.sh/charlesrocabert/MoRIS"><img src="https://action-badges.now.sh/charlesrocabert/MoRIS" /></a>&nbsp;
 <a href="https://github.com/charlesrocabert/MoRIS/LICENSE.html"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
 </p>
 
