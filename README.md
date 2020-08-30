@@ -106,13 +106,28 @@ This mode should only be used for test or development phases.
 Binary executable files are in <code>build/bin</code> folder.
 
 ## First usage <a name="first_usage"></a>
-<code>Under writing</code>
+One MoRIS has been installed, follow the next steps for a first usage of the software.
 
 ### Ready-to-use examples <a name="examples"></a>
-<code>Under writing</code>
+Ready-to-use examples are availables in the folder <code>examples</code>:
+
+• <code>run_single_simulation.sh</code>: This script will run a single MoRIS simulation with given human-mediated dispersal parameters. You can execute it using the following command line:
+
+    bash run_single_simulation.sh
+
+At the end of the simulation, a figure providing an overview of the simulation result is created (<code>single_simulation.pdf</code>). You can edit the parameter values at will to test the behaviour of the model. See below for a full description of the parameters.
+
+• <code>run_optimization.sh</code>: This script will run an optimization session by running multiple MoRIS simulation and trying to find the solution matching the experimental data at best.. You can execute it using the following command line:
+
+    bash run_optimization.sh
+
+You can track the ongoing optimization in the text-file <code>optimization.txt</code>. At the end of the optimization session, MoRIS writes the best parameters set in a specific file. Optimization parameters are defined in a specific file named <code>parameters.txt</code>. See below for a full description of the parameters.
 
 ### Run a MoRIS simulation <a name="run_simulation"></a>
-<code>Under writing</code>
+To run one MoRIS simulation, place yourself in the folder <code>examples</code> using the <code>cd</code> command, and execute the following command line:
+
+    ../build/bin/MoRIS_run <parameters>
+
 
 ### Couple MoRIS to the optimization algorithm <a name="optimize"></a>
 <code>Under writing</code>
