@@ -163,8 +163,7 @@ The command line parameters are described below. The description is also availab
 - <code>-save-all-states</code>, <code>--save--all-states</code>: Save simulation state at any time.
 
 ### Couple MoRIS to the optimization algorithm <a name="optimize"></a>
-To determine the HMD parameters explaining at best a given experimental dataset, MoRIS simulations are coupled to an optimization algorithm. MoRIS software provide a tool to do this: <code>MoRIS_optimize.py</code>. This script depends on a parameters file (usually named <code>parameters.txt</code>) that has a specific structure and parameters (see the example file <code>./examples/parameters.txt</code>), in order to define the number of HMD parameters to optimize, their allowed range of values, and the type of minimization function desired. The parameters file adds a layer on top of simulation parameters (see above):
-
+To determine the HMD parameters explaining at best a given experimental dataset, MoRIS simulations are coupled to an optimization algorithm. MoRIS software provides a tool to do this: <code>MoRIS_optimize.py</code>. This script depends on a parameters file named <code>parameters.txt</code> that has a specific structure and parameters (see the example file <code>./examples/parameters.txt</code>). This parameters file allows the user to define the number of HMD parameters to optimize, their boundaries, and the type of optimization function desired. The parameters file adds a layer on top of simulation parameters (see above):
 
 - <code>EXEC_PATH</code>: Specify the path of MoRIS_run executable,
 - <code>NETWORK_FILE</code>: Specify the path of the road network file (usually <code>network.txt</code>),
@@ -204,7 +203,6 @@ To determine the HMD parameters explaining at best a given experimental dataset,
 - <code>OPTIMIZE_W4</code>: Specify if the weight of category IV roads must be optimized (NO, YES),
 - <code>OPTIMIZE_W5</code>: Specify if the weight of category V roads must be optimized (NO, YES),
 - <code>OPTIMIZE_W6</code>: Specify if the weight of category VI roads must be optimized (NO, YES),
-
 - <code>XINTRO_MIN</code> and <code>XINTRO_MAX</code>: Specify the boundaries of _x_ (0 &leq; _x_ &leq; 1),
 - <code>YINTRO_MIN</code> and <code>YINTRO_MAX</code>: Specify the boundaries of _y_ (0 &leq; _y_ &leq; 1),
 - <code>PINTRO_MIN</code> and <code>PINTRO_MAX</code>: Specify the boundaries of _p_<sub>intro</sub> (0 &leq; _p_<sub>intro</sub> &leq; 1),
