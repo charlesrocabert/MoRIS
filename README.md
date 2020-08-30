@@ -36,7 +36,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 - [First usage](#first_usage)
   - [Ready-to-use examples](#examples)
   - [Run a MoRIS simulation](#run_simulation)
-  - [Couple MoRIS to the CMA-ES optimizer](#optimize)
+  - [Couple MoRIS to the optimization algorithm](#optimize)
 - [Input files tutorial](#tutorial)
 - [Copyright](#copyright)
 - [License](#license)
@@ -114,7 +114,7 @@ Binary executable files are in <code>build/bin</code> folder.
 ### Run a MoRIS simulation <a name="run_simulation"></a>
 <code>Under writing</code>
 
-### Couple MoRIS to the CMA-ES optimizer <a name="optimize"></a>
+### Couple MoRIS to the optimization algorithm <a name="optimize"></a>
 <code>Under writing</code>
 
 ## Input files tutorial <a name="tutorial"></a>
