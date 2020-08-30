@@ -4,7 +4,8 @@
 <br/>
 </p>
 <p align="center">
-Model of Routes of Invasive Spread
+Model of Routes of Invasive Spread<br/>
+A simulator of human-mediated dispersal via transportation networks
 <br />
 <br />
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
