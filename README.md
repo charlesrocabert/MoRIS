@@ -67,9 +67,6 @@ MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles
 </table>
 </p>
 
-## Download <a name="download"></a>
-Download the latest <a href="https://github.com/charlesrocabert/MoRIS-development/releases/latest">version</a>.
-
 ## Installation instructions <a name="installation_instructions"></a>
 Download the <a href="https://github.com/charlesrocabert/MoRIS/releases/latest">latest release</a> of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
 
