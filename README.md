@@ -23,7 +23,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 </p>
 
 <p align="justify">
-  To learn how to use MoRIS, first install the <a href="https://github.com/charlesrocabert/MoRIS/releases/latest">latest release</a>, and follow the <a href="installation_instructions">installation instructions</a> and the <a href="first_usage">first usage</a> guide. MoRIS software requires input files built in a certain way. To learn how to build this files, read <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">tutorial</a>.
+  To learn how to use MoRIS, first install the <a href="https://github.com/charlesrocabert/MoRIS/releases/latest">latest release</a>, and follow the <a href="installation_instructions">installation instructions</a> and the <a href="first_usage">first usage</a> guide. MoRIS software requires input files built in a certain way. To learn how to build this files, read the <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">input files tutorial</a>.
 </p>
 
 ## Table of contents
