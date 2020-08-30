@@ -1,16 +1,15 @@
 <h1 align="center">MoRIS</h1>
 <p align="center">
+<img src="docs/pics/spread.png" width=200>
+<br/>
+</p>
+<p align="center">
 Model of Routes of Invasive Spread
 <br />
 <br />
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
 <a href="https://action-badges.now.sh/charlesrocabert/MoRIS"><img src="https://action-badges.now.sh/charlesrocabert/MoRIS" /></a>&nbsp;
 <a href="https://github.com/charlesrocabert/MoRIS/LICENSE.html"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
-</p>
-
-<p align="center">
-<img src="docs/pics/spread.png" width=300>
-<br/>
 </p>
 
 ## Table of contents
