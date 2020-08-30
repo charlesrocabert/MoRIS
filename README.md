@@ -30,7 +30,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 - [Publications and communications](#publications)
 - [Copyright](#copyright)
 - [License](#license)
-- [Community](#community)
+- [Authors](#authors)
 - [Download](#download)
 - [Installation instructions](#installation_instructions)
   - [Supported platforms](#supported_platforms)
@@ -50,7 +50,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-## Community <a name="community"></a>
+## Authors <a name="authors"></a>
 MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme M.W Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
 
 #### Major contributors
