@@ -1,0 +1,26 @@
+../../build/bin/MoRIS_run \
+-map ./input/map.txt \
+-network ./input/network.txt \
+-sample ./input/sample.txt \
+-typeofdata PRESENCE_ABSENCE \
+-seed 123 \
+-reps 500 \
+-iters 25 \
+-law LOG_NORMAL \
+-optimfunc LOG_LIKELIHOOD \
+-humanactivity YES \
+-xintro 59891.22 \
+-yintro 31742.16 \
+-pintro 1.0 \
+-lambda 23.13390 \
+-mu 6.4951562 \
+-sigma 0.174736073 \
+-gamma 0.0 \
+-w1 1.0 \
+-w2 1.0 \
+-w3 1.0 \
+-w4 1.0 \
+-w5 0.0 \
+-w6 0.0 \
+-wmin 0.0 \
+-save-outputs
