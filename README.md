@@ -163,7 +163,61 @@ The command line parameters are described below. The description is also availab
 - <code>-save-all-states</code>, <code>--save--all-states</code>: Save simulation state at any time.
 
 ### Couple MoRIS to the optimization algorithm <a name="optimize"></a>
-<code>Under writing</code>
+To determine the HMD parameters explaining at best a given experimental dataset, MoRIS simulations are coupled to an optimization algorithm. MoRIS software provide a tool to do this: <code>MoRIS_optimize.py</code>. This script depends on a parameters file (usually named <code>parameters.txt</code>) that has a specific structure and parameters (see the example file <code>./examples/parameters.txt</code>), in order to define the number of HMD parameters to optimize, their allowed range of values, and the type of minimization function desired. The parameters file adds a layer on top of simulation parameters (see above):
+
+
+- <code>EXEC_PATH</code>: Specify the path of MoRIS_run executable,
+- <code>NETWORK_FILE</code>: Specify the path of the road network file (usually <code>network.txt</code>),
+- <code>MAP_FILE</code>: Specify the path of the map file (usually <code>map.txt</code>),
+- <code>SAMPLE_FILE</code>: Specify the path of the sample file (usually <code>sample.txt</code>),
+- <code>SEED</code>: Specify the PRNG seed,
+- <code>TYPE_OF_DATA</code>: Specify the type of experimental data provided in <code>map.txt</code> (PRESENCE_ONLY, PRESENCE_ABSENCE),
+- <code>REPETITIONS_BY_SIMULATION</code>: Specify the number of repetitions by simulation,
+- <code>NUMBER_OF_ITERATIONS</code>: Specify the number of iterations by simulation (usually, one iteration is one year),
+- <code>JUMP_LAW</code>: Specify the the jump distribution law (DIRAC, NORMAL, LOG_NORMAL, CAUCHY),
+- <code>OPTIMIZATION_FUNCTION</code>: Specify the optimization function (LSS, LOG_LIKELIHOOD, LIKELIHOOD_LSS),
+- <code>HUMAN_ACTIVITY_INDEX</code>: Specify if the human activity index should be used to weight the number of jump events (NO, YES),
+- <code>WMIN</code>: Specify the minimal weight between cells,
+- <code>XINTRO_DEFAULT</code>: Specify the default _x_ coordinate of the introduction cell (if not optimized),
+- <code>YINTRO_DEFAULT</code>: Specify the default _y_ coordinate of the introduction cell (if not optimized),
+- <code>PINTRO_DEFAULT</code>: Specify the default prevalence of introduction (if not optimized),
+- <code>LAMBDA_DEFAULT</code>: Specify the default mean number of jumps per cell per year (if not optimized),
+- <code>MU_DEFAULT</code>: Specify the default mean of the jump distribution (only works with DIRAC, NORMAL, LOG_NORMAL) (if not optimized),
+- <code>SIGMA_DEFAULT</code>: Specify the default variance of the jump distribution (with NORMAL, LOG_NORMAL) (if not optimized),
+- <code>GAMMA_DEFAULT</code>: Specify the default gamma parameter of the jump distribution (with CAUCHY) (if not optimized),
+- <code>W1_DEFAULT</code>: Specify the default weight of category I roads (if not optimized),
+- <code>W2_DEFAULT</code>: Specify the default weight of category II roads (if not optimized),
+- <code>W3_DEFAULT</code>: Specify the default weight of category III roads (if not optimized),
+- <code>W4_DEFAULT</code>: Specify the default weight of category IV roads (if not optimized),
+- <code>W5_DEFAULT</code>: Specify the default weight of category V roads (if not optimized),
+- <code>W6_DEFAULT</code>: Specify the default weight of category VI roads (if not optimized),
+- <code>OPTIMIZE_XINTRO</code>: Specify if the _x_ coordinate of the introduction cell must be optimized (NO, YES),
+- <code>OPTIMIZE_YINTRO</code>: Specify if the _y_ coordinate of the introduction cell must be optimized (NO, YES),
+- <code>OPTIMIZE_PINTRO</code>: Specify if the prevalence of introduction must be optimized (NO, YES),
+- <code>OPTIMIZE_LAMBDA</code>: Specify if the mean number of jumps per cell per year must be optimized (NO, YES),
+- <code>OPTIMIZE_MU</code>: Specify if the mean of the jump distribution must be optimized (NO, YES),
+- <code>OPTIMIZE_SIGMA</code>: Specify if the variance of the jump distribution must be optimized (NO, YES),
+- <code>OPTIMIZE_GAMMA</code>: Specify if the gamma parameter of the jump distribution must be optimized (NO, YES),
+- <code>OPTIMIZE_W1</code>: Specify if the weight of category I roads must be optimized (NO, YES),
+- <code>OPTIMIZE_W2</code>: Specify if the weight of category II roads must be optimized (NO, YES),
+- <code>OPTIMIZE_W3</code>: Specify if the weight of category III roads must be optimized (NO, YES),
+- <code>OPTIMIZE_W4</code>: Specify if the weight of category IV roads must be optimized (NO, YES),
+- <code>OPTIMIZE_W5</code>: Specify if the weight of category V roads must be optimized (NO, YES),
+- <code>OPTIMIZE_W6</code>: Specify if the weight of category VI roads must be optimized (NO, YES),
+
+- <code>XINTRO_MIN</code> and <code>XINTRO_MAX</code>: Specify the boundaries of _x_ (0 &leq; _x_ &leq; 1),
+- <code>YINTRO_MIN</code> and <code>YINTRO_MAX</code>: Specify the boundaries of _y_ (0 &leq; _y_ &leq; 1),
+- <code>PINTRO_MIN</code> and <code>PINTRO_MAX</code>: Specify the boundaries of _p_<sub>intro</sub> (0 &leq; _p_<sub>intro</sub> &leq; 1),
+- <code>LAMBDA_MIN</code> and <code>LAMBDA_MAX</code>: Specify the boundaries of &lambda; (0 &leq; &lambda;),
+- <code>MU_MIN</code> and <code>MU_MAX</code>: Specify the boundaries of &mu; (0 &leq; &mu;),
+- <code>SIGMA_MIN</code> and <code>SIGMA_MAX</code>: Specify the boundaries of &sigma; (0.1 &leq; &sigma;),
+- <code>GAMMA_MIN</code> and <code>GAMMA_MAX</code>: Specify the boundaries of &gamma; (0 &leq; &gamma;),
+- <code>W1_MIN</code> and <code>W1_MAX</code>: Specify the boundaries of _w_<sub>1</sub> (0 &leq; _w_<sub>1</sub> &leq; 1),
+- <code>W2_MIN</code> and <code>W2_MAX</code>: Specify the boundaries of _w_<sub>2</sub> (0 &leq; _w_<sub>2</sub> &leq; 1),
+- <code>W3_MIN</code> and <code>W3_MAX</code>: Specify the boundaries of _w_<sub>3</sub> (0 &leq; _w_<sub>3</sub> &leq; 1),
+- <code>W4_MIN</code> and <code>W4_MAX</code>: Specify the boundaries of _w_<sub>4</sub> (0 &leq; _w_<sub>4</sub> &leq; 1),
+- <code>W5_MIN</code> and <code>W5_MAX</code>: Specify the boundaries of _w_<sub>5</sub> (0 &leq; _w_<sub>5</sub> &leq; 1),
+- <code>W6_MIN</code> and <code>W6_MAX</code>: Specify the boundaries of _w_<sub>6</sub> (0 &leq; _w_<sub>6</sub> &leq; 1).
 
 ## Input files tutorial <a name="tutorial"></a>
 A tutorial to build MoRIS input files is <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">available here</a>.
