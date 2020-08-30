@@ -106,10 +106,10 @@ This mode should only be used for test or development phases.
 Binary executable files are in <code>build/bin</code> folder.
 
 ## First usage <a name="first_usage"></a>
-One MoRIS has been installed, follow the next steps for a first usage of the software.
+Once MoRIS has been installed, follow the next steps for a first usage of the software.
 
 ### Ready-to-use examples <a name="examples"></a>
-Ready-to-use examples are availables in the folder <code>examples</code>:
+Ready-to-use examples are available in the folder <code>examples</code>:
 
 • <code>run_single_simulation.sh</code>: This script will run a single MoRIS simulation with given human-mediated dispersal parameters. You can execute it using the following command line:
 
@@ -117,17 +117,50 @@ Ready-to-use examples are availables in the folder <code>examples</code>:
 
 At the end of the simulation, a figure providing an overview of the simulation result is created (<code>single_simulation.pdf</code>). You can edit the parameter values at will to test the behaviour of the model. See below for a full description of the parameters.
 
-• <code>run_optimization.sh</code>: This script will run an optimization session by running multiple MoRIS simulation and trying to find the solution matching the experimental data at best.. You can execute it using the following command line:
+• <code>run_optimization.sh</code>: This script will launch an optimization session by running multiple MoRIS simulations, and trying to find the solution matching the experimental data at best. You can execute it using the following command line:
 
     bash run_optimization.sh
 
-You can track the ongoing optimization in the text-file <code>optimization.txt</code>. At the end of the optimization session, MoRIS writes the best parameters set in a specific file. Optimization parameters are defined in a specific file named <code>parameters.txt</code>. See below for a full description of the parameters.
+You can track the ongoing optimization in the text-file <code>optimization.txt</code>. At the end of the optimization session, MoRIS writes the best parameters set in a text-file. Optimization parameters are defined in a specific file named <code>parameters.txt</code>. See below for a full description of the parameters.
 
 ### Run a MoRIS simulation <a name="run_simulation"></a>
 To run one MoRIS simulation, place yourself in the folder <code>examples</code> using the <code>cd</code> command, and execute the following command line:
 
     ../build/bin/MoRIS_run <parameters>
 
+The command line parameters are described below. The description is also available by executing the following command line in a terminal:
+
+    ../build/bin/MoRIS_run -h
+
+#### Parameters:
+- <code>-h</code>, <code>--help</code>: Print this help, then exit,
+- <code>-v</code>, <code>--version</code>: Print the current version, then exit,
+- <code>-seed</code>, <code>--seed</code>: Specify the PRNG seed,
+- <code>-typeofdata</code>, <code>--type-of-data</code>: Specify the type of experimental data (<code>PRESENCE_ONLY</code> or <code>PRESENCE_ABSENCE</code>),
+- <code>-network</code>, <code>--network</code>: Specify the network file (default: <code>network.txt</code>),
+- <code>-map</code>, <code>--map</code>: Specify the map file (default: <code>map.txt</code>),
+- <code>-sample</code>, <code>--sample</code>: Specify the sample file (default: <code>sample.txt</code>),
+- <code>-reps</code>, <code>--reps</code>: Specify the number of repetitions by simulation,
+- <code>-iters</code>, <code>--iters</code>: Specify the number of iterations by simulation (usually one iteration is one year),
+- <code>-law</code>, <code>--law</code>: Specify the jump distribution law (<code>DIRAC</code>, <code>NORMAL</code>, <code>LOG_NORMAL</code>, <code>CAUCHY</code>),
+- <code>-optimfunc</code>, <code>--optimfunc</code>: Specify the optimization function (<code>LSS</code>, <code>LOG_LIKELIHOOD</code>, <code>LIKELIHOOD_LSS</code>). Use preferably the option <code>LOG_LIKELIHOOD</code>,
+- <code>-humanactivity</code>, <code>--humanactivity</code>: Specify if the human activity index should be used to weight the number of jump events (<code>NO</code>, <code>YES</code>),
+- <code>-xintro</code> <code>--xintro</code>: Specify the _x_ coordinate of the introduction cell,
+- <code>-yintro</code>, <code>--yintro</code>: Specify the _y_ coordinate of the introduction cell,
+- <code>-pintro</code>, <code>--pintro</code>: Specify the prevalence of the introduction (usually 1),
+- <code>-lambda</code>, <code>--lambda</code>: Specify the mean number of jumps per cell per year,
+- <code>-mu</code>, <code>--mu</code>: Specify the mean of the jump distribution (only works with <code>DIRAC</code>, <code>NORMAL</code>, <code>LOG_NORMAL</code>),
+- <code>-sigma</code>, <code>--sigma</code>: Specify the variance of the jump distribution (only works with <code>NORMAL</code>, <code>LOG_NORMAL</code>),
+- <code>-gamma</code>, <code>--gamma</code>: Specify the gamma parameter of the jump distribution (only works with <code>CAUCHY</code>),
+- <code>-w1</code>, <code>--w1</code>: Specify the weight of category I roads,
+- <code>-w2</code>, <code>--w2</code>: Specify the weight of category II roads,
+- <code>-w3</code>, <code>--w3</code>: Specify the weight of category III roads,
+- <code>-w4</code>, <code>--w4</code>: Specify the weight of category IV roads,
+- <code>-w5</code>, <code>--w5</code>: Specify the weight of category V roads,
+- <code>-w6</code>, <code>--w6</code>: Specify the weight of category VI roads,
+- <code>-wmin</code>, <code>--wmin</code>: Specify the minimal weight between cells,
+- <code>-save-outputs</code>, <code>--save-outputs</code>: Save simulation outputs (final state, lineage tree, ...),
+- <code>-save-all-states</code>, <code>--save--all-states</code>: Save simulation state at any time.
 
 ### Couple MoRIS to the optimization algorithm <a name="optimize"></a>
 <code>Under writing</code>
