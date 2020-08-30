@@ -30,21 +30,23 @@ EXEC_PATH  ../build/bin/MoRIS_run
 // Set input files
 ///////////////////////////////////////////////////////////////
 
-NETWORK_FILE  input/network.txt
-MAP_FILE      input/map.txt
-SAMPLE_FILE   input/sample.txt
+NETWORK_FILE  ./input/network.txt
+MAP_FILE      ./input/map.txt
+SAMPLE_FILE   ./input/sample.txt
 
 
 ///////////////////////////////////////////////////////////////
 // Set main parameters
 ///////////////////////////////////////////////////////////////
 
-SEED                       987654
+SEED                       1234
 TYPE_OF_DATA               PRESENCE_ABSENCE
-REPETITIONS_BY_SIMULATION  500
+REPETITIONS_BY_SIMULATION  1000
 NUMBER_OF_ITERATIONS       25
 JUMP_LAW                   LOG_NORMAL
 OPTIMIZATION_FUNCTION      LOG_LIKELIHOOD
+HUMAN_ACTIVITY_INDEX       YES
+WMIN                       0.0
 
 ///////////////////////////////////////////////////////////////
 // Set default parameter values
@@ -63,27 +65,25 @@ W3_DEFAULT      1.0
 W4_DEFAULT      1.0
 W5_DEFAULT      0.0
 W6_DEFAULT      0.0
-WMIN_DEFAULT    0.0
 
 
 ///////////////////////////////////////////////////////////////
 // Set parameters to optimize
 ///////////////////////////////////////////////////////////////
 
-OPTIMIZE_XINTRO  TRUE
-OPTIMIZE_YINTRO  TRUE
-OPTIMIZE_PINTRO  FALSE
-OPTIMIZE_LAMBDA  TRUE
-OPTIMIZE_MU      TRUE
-OPTIMIZE_SIGMA   TRUE
-OPTIMIZE_GAMMA   FALSE
-OPTIMIZE_W1      FALSE
-OPTIMIZE_W2      FALSE
-OPTIMIZE_W3      FALSE
-OPTIMIZE_W4      FALSE
-OPTIMIZE_W5      FALSE
-OPTIMIZE_W6      FALSE
-OPTIMIZE_WMIN    FALSE
+OPTIMIZE_XINTRO  YES
+OPTIMIZE_YINTRO  YES
+OPTIMIZE_PINTRO  NO
+OPTIMIZE_LAMBDA  YES
+OPTIMIZE_MU      YES
+OPTIMIZE_SIGMA   YES
+OPTIMIZE_GAMMA   NO
+OPTIMIZE_W1      YES
+OPTIMIZE_W2      YES
+OPTIMIZE_W3      YES
+OPTIMIZE_W4      YES
+OPTIMIZE_W5      NO
+OPTIMIZE_W6      NO
 
 
 ///////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ LAMBDA_MAX  30.0
 MU_MIN  0.0
 MU_MAX  30.0
 
-SIGMA_MIN  0.0
+SIGMA_MIN  0.1
 SIGMA_MAX  3.0
 
 GAMMA_MIN  0.0
@@ -128,6 +128,3 @@ W5_MAX  1.0
 
 W6_MIN  0.0
 W6_MAX  1.0
-
-WMIN_MIN  0.0
-WMIN_MAX  1.0
