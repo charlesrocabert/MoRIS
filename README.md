@@ -71,7 +71,7 @@ MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles
 Download the <a href="https://github.com/charlesrocabert/MoRIS/releases/latest">latest release</a> of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
 
 ### Supported platforms <a name="supported_platforms"></a>
-MoRIS software has been successfully tested on Unix, OSX and macos platforms.
+MoRIS software has been successfully tested on Unix/Linux and macOS platforms.
 
 ### Dependencies <a name="dependencies"></a>
 * A C++ compiler (GCC, LLVM, ...),
