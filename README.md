@@ -1,6 +1,6 @@
 <h1 align="center">MoRIS</h1>
 <p align="center">
-<img src="docs/pics/spread.png" width=200>
+<img src="docs/pics/travelling_ant.png" width=200>
 <br/>
 </p>
 <p align="center">
