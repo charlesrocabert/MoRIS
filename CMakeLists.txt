@@ -1,7 +1,7 @@
 
 #***************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright © 2014-2020 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+# Copyright © 2014-2021 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
 # Web: https://github.com/charlesrocabert/MoRIS
 #
 # This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ set(PACKAGE "\"MoRIS\"")
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 9)
-set(VERSION_PATCH 6)
+set(VERSION_PATCH 7)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -53,7 +53,7 @@ ADD_DEFINITIONS(-std=c++11)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Set DEBUG and RELEASE flags                                                      #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -g -pg -Wall -Wextra -pedantic")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -g -Wall -Wextra -pedantic")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -O3 -Wall -Wextra -pedantic")
 
 
@@ -75,9 +75,6 @@ set(EXECUTABLE_OUTPUT_PATH ../build/bin)
 set(RUN_EXECUTABLE MoRIS_run)
 add_executable(${RUN_EXECUTABLE} src/MoRIS_run.cpp)
 
-#set(GENERATE_ARTIFICIAL_DATA_EXECUTABLE MoRIS_artificial_data)
-#add_executable(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} src/MoRIS_artificial_data.cpp)
-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Find and link external libraries                                                 #
@@ -86,7 +83,6 @@ find_package(GSL REQUIRED)
 if(GSL_FOUND)
   include_directories(${GSL_INCLUDE_DIR})
   target_link_libraries(${RUN_EXECUTABLE} ${GSL_LIBRARIES})
-  #target_link_libraries(${GENERATE_ARTIFICIAL_DATA_EXECUTABLE} ${GSL_LIBRARIES})
 endif(GSL_FOUND)
 
 

@@ -10,8 +10,8 @@
 -optimfunc LOG_LIKELIHOOD \
 -humanactivity YES \
 -wmin 0.0 \
--xintro 59891.22 \
--yintro 31742.16 \
+-xintro 44000 \
+-yintro 42000 \
 -pintro 1.0 \
 -lambda 23.13390 \
 -mu 6.4951562 \
@@ -25,4 +25,4 @@
 -w6 0.0 \
 -save-outputs
 
-Rscript ./rscripts/plot_single_simulation.R $(pwd)
+Rscript ./rscripts/plot_single_simulation.R $(pwd) 44000 42000
