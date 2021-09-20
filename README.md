@@ -47,7 +47,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 • J. M.W. Gippet, C. Rocabert, S. Fenet, A. Dumet and B. Kaufmann (2015, July). Modeling and evaluating human-mediated dispersal mechanisms at landscape scale: a study of road network and invasion parameters for Lasius neglectus ants invasive species. In <em>Proceedings of World Conference on Natural Resource Modeling</em> (Bordeaux, France). https://hal.archives-ouvertes.fr/hal-01242828/
 
 ## Authors <a name="authors"></a>
-MoRIS is being developed by <a href="https://github.com/charlesrocabert">Charles Rocabert</a>, <a href="https://jeromegippet.com/">Jérôme M.W Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/">Serge Fenet</a>.
+MoRIS is being developed by <a href="https://charlesrocabert.github.io/" target="_blank">Charles Rocabert</a>, <a href="https://jgippet.github.io/" target="_blank">Jérôme M.W Gippet</a> and <a href="https://perso.liris.cnrs.fr/sfenet/homepage/" target="_blank">Serge Fenet</a>.
 
 #### Major contributors
 * Aymeric Bonnamour
