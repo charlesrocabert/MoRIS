@@ -2,14 +2,14 @@
  * \file      Parameters.h
  * \author    Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * \date      15-12-2014
- * \copyright MoRIS. Copyright © 2014-2021 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
+ * \copyright MoRIS. Copyright © 2014-2022 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet. All rights reserved
  * \license   This project is released under the GNU General Public License
  * \brief     Parameters class declaration
  */
 
 /****************************************************************************
  * MoRIS (Model of Routes of Invasive Spread)
- * Copyright © 2014-2021 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+ * Copyright © 2014-2022 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
  * Web: https://github.com/charlesrocabert/MoRIS
  *
  * This program is free software: you can redistribute it and/or modify
