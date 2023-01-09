@@ -3,7 +3,7 @@
 
 #***************************************************************************
 # MoRIS (Model of Routes of Invasive Spread)
-# Copyright © 2014-2022 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
+# Copyright © 2014-2023 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet
 # Web: https://github.com/charlesrocabert/MoRIS
 #
 # This program is free software: you can redistribute it and/or modify
@@ -831,7 +831,7 @@ def printHelp():
 	print("                            * MoRIS Optimize *                             ")
 	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 	print(" MoRIS (Model of Routes of Invasive Spread)                                ")
-	print(" Copyright © 2014-2022 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   ")
+	print(" Copyright © 2014-2023 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   ")
 	print(" Web: https://github.com/charlesrocabert/MoRIS                             ")
 	print("                                                                           ")
 	print(" This program comes with ABSOLUTELY NO WARRANTY.                           ")
@@ -851,7 +851,7 @@ def printHeader():
 	print("                            * MoRIS Optimize *                             ")
 	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 	print(" MoRIS (Model of Routes of Invasive Spread)                                ")
-	print(" Copyright © 2014-2022 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   ")
+	print(" Copyright © 2014-2023 Charles Rocabert, Jérôme M.W. Gippet, Serge Fenet   ")
 	print(" Web: https://github.com/charlesrocabert/MoRIS                             ")
 	print("                                                                           ")
 	print(" This program comes with ABSOLUTELY NO WARRANTY.                           ")

@@ -218,7 +218,7 @@ To determine the HMD parameters explaining at best a given experimental dataset,
 A tutorial to build MoRIS input files is <a href="https://github.com/charlesrocabert/MoRIS/blob/master/INPUT_FILES_TUTORIAL.md">available here</a>.
 
 ## Copyright <a name="copyright"></a>
-Copyright © 2014-2022 Charles Rocabert, Jérôme M.W Gippet, Serge Fenet. All rights reserved.
+Copyright © 2014-2023 Charles Rocabert, Jérôme M.W Gippet, Serge Fenet. All rights reserved.
 
 ## License <a name="license"></a>
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
