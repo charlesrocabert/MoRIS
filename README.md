@@ -53,6 +53,7 @@ MoRIS is being developed by <a href="https://charlesrocabert.github.io/" target=
 
 #### Major contributors
 * Aymeric Bonnamour
+* Bernard Kaufmann
 
 #### Other contributors
 * Vivek Srivastava
