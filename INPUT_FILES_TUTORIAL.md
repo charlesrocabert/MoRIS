@@ -5,10 +5,10 @@ J. M. W. Gippet, C. Rocabert
 
 <br/>
 <br/>
-This tutorial explains to the user how to build MoRIS input files, in order to perform HMD (Human Mediated Dispersal) parameters estimation.
+This tutorial explains to the user how to build MoRIS input files, in order to perform HMD (Human Mediated Dispersal) simulations and parameters estimation.
 
-MoRIS requires 3 input files:
-- <strong>The map file</strong>, describing a discretized version of the area of interest, made of "cells" of a given size (<em>e.g.</em> squares, or hexagons, or anything else),
+MoRIS requires three input files:
+- <strong>The map file</strong>, describing a discretized version of the area of interest, made of "cells" of a given size (<em>e.g.</em> squares, hexagons, or anything else),
 - <strong>The network file</strong>, describing the network connecting cells on the map (<em>e.g.</em> a road network, but any network could work, such as a river system or an aerial system),
 - <strong>The sample file</strong>, describing the sampling effort of the invasive species of interest, cell by cell. A presence-absence scheme is required.
 
@@ -46,7 +46,7 @@ Here is an example of the file structure:
 #### A) Choose an extent.
 Define a <strong>working area</strong> (red square on figure 1) around your <strong>area of interest</strong>, namely: the area where you have presence/absence data on your favorite invasive species (red/green dots on figure 1).
 
-This <strong>working area</strong> must be centered around and larger by at least 100% than the invaded part of your area of interest, except for natural barriers (the ocean for example, left/West side on figure 1). Do not underestimate the importance of this <strong>bufferring area</strong>, to avoid estimation biases in MoRIS.
+This <strong>working area</strong> must be centered around and larger by at least 100% than your area of interest, except for natural barriers (the ocean for example, left/West side on figure 1). Do not underestimate the importance of this <strong>buffering area</strong>, to avoid estimation biases in MoRIS.
 
 <p align="center">
   <br/>
