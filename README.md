@@ -42,7 +42,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 - [License](#license)
 
 ## Publications and communications <a name="publications"></a>
-• C. Rocabert, S. Fenet, B. Kaufmann and J. M.W. Gippet (2023). Accounting for the topology of road networks to better explain human-mediated dispersal in terrestrial landscapes. <em>Ecography</em> (in press).
+• C. Rocabert, S. Fenet, B. Kaufmann and J. M.W. Gippet (2023). Accounting for the topology of road networks to better explain human-mediated dispersal in terrestrial landscapes (2023, <em>accepted</em>).
 
 • J. M.W. Gippet, S. Fenet, A. Dumet, B. Kaufmann and C. Rocabert (2016, August). MoRIS: Model of Routes of Invasive Spread. Human-mediated dispersal, road network and invasion parameters. In <em>Proceedings of IENE 2016 conference. 5th International Conference on Ecology and Transportation: Integrating Transport Infrastructures with Living Landscapes</em> (Lyon, France). http://hal.cirad.fr/LJK_MAD_STEEP/hal-01412280v1
 
