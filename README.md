@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/charlesrocabert/MoRIS/assets/25666459/bd2da28d-7759-4595-9ea3-470827b8b85b" width=400>
+<img src="docs/pics/logo.png" width=400>
 <br/>
 </p>
 
