@@ -1,8 +1,8 @@
-<h1 align="center">MoRIS</h1>
 <p align="center">
-<img src="https://github.com/charlesrocabert/MoRIS/assets/25666459/bb9f97da-70f3-42fb-bb5f-8cffd89f0e2c" width=200>
+<img src="https://github.com/charlesrocabert/MoRIS/assets/25666459/b0489a26-55c5-4fd9-bef3-701e24fdc0bd" width=400>
 <br/>
 </p>
+
 <p align="center">
 <strong>Model of Routes of Invasive Spread</strong>
 <br />
