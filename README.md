@@ -1,10 +1,10 @@
 <h1 align="center">MoRIS</h1>
 <p align="center">
-<img src="docs/pics/travelling_ant.png" width=200>
+<img src="https://github.com/charlesrocabert/MoRIS/assets/25666459/bb9f97da-70f3-42fb-bb5f-8cffd89f0e2c" width=200>
 <br/>
 </p>
 <p align="center">
-Model of Routes of Invasive Spread
+<strong>Model of Routes of Invasive Spread</strong>
 <br />
 <br />
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
