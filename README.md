@@ -29,6 +29,7 @@ Human-mediated dispersal acts as a vector for many exotic species, both at the i
 ## Table of contents
 - [Publications and communications](#publications)
 - [Authors](#authors)
+- [Citing MoRIS](#citing)
 - [Installation instructions](#installation_instructions)
   - [Supported platforms](#supported_platforms)
   - [Dependencies](#dependencies)
@@ -69,6 +70,9 @@ MoRIS is being developed by <a href="https://charlesrocabert.github.io/" target=
     </tr>
 </table>
 </p>
+
+## Citing MoRIS <a name="citing"></a>
+If you are using MoRIS software for research purpose and publication, please cite the following manuscript: https://doi.org/10.1111/ecog.07068
 
 ## Installation instructions <a name="installation_instructions"></a>
 Download the <a href="https://github.com/charlesrocabert/MoRIS/releases/latest">latest release</a> of MoRIS, and save it to a directory of your choice. Open a terminal and use the <code>cd</code> command to navigate to this directory. Then follow the steps below to compile and build the executables.
