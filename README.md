@@ -8,7 +8,7 @@
 <br />
 <br />
 <a href="https://github.com/charlesrocabert/MoRIS/releases/latest"><img src="https://img.shields.io/github/release/charlesrocabert/MoRIS/all.svg" /></a>&nbsp;
-<a href="https://github.com/charlesrocabert/MoRIS/actions"><img src="https://github.com/charlesrocabert/MoRIS/workflows/CMake/badge.svg" /></a>&nbsp;
+<a href="https://github.com/charlesrocabert/MoRIS/actions/workflows/cmake.yml"><img src="https://github.com/charlesrocabert/MoRIS/actions/workflows/cmake.yml/badge.svg" /></a>&nbsp;
 <a href="https://github.com/charlesrocabert/MoRIS/LICENSE.html"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
 </p>
 
